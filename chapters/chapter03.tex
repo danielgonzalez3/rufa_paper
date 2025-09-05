@@ -1,0 +1,287 @@
+\chapter{Rufa Database Design}
+
+In this chapter, we delve into the rationale behind the relational database for the RUFA project, a system designed to track tree records across various geographic and ecological dimensions. A relational database provides an ideal solution for managing structured data, such as tree attributes, geographic metrics, and hierarchical relationships between places, zip codes, and tracts. We will explore the MySQL workflow, emphasizing data integrity, normalization principles, materialized views for efficient querying, and indexing strategies to optimize database performance. These features ensure scalable, accurate, and high-performance data management for the RUFA project.
+
+
+\section{SQL Workflow}
+
+A well-defined SQL workflow is crucial for maintaining data integrity and ensuring efficient data retrieval \cite{codd1970}. The following subsections will detail the tables used in the RUFA database, the normalization process adopted, and the overall database schema design.
+
+
+\subsection{Tables and Normalization}
+
+The RUFA database consists of several tables designed to minimize redundancy and dependency. By normalizing the database to the third normal form (3NF), we ensure that each table contains data related to a specific topic, thereby enhancing data consistency and simplifying maintenance.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=6.3in]{figures/Rufa_Database.jpeg}
+    \caption{Entity Relationship Diagram (ERD) for the RUFA database schema}
+    \label{fig:RUFA_ERD}
+\end{figure}
+
+\subsection{Entity Relationship Diagram}
+
+\autoref{fig:RUFA_ERD} illustrates the ERD for the RUFA database schema. This diagram highlights the relationships between different entities, such as Points, Polygons, and Places, ensuring that the database structure supports all necessary operations and queries efficiently. Points are derived from our core data sources, while polygons represent geographic boundaries including census places, ZIP codes, and census tracts.
+
+
+\subsection{Alternative Database Solutions}
+
+While MySQL serves as the database choice for the RUFA, there are several alternative systems that offer enhanced capabilities for spatial data management and analysis. Given that the RUFA project relies on precise geographical information—such as census tracts, city boundaries, and tree coordinates—optimizing spatial queries and performance can be a critical consideration.
+
+\paragraph{PostgreSQL/PostGIS.} One of the most commonly cited alternatives for spatially intensive applications is PostgreSQL coupled with its PostGIS extension \cite{postgis2005}. PostGIS extends the relational engine to include advanced geospatial data types, indexing methods (e.g., GiST, SP-GiST), and an extensive library of geospatial functions (for instance, ST\_Intersect, S\_Buffer, and ST\_Distance). These features support complex spatial queries, such as determining which trees fall within a specific bounding polygon or calculating nearest-neighbor distances between tree points. Additionally, PostGIS’s robust handling of coordinate reference systems (CRS) and transformations can greatly simplify cross-regional comparisons within the RUFA framework.
+
+\paragraph{MongoDB with Geospatial Indexes.} MongoDB, a NoSQL document database, also offers geospatial indexing that can handle queries for distance-based searches on points, lines, and polygons \cite{cattell2011}. This schema-free approach can be advantageous for storing heterogeneous tree data—especially when the attributes of different species vary significantly—since new fields can be added without redefining a rigid schema.
+
+\paragraph{GIS-Specific Databases.} Some organizations adopt specialized spatial database solutions, such as \textit{Esri’s ArcGIS Enterprise} or \textit{Oracle Spatial and Graph}, for high-volume or enterprise-level spatial data management. These systems offer robust toolsets for spatial analyses, but they can come with higher licensing costs and steeper learning curves. For smaller projects or open-source-driven initiatives, this may pose resource constraints and limit broad community involvement.
+
+\paragraph{Why MySQL Remains in Use.} Despite these more spatially advanced alternatives, MySQL remains the primary choice for the RUFA project due to its historical ties with the selectree.calpoly.edu infrastructure. Many existing scripts, tools, and user-facing applications are already deeply integrated with MySQL, making a complete or partial transition to another platform expensive in terms of development effort and time. Moreover, while MySQL’s native spatial features are comparatively limited, they can still manage a variety of spatial queries by leveraging \textit{SPATIAL indexes} on MyISAM or InnoDB tables.
+
+For MyISAM and InnoDB tables, search operations in columns containing spatial data can be optimized using SPATIAL indexes. The most typical operations are:
+
+\begin{itemize}
+    \item \textit{Point queries} that search for all objects containing a given point
+    \item \textit{Region queries} that search for all objects overlapping a specified region
+\end{itemize}
+
+MySQL uses \textit{R-Trees} with quadratic splitting for SPATIAL indexes on geometry columns. A SPATIAL index is built using the \textit{minimum bounding rectangle} (MBR) of a geometry. For most geometries, the MBR is the smallest rectangle that completely encloses the shape. For a horizontal or vertical linestring, the MBR degenerates to that linestring; and for a point, it degenerates to a single point. It is also possible to create normal (non-SPATIAL) indexes on spatial columns, although these indexes have more restrictions—for instance, in a non-SPATIAL index, you must generally restrict the data to a specific storage engine or data type to ensure efficient lookups.
+
+Ultimately, although PostgreSQL/PostGIS/MongoDB with geospatial indexes, or specialized GIS databases may outperform MySQL in certain spatial workflows, the RUFA project’s current operational environment and alignment with Selectree’s architecture underscore MySQL’s continued use. Future iterations of RUFA could incorporate or migrate to these alternatives if spatial demands grow significantly—potentially leveraging hybrid architectures that pair MySQL’s relational strengths with specialized spatial extensions in a multi-database ecosystem.
+
+\section{Materialized Views}
+
+Materialized views are used in the RUFA database to store the results of complex queries, thereby improving query performance. To ensure that these views remain up-to-date with the underlying data, we implement automatic refresh mechanisms. This can be achieved using database triggers or scheduled jobs that periodically update the materialized views based on changes in the base tables.
+
+\section{Indexing Strategies}
+
+Effective indexing is essential for optimizing query performance in the RUFA database. By carefully selecting which columns to index, we can significantly reduce query execution time. Automatic updates to indexes are managed by the database system, which maintains the indexes as data is inserted, updated, or deleted. Additionally, regular index maintenance tasks, such as rebuilding fragmented indexes, are scheduled to ensure optimal performance.
+
+\subsection{Automatic Index Maintenance}
+
+Modern relational database management systems (RDBMS) handle index maintenance automatically. However, for large databases like RUFA, it's advisable to monitor index performance and perform manual maintenance when necessary. Tools and scripts can be employed to automate these maintenance tasks, ensuring that indexes remain efficient without manual intervention.
+
+\section{Materialized View Implementation for RUFA Score Management}
+
+\subsection{Overview}
+
+The RUFA system relies on complex calculations involving multiple metrics—canopy cover percentage (CCP), trees per capita (TPC), tree diversity (TD-50), and tree evenness (TE)—to generate composite RUFA scores for census-designated places across California. Given the computational intensity of these calculations and the need for responsive user queries, implementing materialized views becomes essential for maintaining system performance while ensuring data accuracy.
+
+The system faces a unique challenge in that geographic areas are hierarchically related—when tree data changes in a city like Los Angeles, the system must update not only the city-level statistics but also all associated ZIP codes, census tracts, climate zones, and county-level aggregations. This cascading update requirement necessitates a sophisticated materialized view strategy that can efficiently propagate changes through the geographic hierarchy.
+
+\subsection{Geographic Cascade Architecture}
+
+Since MariaDB does not natively support true materialized views like PostgreSQL, the RUFA system implements a specialized architecture using regular tables that function as materialized views, combined with automated refresh mechanisms to maintain data consistency across geographic hierarchies.
+
+The core innovation lies in the cascading update system that recognizes the interconnected nature of geographic boundaries. When tree inventory data changes in any location, the system automatically identifies and updates all related geographic areas through a relationship mapping table and stored procedure framework. This ensures that statistics remain synchronized across ZIP codes, cities, census tracts, climate zones, and counties without requiring manual intervention.
+
+\subsubsection{Unified Statistics Table}
+
+The system maintains a central \texttt{tree\_stats\_by\_location} table that stores pre-calculated metrics for all geographic location types within a single, normalized structure. This table contains comprehensive tree statistics including species diversity counts, average tree characteristics, native species distributions, and water requirement breakdowns. Each record is identified by a location type (zip, city, tract) and corresponding location code, enabling efficient querying across different geographic scales.
+
+\subsubsection{Relationship Mapping and Cascade Logic}
+
+A separate \texttt{location\_relationships} table maintains the hierarchical connections between different geographic boundaries, enabling the system to determine which areas need updates when tree data changes. The cascade logic is implemented through stored procedures that automatically refresh statistics for all related geographic areas when triggered by data modifications.
+
+For example, when tree inventory data changes in Los Angeles, the system automatically updates statistics for the city itself, all ZIP codes within Los Angeles boundaries, associated census tracts, the relevant climate zone, and Los Angeles County. This ensures consistency across all geographic scales without requiring users or administrators to manually trigger updates for each affected area.
+
+\paragraph{Trigger-Based Updates}
+
+Database triggers are implemented on core tables to automatically invalidate and schedule refreshes of dependent materialized views:
+
+\begin{lstlisting}[language=SQL, caption=Database trigger for automatic refresh scheduling]
+DELIMITER $
+CREATE TRIGGER update_rufa_scores_trigger
+AFTER INSERT ON tree_inventory
+FOR EACH ROW
+BEGIN
+    UPDATE mv_refresh_schedule 
+    SET needs_refresh = TRUE, 
+        last_modified = NOW()
+    WHERE view_name = 'mv_rufa_scores'
+    AND place_id = NEW.place_id;
+END$
+DELIMITER ;
+\end{lstlisting}
+
+\paragraph{Scheduled Batch Processing}
+
+A scheduled job runs every N hours to process bulk updates and recalculate scores for modified areas:
+
+\begin{lstlisting}[language=SQL, caption=Batch refresh procedure for RUFA scores]
+-- Batch refresh procedure
+DELIMITER $
+CREATE PROCEDURE RefreshRUFAScores()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE place_to_update VARCHAR(50);
+    
+    -- Cursor for places needing updates
+    DECLARE place_cursor CURSOR FOR 
+        SELECT DISTINCT place_id 
+        FROM mv_refresh_schedule 
+        WHERE needs_refresh = TRUE;
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+    OPEN place_cursor;
+    
+    refresh_loop: LOOP
+        FETCH place_cursor INTO place_to_update;
+        IF done THEN
+            LEAVE refresh_loop;
+        END IF;
+        
+        -- Recalculate RUFA score components
+        CALL CalculateRUFAScore(place_to_update);
+        
+        -- Mark as refreshed
+        UPDATE mv_refresh_schedule 
+        SET needs_refresh = FALSE, 
+            last_refreshed = NOW()
+        WHERE place_id = place_to_update;
+        
+    END LOOP;
+    
+    CLOSE place_cursor;
+END$
+DELIMITER ;
+\end{lstlisting}
+
+\paragraph{Incremental Update Strategy}
+
+Rather than full table refreshes, the system implements incremental updates that only recalculate scores for affected geographic areas:
+
+\begin{itemize}
+    \item \textbf{Spatial Partitioning}: RUFA scores are partitioned by climate zones and counties to isolate updates
+    \item \textbf{Change Detection}: Modified tree records trigger updates only for their specific census-designated places
+    \item \textbf{Dependency Tracking}: A dependency graph ensures that changes to base data propagate correctly through all dependent materialized views
+\end{itemize}
+
+\subsection{Data Consistency Safeguards}
+
+To maintain data integrity during the refresh process:
+
+\subsubsection{Version Control}
+Each materialized view maintains version numbers to detect stale data:
+
+\begin{lstlisting}[language=SQL, caption=Version control table for materialized views]
+CREATE TABLE mv_version_control (
+    view_name VARCHAR(50) PRIMARY KEY,
+    current_version INT NOT NULL DEFAULT 1,
+    last_refresh TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    refresh_duration_seconds INT,
+    status ENUM('CURRENT', 'REFRESHING', 'STALE') DEFAULT 'CURRENT'
+);
+\end{lstlisting}
+
+\subsubsection{Atomic Updates}
+Large refresh operations use temporary tables and atomic swaps to prevent serving inconsistent data:
+
+\begin{lstlisting}[language=SQL, caption=Atomic table swap for consistent updates]
+-- Create temporary table with updated scores
+CREATE TABLE mv_rufa_scores_temp LIKE mv_rufa_scores;
+
+-- Populate with fresh calculations
+INSERT INTO mv_rufa_scores_temp 
+SELECT place_id, 
+       ((ccp_score + td_score + te_score + tpc_score) / 20) * 100 as rufa_score,
+       NOW() as calculated_at
+FROM mv_tree_metrics 
+JOIN mv_population_data USING (place_id);
+
+-- Atomic swap
+RENAME TABLE mv_rufa_scores TO mv_rufa_scores_old,
+             mv_rufa_scores_temp TO mv_rufa_scores;
+
+DROP TABLE mv_rufa_scores_old;
+\end{lstlisting}
+
+\subsection{Performance Optimization}
+
+The materialized view system includes several performance optimizations:
+
+\subsubsection{Selective Refresh}
+Only geographic areas with actual data changes are recalculated, dramatically reducing refresh times from hours to minutes for typical updates.
+
+\subsubsection{Parallel Processing}
+Multiple refresh workers can simultaneously update different geographic partitions, leveraging MariaDB's parallel processing capabilities.
+
+\subsubsection{Caching Strategy}
+Frequently accessed RUFA scores are cached in Redis with appropriate TTL values, reducing database load for dashboard queries.
+
+\subsection{Monitoring and Alerting}
+
+The system includes comprehensive monitoring to ensure materialized views remain current:
+
+\begin{itemize}
+    \item \textbf{Staleness Detection}: Automated alerts when materialized views fall behind source data by more than 12 hours
+    \item \textbf{Performance Monitoring}: Tracking of refresh times and resource utilization
+    \item \textbf{Data Quality Checks}: Validation that recalculated scores fall within expected ranges
+\end{itemize}
+
+This materialized view architecture ensures that RUFA scores remain accurate and current while providing the query performance necessary for responsive user interactions with the Urban Forestry Assessment Dashboard.
+
+\subsection{Indexing Results}
+
+To evaluate the performance impact of different data storage and indexing strategies, we conducted comprehensive benchmarking tests across various query scenarios. Our analysis compared four different approaches for data retrieval and rendering within the RUFA system, measuring query execution times and system responsiveness under typical usage patterns. All performance tests were conducted on a standardized test environment consisting of an AWS EC2 instance (t3.large) with 2 vCPUs, 8GB RAM, and 10.5.23 MariaDB running on Amazon RDS. The test dataset contained approximately 7.2 million tree records distributed across 702 cities in California, matching the production data scale described in the California Urban Forest Inventory.
+
+Each test scenario was executed 100 times to ensure statistical significance, with query execution times measured using MySQL's built-in profiling tools. The performance metrics were calculated as:
+
+\begin{equation}
+\text{Throughput} = \frac{1}{\text{Average Query Time (seconds)}}
+\end{equation}
+
+\begin{equation}
+\text{Performance Improvement} = \frac{T_{\text{baseline}} - T_{\text{optimized}}}{T_{\text{baseline}}} \times 100\%
+\end{equation}
+
+where $T_{\text{baseline}}$ represents the baseline query time and $T_{\text{optimized}}$ represents the optimized query time.
+
+\subsection{Performance Comparison Results}
+
+Table~\ref{tab:performance_comparison} presents the average query execution times across different storage and indexing strategies for city-specific queries retrieving tree inventory data.
+
+\begin{table}[htbp]
+\centering
+\caption{Performance comparison of different storage and indexing strategies}
+\label{tab:performance_comparison}
+\begin{tabular}{p{4cm}ccc}
+\hline
+\textbf{Storage Method} & \textbf{Avg. Time (ms)} & \textbf{Std. Dev.} & \textbf{Queries/s} \\
+\hline
+S3 Single CSV File & 8,450 & 1,230 & 0.12 \\
+S3 Per-City CSV Files & 3,120 & 480 & 0.32 \\
+Database Table (No Index) & 2,890 & 290 & 0.35 \\
+Database Table (Index) & 145 & 25 & 6.90 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{S3 Single CSV File Approach}
+
+The initial approach of storing all tree data in a single CSV file on Amazon S3 demonstrated the poorest performance, with average query times exceeding 8.4 seconds. This method required downloading and parsing the entire dataset for each query, regardless of the specific city or region being requested. The high standard deviation ($\sigma = 1,230$ ms) indicated inconsistent performance, likely due to network latency variations and the overhead of processing large file transfers.
+
+\subsubsection{S3 Per-City CSV Files}
+
+Partitioning the data into individual CSV files per city showed significant improvement, reducing average query times to 3.12 seconds—a 63\% performance improvement over the single file approach. This approach eliminated the need to process irrelevant data for city-specific queries. However, the system still faced overhead from file system operations and CSV parsing, limiting its scalability for real-time applications.
+
+\subsubsection{Database Table Without Indexing}
+
+Direct queries against the MySQL database table without proper indexing yielded slightly better performance than the partitioned CSV approach, with average query times of 2.89 seconds. While this eliminated file parsing overhead, the lack of indexing on frequently queried columns (particularly city names and geographic identifiers) required full table scans with $O(n)$ complexity for most operations.
+
+\subsubsection{Database Table With City Indexing}
+
+The implementation of a B-tree index on the city column resulted in dramatic performance improvements, reducing average query times to just 145 milliseconds—a 95\% improvement over the non-indexed approach. The low standard deviation ($\sigma = 25$ ms) demonstrates consistent performance across different query patterns. This approach achieved a throughput of 6.90 queries per second, making it suitable for interactive web applications and real-time dashboard updates.
+
+\subsection{Memory and Storage Impact}
+
+The indexing strategy increased database storage requirements by approximately 15\%, from 2.3GB to 2.6GB for the complete dataset. However, this storage overhead was offset by significant reductions in memory usage during query execution, as indexed queries required substantially less working memory for result set processing.
+
+The storage overhead can be expressed as:
+
+\begin{equation}
+\text{Storage Overhead} = \frac{S_{\text{indexed}} - S_{\text{original}}}{S_{\text{original}}} \times 100\% = \frac{2.6 - 2.3}{2.3} \times 100\% = 13.0\%
+\end{equation}
+
+\subsection{Scaling Considerations}
+
+Performance testing with varying dataset sizes demonstrated that the indexed approach maintains logarithmic time complexity $O(\log n)$, ensuring scalability as the urban forest inventory continues to grow. Projections suggest that even with a 10$\times$ increase in data volume, indexed query times would remain under 300ms for typical city-based queries, maintaining the system's responsiveness for interactive applications.

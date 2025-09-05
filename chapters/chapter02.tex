@@ -1,0 +1,27 @@
+\chapter{Background} \label{sec:Background}
+
+The Rapid Urban Forest Assessment (RUFA) system integrates two primary data sources to provide comprehensive insights into urban forest ecosystems. The first data source offers highly detailed tree characteristics, derived from an extensive compilation of California urban forest inventories. These inventories were aggregated from diverse sources, including private arborist firms (West Coast Arborists, Davey Tree Company, APlus Tree Care) and public entities such as CAL FIRE. This robust dataset ensures a high level of granularity and accuracy in tree attribute information \cite{love2022}. Our second data source estimates tree coordinates using a deep learning approach. This method employs high-resolution multispectral aerial imagery to detect individual trees in urban settings. A convolutional neural network is utilized to generate a confidence map by regressing the detected tree information, enabling precise spatial quantification of urban tree coverage \cite{ventura2022}.
+
+\section{Diversity Metrics}
+
+Diversity metrics play a crucial role in understanding the composition and resilience of urban forests. Among these, the TD-50 index, introduced by Love et al. \cite{love2022}, has emerged as a pivotal tool for assessing urban tree species diversity. This index identifies the species that constitute the top 50\% of urban forest abundance, providing a snapshot of both ecological dominance and species richness.
+
+The value of such metrics lies in their ability to guide urban forestry programs toward enhanced biodiversity. High diversity levels improve resilience to pests, diseases, and environmental changes, while low diversity often signifies vulnerability. For instance, McPherson et al. \cite{mcpherson2018} highlight the importance of diversifying tree species as a strategy to bolster urban forest resilience against climate change impacts. Furthermore, Livesley et al. \cite{livesley2016} emphasize the ecological functions provided by diverse urban forests, such as improved air quality, habitat provision, and the regulation of urban microclimates.
+
+Research underscores that species diversity influences urban forests' ability to adapt to environmental stressors, including extreme weather events and urban heat islands. Therefore, incorporating diversity metrics into urban forestry management is critical for maintaining ecological stability and sustainability.
+
+\section{Canopy and Density}
+
+Urban tree canopy coverage and density are fundamental indicators of urban forest health and performance. Studies like those by Livesley et al. \cite{livesley2016} and Sanusi et al. \cite{sanusi2016} underscore the significance of these metrics in understanding urban tree contributions to ecological and social well-being.
+
+Canopy coverage is particularly effective in regulating urban temperatures and reducing solar radiation. This is especially relevant for small-statured trees, which Sanusi et al. \cite{sanusi2016} found to be instrumental in urban cooling, despite their limited size. Additionally, canopy density directly correlates with urban areas' capacity to manage stormwater runoff, as shown in Xiao and McPherson's \cite{xiao2016} research.
+
+Density metrics also provide insights into forest sustainability. Higher tree densities often indicate robust forest growth and effective carbon sequestration capabilities. However, overcrowding can lead to competition for resources, reducing overall health and resilience. Balancing canopy coverage and density is therefore essential for maximizing the benefits of urban forests, from cooling effects and stormwater management to improving urban aesthetics and human well-being.
+
+\section{RUFA Score}
+
+The Rapid Urban Forest Assessment (RUFA) system also provides a composite ``RUFA Score'' for each census-designated place in California, facilitating an at-a-glance evaluation of urban forest health and sustainability. This score integrates four equally weighted metrics:
+
+\begin{itemize} \item \textbf{Canopy cover percentage (CCP)} – Reflects the proportion of land area covered by tree canopy. \item \textbf{Trees per capita (TPC)} – Indicates tree distribution relative to population size. \item \textbf{Tree diversity (TD)} – Incorporates the TD-50 index \cite{love2022} to capture species richness and dominance. \item \textbf{Tree evenness (TE)} – Describes how uniformly individuals are distributed among available species. \end{itemize}
+
+Each metric is \textit{binned} into a score of 1 to 5 based on its distribution across California. Summing these binned values yields a maximum of 20 possible points. The final RUFA Score is then calculated as: \begin{equation} \text{RUFA Score} = \left( \frac{\text{CCP} + \text{TD} + \text{TE} + \text{TPC}}{20} \right) \times 100, \end{equation} where higher values (closer to 100) indicate stronger overall performance. By normalizing each component and summing their contributions, the RUFA Score offers a standardized, comparable index of urban forest health. This approach ensures that areas with varying population densities, canopy coverage, and species compositions can be evaluated on a consistent scale, guiding strategic planning and policy decisions to enhance urban forest resilience.
