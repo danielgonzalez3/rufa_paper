@@ -1,0 +1,384 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{cattell2011}{article}{}
+      \name{author}{1}{}{%
+        {{hash=4150d492f71967b65dec2918f6486019}{%
+           family={Cattell},
+           familyi={C\bibinitperiod},
+           given={Rick},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{4150d492f71967b65dec2918f6486019}
+      \strng{fullhash}{4150d492f71967b65dec2918f6486019}
+      \strng{bibnamehash}{4150d492f71967b65dec2918f6486019}
+      \strng{authorbibnamehash}{4150d492f71967b65dec2918f6486019}
+      \strng{authornamehash}{4150d492f71967b65dec2918f6486019}
+      \strng{authorfullhash}{4150d492f71967b65dec2918f6486019}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM SIGMOD Record}
+      \field{number}{4}
+      \field{title}{Scalable {SQL} and {NoSQL} data stores}
+      \field{volume}{39}
+      \field{year}{2011}
+      \field{pages}{12\bibrangedash 27}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1145/1978915.1978919
+      \endverb
+    \endentry
+    \entry{codd1970}{article}{}
+      \name{author}{1}{}{%
+        {{hash=575e6ec8dab1a34c19f7021664baaccc}{%
+           family={Codd},
+           familyi={C\bibinitperiod},
+           given={E.\bibnamedelimi F.},
+           giveni={E\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{575e6ec8dab1a34c19f7021664baaccc}
+      \strng{fullhash}{575e6ec8dab1a34c19f7021664baaccc}
+      \strng{bibnamehash}{575e6ec8dab1a34c19f7021664baaccc}
+      \strng{authorbibnamehash}{575e6ec8dab1a34c19f7021664baaccc}
+      \strng{authornamehash}{575e6ec8dab1a34c19f7021664baaccc}
+      \strng{authorfullhash}{575e6ec8dab1a34c19f7021664baaccc}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications of the ACM}
+      \field{number}{6}
+      \field{title}{A Relational Model of Data for Large Shared Data Banks}
+      \field{volume}{13}
+      \field{year}{1970}
+      \field{pages}{377\bibrangedash 387}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1145/362384.362685
+      \endverb
+    \endentry
+    \entry{livesley2016}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{3}{}{%
+        {{hash=3883ac8669d957b4b8a0796c2f1d7f68}{%
+           family={Livesley},
+           familyi={L\bibinitperiod},
+           given={S.\bibnamedelimi J.},
+           giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=174e99bd260faddce6094345d8a9ab90}{%
+           family={McPherson},
+           familyi={M\bibinitperiod},
+           given={E.\bibnamedelimi G.},
+           giveni={E\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=1433ace614bbdcdd3059323ef1a966e6}{%
+           family={Calfapietra},
+           familyi={C\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{dea084a79b374748b05ce4c7866595be}
+      \strng{fullhash}{dea084a79b374748b05ce4c7866595be}
+      \strng{bibnamehash}{dea084a79b374748b05ce4c7866595be}
+      \strng{authorbibnamehash}{dea084a79b374748b05ce4c7866595be}
+      \strng{authornamehash}{dea084a79b374748b05ce4c7866595be}
+      \strng{authorfullhash}{dea084a79b374748b05ce4c7866595be}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Urban Ecology}
+      \field{note}{Please add volume/issue/pages/doi if available}
+      \field{title}{The Urban Forest and Ecosystem Services: Impacts on Urban Water, Heat, and Pollution Cycles at the Tree, Street, and City Scale}
+      \field{year}{2016}
+    \endentry
+    \entry{love2022}{article}{}
+      \name{author}{2}{}{%
+        {{hash=df1110ea1a6c63f28863d15d48fe2760}{%
+           family={Love},
+           familyi={L\bibinitperiod},
+           given={Natalie\bibnamedelimb L.\bibnamedelimi R.},
+           giveni={N\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=174e99bd260faddce6094345d8a9ab90}{%
+           family={McPherson},
+           familyi={M\bibinitperiod},
+           given={E.\bibnamedelimi G.},
+           giveni={E\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{56ffa5a57f1372bca105aff97099419b}
+      \strng{fullhash}{56ffa5a57f1372bca105aff97099419b}
+      \strng{bibnamehash}{56ffa5a57f1372bca105aff97099419b}
+      \strng{authorbibnamehash}{56ffa5a57f1372bca105aff97099419b}
+      \strng{authornamehash}{56ffa5a57f1372bca105aff97099419b}
+      \strng{authorfullhash}{56ffa5a57f1372bca105aff97099419b}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Urban Forestry \& Urban Greening}
+      \field{note}{Please add volume/issue/pages/doi if available}
+      \field{title}{Diversity and structure in California’s urban forest}
+      \field{year}{2022}
+    \endentry
+    \entry{mcpherson2018}{article}{}
+      \name{author}{5}{}{%
+        {{hash=174e99bd260faddce6094345d8a9ab90}{%
+           family={McPherson},
+           familyi={M\bibinitperiod},
+           given={E.\bibnamedelimi G.},
+           giveni={E\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=68d5e173203158206a67be564aa26228}{%
+           family={Berry},
+           familyi={B\bibinitperiod},
+           given={A.\bibnamedelimi M.},
+           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=4a6414c5fbf35885c0629321644f8fdd}{%
+           family={Studer},
+           familyi={S\bibinitperiod},
+           given={S.\bibnamedelimi M.\bibnamedelimi L.},
+           giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=2bdd48dc68b3d7c9d63e3844f2459fd6}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod}}}%
+        {{hash=c69f77297c392c29081ec44c4132095a}{%
+           family={Doorn},
+           familyi={D\bibinitperiod},
+           given={N.\bibnamedelimi S.},
+           giveni={N\bibinitperiod\bibinitdelim S\bibinitperiod},
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{849fa7915aeb61fc7aa703457471c020}
+      \strng{fullhash}{f2bd6739c419412b8bfe3f76cd6cba07}
+      \strng{bibnamehash}{849fa7915aeb61fc7aa703457471c020}
+      \strng{authorbibnamehash}{849fa7915aeb61fc7aa703457471c020}
+      \strng{authornamehash}{849fa7915aeb61fc7aa703457471c020}
+      \strng{authorfullhash}{f2bd6739c419412b8bfe3f76cd6cba07}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Arboriculture \& Urban Forestry}
+      \field{number}{2}
+      \field{title}{Performance Testing to Identify Climate-Ready Trees for Central Valley Communities}
+      \field{volume}{44}
+      \field{year}{2018}
+      \field{pages}{83\bibrangedash 99}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.48044/jauf.2018.008
+      \endverb
+    \endentry
+    \entry{postgis2005}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=da545cfdabdb3af30e84becc024bb262}{%
+           family={Ramsey},
+           familyi={R\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+        {{hash=6014d89acf957001a24079c523e6e0f7}{%
+           family={Research},
+           familyi={R\bibinitperiod},
+           given={Refractions},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \strng{fullhash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \strng{bibnamehash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \strng{authorbibnamehash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \strng{authornamehash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \strng{authorfullhash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Available at \url{https://postgis.net}}
+      \field{title}{PostGIS Documentation}
+      \field{year}{2005}
+    \endentry
+    \entry{sanusi2016}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=10d06050bd5532b901b21c3edfd7e8a0}{%
+           family={Sanusi},
+           familyi={S\bibinitperiod},
+           given={D.\bibnamedelimi Johnstone},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{319654175ce78b507ed5bbc2be70e84d}
+      \strng{fullhash}{319654175ce78b507ed5bbc2be70e84d}
+      \strng{bibnamehash}{319654175ce78b507ed5bbc2be70e84d}
+      \strng{authorbibnamehash}{319654175ce78b507ed5bbc2be70e84d}
+      \strng{authornamehash}{319654175ce78b507ed5bbc2be70e84d}
+      \strng{authorfullhash}{319654175ce78b507ed5bbc2be70e84d}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Environmental Quality}
+      \field{note}{Please add volume/issue/pages/doi if available}
+      \field{title}{Street orientation and side of the street greatly influence the microclimatic benefits street trees}
+      \field{year}{2016}
+    \endentry
+    \entry{ventura2022}{article}{}
+      \name{author}{13}{}{%
+        {{hash=e9f110a1d919f44c93ba4ef10039a3f4}{%
+           family={Ventura},
+           familyi={V\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=4ad8e2f7e74f780bbd3e16d666fcbeb1}{%
+           family={Pawlak},
+           familyi={P\bibinitperiod},
+           given={Camille},
+           giveni={C\bibinitperiod}}}%
+        {{hash=fb991ef64859123fd541c5ae3db6ccbe}{%
+           family={Honsberger},
+           familyi={H\bibinitperiod},
+           given={Milo},
+           giveni={M\bibinitperiod}}}%
+        {{hash=d543ac15caf0e6cdce720ad46835e5b6}{%
+           family={Gonsalves},
+           familyi={G\bibinitperiod},
+           given={Cameron},
+           giveni={C\bibinitperiod}}}%
+        {{hash=14f6c645191905ce2353987dce7ac4f8}{%
+           family={Rice},
+           familyi={R\bibinitperiod},
+           given={Julian},
+           giveni={J\bibinitperiod}}}%
+        {{hash=df1110ea1a6c63f28863d15d48fe2760}{%
+           family={Love},
+           familyi={L\bibinitperiod},
+           given={Natalie\bibnamedelimb L.\bibnamedelimi R.},
+           giveni={N\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=3b9cd0534633d3abb47277184b70563d}{%
+           family={Han},
+           familyi={H\bibinitperiod},
+           given={Skyler},
+           giveni={S\bibinitperiod}}}%
+        {{hash=c420375b66a69bdffcef2eab53878a59}{%
+           family={Nguyen},
+           familyi={N\bibinitperiod},
+           given={Viet},
+           giveni={V\bibinitperiod}}}%
+        {{hash=46bd63dc012cd7a9ac81cec0d932edec}{%
+           family={Sugano},
+           familyi={S\bibinitperiod},
+           given={Keilana},
+           giveni={K\bibinitperiod}}}%
+        {{hash=70d76fa765689b6fcd0917911f2feed3}{%
+           family={Doremus},
+           familyi={D\bibinitperiod},
+           given={Jacqueline},
+           giveni={J\bibinitperiod}}}%
+        {{hash=95ffaa59db6ab00e01505b4a738be6cd}{%
+           family={Fricker},
+           familyi={F\bibinitperiod},
+           given={G.\bibnamedelimi Andrew},
+           giveni={G\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=62c9a6dfa60a38ff9f47ae036ef3215b}{%
+           family={Yost},
+           familyi={Y\bibinitperiod},
+           given={Jenn},
+           giveni={J\bibinitperiod}}}%
+        {{hash=c5552a1ab25b8712705e6e3567cb160f}{%
+           family={Ritter},
+           familyi={R\bibinitperiod},
+           given={Matt},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{3ca73da39c3280374e6bb4096992c79d}
+      \strng{fullhash}{0b8d2eb8226aaa9369e80e0e3c9e90ba}
+      \strng{bibnamehash}{3ca73da39c3280374e6bb4096992c79d}
+      \strng{authorbibnamehash}{3ca73da39c3280374e6bb4096992c79d}
+      \strng{authornamehash}{3ca73da39c3280374e6bb4096992c79d}
+      \strng{authorfullhash}{0b8d2eb8226aaa9369e80e0e3c9e90ba}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv}
+      \field{note}{Available at \url{https://arxiv.org/abs/2208.10607v4}}
+      \field{title}{Individual Tree Detection in Large-Scale Urban Environments using High-Resolution Multispectral Imagery}
+      \field{year}{2022}
+    \endentry
+    \entry{xiao2016}{article}{}
+      \name{author}{2}{}{%
+        {{hash=05c874cddeb018e52d2f044b54580e01}{%
+           family={Xiao},
+           familyi={X\bibinitperiod},
+           given={Q.},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=174e99bd260faddce6094345d8a9ab90}{%
+           family={McPherson},
+           familyi={M\bibinitperiod},
+           given={E.\bibnamedelimi G.},
+           giveni={E\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{6289a489f726f621a78516cab922e760}
+      \strng{fullhash}{6289a489f726f621a78516cab922e760}
+      \strng{bibnamehash}{6289a489f726f621a78516cab922e760}
+      \strng{authorbibnamehash}{6289a489f726f621a78516cab922e760}
+      \strng{authornamehash}{6289a489f726f621a78516cab922e760}
+      \strng{authorfullhash}{6289a489f726f621a78516cab922e760}
+      \field{sortinit}{X}
+      \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Environmental Quality}
+      \field{note}{Please add volume/issue/pages/doi if available}
+      \field{title}{Surface water storage capacity of twenty tree species in Davis, California. Journal of Environmental Quality}
+      \field{year}{2016}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

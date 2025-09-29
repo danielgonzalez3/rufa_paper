@@ -1,8 +1,42 @@
 \chapter{System Design}
-Overall System Design
 
-\section{Infrastructure Architecture}
+The rapid urban forest assessment system requires a robust and scalable architecture capable of handling large-scale tree inventory data while providing real-time query capabilities for municipal planners and environmental researchers. Building upon the performance analysis presented in Chapter 3, which demonstrated that indexed database queries achieve 95\% performance improvements over non-indexed approaches, this chapter outlines the comprehensive system design that enables efficient processing and visualization of urban forest data across California's 702+ cities.
+
+The system architecture addresses three critical design requirements: scalability to accommodate the 7.2 million tree records in the California Urban Forest Inventory, performance optimization to support interactive web applications with sub-second response times, and extensibility to incorporate additional environmental datasets and analysis capabilities. The design leverages cloud-native technologies and modern web frameworks to create a maintainable and cost-effective solution.
+
+This chapter is organized into three main sections that detail the key architectural components. Section~\ref{sec:infrastructure} presents the infrastructure utilized, including a comprehensive system diagram, the optimized database design that achieves 6.90 queries per second throughput, S3 integration with ESRI connectivity for geospatial data processing, and scalability considerations for future growth. Section~\ref{sec:security} outlines the security and permissions framework, covering user store management, role-based permissions architecture, and NGINX configuration for secure request handling. Finally, Section~\ref{sec:deployment} describes the deployment strategy, focusing on the continuous integration and continuous deployment (CI/CD) pipeline that ensures reliable system updates and maintenance.
+
+The resulting system design provides a foundation for sustainable city greenification efforts by enabling rapid assessment of urban forest conditions, identification of tree planting opportunities, and data-driven decision making for municipal environmental programs.
+
+\section{Infrastructure Used}
+\label{sec:infrastructure}
+
+\subsection{System Diagram}
+\label{subsec:diagram}
+
+\subsection{Database}
+\label{subsec:database}
+
+\subsection{S3 - ESRI Connectivity}
+\label{subsec:s3-esri}
+
+\subsection{Scalability}
+\label{subsec:scalability}
 
 \section{Security and Permissions}
+\label{sec:security}
 
-\section{Deployment Strategy}
+\subsection{User Store}
+\label{subsec:user-store}
+
+\subsection{Permissions}
+\label{subsec:permissions}
+
+\subsection{NGINX}
+\label{subsec:nginx}
+
+\section{Deployment}
+\label{sec:deployment}
+
+\subsection{CI/CD}
+\label{subsec:cicd}
