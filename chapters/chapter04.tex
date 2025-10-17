@@ -4,39 +4,40 @@ The rapid urban forest assessment system requires a robust and scalable architec
 
 The system architecture addresses three critical design requirements: scalability to accommodate the 7.2 million tree records in the California Urban Forest Inventory, performance optimization to support interactive web applications with sub-second response times, and extensibility to incorporate additional environmental datasets and analysis capabilities. The design leverages cloud-native technologies and modern web frameworks to create a maintainable and cost-effective solution.
 
-This chapter is organized into three main sections that detail the key architectural components. Section~\ref{sec:infrastructure} presents the infrastructure utilized, including a comprehensive system diagram, the optimized database design that achieves 6.90 queries per second throughput, S3 integration with ESRI connectivity for geospatial data processing, and scalability considerations for future growth. Section~\ref{sec:security} outlines the security and permissions framework, covering user store management, role-based permissions architecture, and NGINX configuration for secure request handling. Finally, Section~\ref{sec:deployment} describes the deployment strategy, focusing on the continuous integration and continuous deployment (CI/CD) pipeline that ensures reliable system updates and maintenance.
-
-The resulting system design provides a foundation for sustainable city greenification efforts by enabling rapid assessment of urban forest conditions, identification of tree planting opportunities, and data-driven decision making for municipal environmental programs.
-
-\section{Infrastructure Used}
-\label{sec:infrastructure}
-
-\subsection{System Diagram}
+\section{System Diagram}
 \label{subsec:diagram}
 
-\subsection{Database}
-\label{subsec:database}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/rufa_system.png}
+\caption{AWS-based system architecture for the RUFA platform.}
+\label{fig:rufa_system_architecture}
+\end{figure}
 
-\subsection{S3 - ESRI Connectivity}
-\label{subsec:s3-esri}
+Figure~\ref{fig:rufa_system_architecture} presents the architecture of the RUFA system, deployed within an AWS Virtual Private Cloud (VPC) for scalability, security, and high availability. The system follows a three-tier design: front-end delivery, backend processing, and data storage.
 
-\subsection{Scalability}
-\label{subsec:scalability}
+\begin{table}[h!]
+\centering
+\caption{System Component Connections}
+\label{tab:system_connections}
+\begin{tabular}{p{2cm}p{3cm}p{6cm}}
+\hline
+\textbf{Connection} & \textbf{From} & \textbf{To} \\
+\hline
+1A & Users & CloudFront CDN \\
+1B & CloudFront & S3 Static Assets \\
+1C & CloudFront & Backend Services \\
+2A & ELB & EC2 Instances \\
+2B & ELB & HTTPS/HTTP Requests \\
+3A & Backend & RDS MySQL Database \\
+3B & Backend & S3 Data Buckets \\
+\hline
+\end{tabular}
+\end{table}
 
-\section{Security and Permissions}
-\label{sec:security}
+Users access the dashboard through CloudFront (1A), which delivers static web assets hosted on Amazon S3 (1B) and routes data requests (1C) to backend services inside the VPC. Backend processing occurs on EC2 instances (2A) distributed across two availability zones, managed by an Elastic Load Balancer (ELB) that forwards HTTPS and HTTP requests (2B). These instances handle user queries, filtering, and aggregation tasks such as computing city-level tree density or generating spatial histograms.
 
-\subsection{User Store}
-\label{subsec:user-store}
+The data layer includes an Amazon RDS MySQL database in a private subnet, securely accessed only by backend instances. Supporting geospatial and inventory datasets are stored in S3 buckets (3A, 3B), which hold tree inventory, canopy detection, and build artifacts. This configuration enables distributed computation on subsets of data for each city or ZIP code.
 
-\subsection{Permissions}
-\label{subsec:permissions}
+This architecture enables rapid querying, scalable data processing, and real-time visualization of over seven million urban tree records across California's cities, providing urban planners and environmental researchers with the tools necessary for sustainable planning and evidence-based decision-making.
 
-\subsection{NGINX}
-\label{subsec:nginx}
-
-\section{Deployment}
-\label{sec:deployment}
-
-\subsection{CI/CD}
-\label{subsec:cicd}

@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1760683813.32671 "main.bcf" "main.bbl" "main" 1760683818.11284 0
+["biber main"] 1760683813.32671 "main.bcf" "main.bbl" "main" 1760687146.37633 0
   "bibliography/references.bib" 1760683814.16013 3047 c206b7b53516a5aabc5b24e6ec532bec ""
-  "main.bcf" 1760683818.01354 109481 e03bb55b2b0e31b417111540c89247c9 "pdflatex"
+  "main.bcf" 1760687146.21855 109481 e03bb55b2b0e31b417111540c89247c9 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1760683816.8078 "/Users/danielgonzalez/dev/rufa_paper/main.tex" "main.pdf" "main" 1760683818.11312 0
+["pdflatex"] 1760687144.13379 "/Users/danielgonzalez/dev/rufa_paper/main.tex" "main.pdf" "main" 1760687146.37683 0
   "/Users/danielgonzalez/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk" 1759997833.69912 14040 a59c6c79667af0862dc2d9259e374851 ""
   "/Users/danielgonzalez/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tctt1200.600pk" 1759997833.37717 11344 ecb9fbd0e5e97aed229530678ecf40cd ""
   "/Users/danielgonzalez/dev/rufa_paper/main.tex" 1759994910.99192 7143 f66a2c58427a7f6ac13337939da0f9e9 ""
@@ -233,12 +233,13 @@
   "chapters/chapter01.tex" 1759994910.9747 1632 aa31364ac08befd6ddf468fe7a85e1c2 ""
   "chapters/chapter02.tex" 1759994910.97481 5288 19fc654fb8d9854ec17e21fcff935944 ""
   "chapters/chapter03.tex" 1759994910.97494 21094 38b4ec30388304dede59790a367aeeb8 ""
-  "chapters/chapter04.tex" 1759994910.97538 2730 3b6a181fcd5551a2537a0ca7ac7225d3 ""
+  "chapters/chapter04.tex" 1760687143.21542 3278 49ed2a58224db87acf86e7fb5bd86ddd ""
   "chapters/chapter05.tex" 1760683637.68247 9101 fba55c046ae85f42e309873978720c59 ""
   "chapters/chapter06.tex" 1760683612.73806 5049 cec2109c04a0ee1934da033b42962f21 ""
   "chapters/outline.tex" 1759994910.97587 167 1334e5b6d278936b9d90a543e5d68e40 ""
   "cpthesis.cls" 1759994910.97609 49929 8571e43ed3562298597a791add5a5840 ""
   "figures/Rufa_Database.jpeg" 1759994910.97763 162794 d0f85ab6a0f7948337d7ad734ceb154c ""
+  "figures/rufa_system.png" 1760686156.68312 125275 dac4d167009802de1cbfda961774e5e0 ""
   "frontmatter/abstract.tex" 1759994910.9822 1078 29c8b3c4e95262e4c5061672ee5548c0 ""
   "frontmatter/acknowledgments.tex" 1759994910.98229 1368 f05fcf20b244a2a36db25a01c275a930 ""
   "frontmatter/dedication.tex" 1759994910.98234 0 d41d8cd98f00b204e9800998ecf8427e ""
@@ -246,14 +247,14 @@
   "frontmatter/listings.tex" 1759994910.98254 206 d7a75e5bf2b9186f348fbe08b26a0462 ""
   "frontmatter/nomenclature.tex" 1759994910.98263 141 d56a823274ef38bde57f36eb115acf6c ""
   "frontmatter/preamble.tex" 1759997919.67811 833 a4e89eb3ea01f4f7d1f994899cfd4595 ""
-  "main.aux" 1760683818.00933 16325 e49e578abfc02e2addb3d2523952ddbb "pdflatex"
+  "main.aux" 1760687146.21382 14292 75b2b5152ec384abff8aad05215ff235 "pdflatex"
   "main.bbl" 1760683815.48792 16231 05de70df9667286b0f0901346b754925 "biber main"
-  "main.lof" 1760683818.01444 197 d77c1556f554b5f3afee111989a5e655 "pdflatex"
-  "main.lot" 1760683818.01442 389 49fc601b3177c7e449c7561952fdf55c "pdflatex"
-  "main.out" 1760683818.01105 13136 c5de5b2e315617c48fd527d14bc36f93 "pdflatex"
-  "main.run.xml" 1760683818.01414 2318 ebd98b15c298057d75c6637c1a71e311 "pdflatex"
+  "main.lof" 1760687146.21956 331 a2b1d6a72ac986338c5c88f0ccb19ead "pdflatex"
+  "main.lot" 1760687146.21953 497 7450217600def012708c14f7bd12ca71 "pdflatex"
+  "main.out" 1760687146.21588 11574 596af0f07effd57408dc360daf5a23ee "pdflatex"
+  "main.run.xml" 1760687146.21932 2318 ebd98b15c298057d75c6637c1a71e311 "pdflatex"
   "main.tex" 1759994910.99192 7143 f66a2c58427a7f6ac13337939da0f9e9 ""
-  "main.toc" 1760683818.01421 6777 bfbee568056d6a13aae272a9e833877f "pdflatex"
+  "main.toc" 1760687146.21943 5962 b44d2fb87604ee12ec57644a9ef6fe9d "pdflatex"
   "uct12.clo" 1759994910.99234 18635 588f5223083671c26f51bdfe62713828 ""
   (generated)
   "main.aux"

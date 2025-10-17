@@ -44,17 +44,7 @@
 \contentsline {subsection}{\numberline {3.4.8}Memory and Storage Impact}{20}{subsection.3.4.8}%
 \contentsline {subsection}{\numberline {3.4.9}Scaling Considerations}{20}{subsection.3.4.9}%
 \contentsline {chapter}{\numberline {4.}\uppercase {System Design}}{22}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Infrastructure Used}{24}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}System Diagram}{24}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Database}{24}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}S3 - ESRI Connectivity}{24}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Scalability}{24}{subsection.4.1.4}%
-\contentsline {section}{\numberline {4.2}Security and Permissions}{24}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}User Store}{24}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Permissions}{24}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}NGINX}{24}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Deployment}{24}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}CI/CD}{24}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.1}System Diagram}{23}{section.4.1}%
 \contentsline {chapter}{\numberline {5.}\uppercase {Clustering}}{25}{chapter.5}%
 \contentsline {section}{\numberline {5.1}K-Means}{25}{section.5.1}%
 \contentsline {section}{\numberline {5.2}K-Means with Caching}{26}{section.5.2}%
@@ -73,7 +63,7 @@
 \contentsline {section}{\numberline {6.1}Future Work}{35}{section.6.1}%
 \contentsline {subsection}{\numberline {6.1.1}Allometry Feature}{35}{subsection.6.1.1}%
 \contentsline {section}{\numberline {6.2}Architecture Changes}{35}{section.6.2}%
-\contentsline {chapter}{\MakeUppercase []{Bibliography}}{37}{chapter*.13}%
+\contentsline {chapter}{\MakeUppercase []{Bibliography}}{37}{chapter*.15}%
 \let \l@chapter \l@section 
 \noindent \MakeUppercase []{Appendices}
 \let \l@chapter \l@section 
