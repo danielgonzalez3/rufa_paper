@@ -29,20 +29,20 @@
 \contentsline {paragraph}{Incremental Update Strategy}{14}{paragraph*.11}%
 \contentsline {subsection}{\numberline {3.4.3}Data Consistency Safeguards}{15}{subsection.3.4.3}%
 \contentsline {subsubsection}{\numberline {3.4.3.1}Version Control}{15}{subsubsection.3.4.3.1}%
-\contentsline {subsubsection}{\numberline {3.4.3.2}Atomic Updates}{15}{subsubsection.3.4.3.2}%
+\contentsline {subsubsection}{\numberline {3.4.3.2}Atomic Updates}{16}{subsubsection.3.4.3.2}%
 \contentsline {subsection}{\numberline {3.4.4}Performance Optimization}{16}{subsection.3.4.4}%
-\contentsline {subsubsection}{\numberline {3.4.4.1}Selective Refresh}{16}{subsubsection.3.4.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.4.2}Parallel Processing}{16}{subsubsection.3.4.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.4.1}Selective Refresh}{17}{subsubsection.3.4.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.4.2}Parallel Processing}{17}{subsubsection.3.4.4.2}%
 \contentsline {subsubsection}{\numberline {3.4.4.3}Caching Strategy}{17}{subsubsection.3.4.4.3}%
 \contentsline {subsection}{\numberline {3.4.5}Monitoring and Alerting}{17}{subsection.3.4.5}%
-\contentsline {subsection}{\numberline {3.4.6}Indexing Results}{17}{subsection.3.4.6}%
-\contentsline {subsection}{\numberline {3.4.7}Performance Comparison Results}{18}{subsection.3.4.7}%
+\contentsline {subsection}{\numberline {3.4.6}Indexing Results}{18}{subsection.3.4.6}%
+\contentsline {subsection}{\numberline {3.4.7}Performance Comparison Results}{19}{subsection.3.4.7}%
 \contentsline {subsubsection}{\numberline {3.4.7.1}S3 Single CSV File Approach}{19}{subsubsection.3.4.7.1}%
 \contentsline {subsubsection}{\numberline {3.4.7.2}S3 Per-City CSV Files}{19}{subsubsection.3.4.7.2}%
-\contentsline {subsubsection}{\numberline {3.4.7.3}Database Table Without Indexing}{19}{subsubsection.3.4.7.3}%
+\contentsline {subsubsection}{\numberline {3.4.7.3}Database Table Without Indexing}{20}{subsubsection.3.4.7.3}%
 \contentsline {subsubsection}{\numberline {3.4.7.4}Database Table With City Indexing}{20}{subsubsection.3.4.7.4}%
 \contentsline {subsection}{\numberline {3.4.8}Memory and Storage Impact}{20}{subsection.3.4.8}%
-\contentsline {subsection}{\numberline {3.4.9}Scaling Considerations}{20}{subsection.3.4.9}%
+\contentsline {subsection}{\numberline {3.4.9}Scaling Considerations}{21}{subsection.3.4.9}%
 \contentsline {chapter}{\numberline {4.}\uppercase {System Design}}{22}{chapter.4}%
 \contentsline {section}{\numberline {4.1}System Diagram}{23}{section.4.1}%
 \contentsline {chapter}{\numberline {5.}\uppercase {Clustering}}{25}{chapter.5}%

@@ -158,7 +158,11 @@ Rather than full table refreshes, the system implements incremental updates that
 
 \subsection{Data Consistency Safeguards}
 
-To maintain data integrity during the refresh process:
+Because refresh is multi-step (read base data, recompute aggregates, write serving tables), readers can otherwise see \emph{transient inconsistency}---mismatched rollups across geographic levels, mixed snapshots across partitions, or a schedule table that disagrees with what was published when triggers and batch jobs overlap.
+
+RUFA therefore enforces operational goals of \textbf{detectability}, so materialized tables expose whether they are current, in progress, or stale; \textbf{atomic publication}, so score tables never appear half-updated during a refresh; and \textbf{cascade alignment}, so dependent geographic levels shown together reflect the same logical version of the underlying data.
+
+The subsections below implement this in MariaDB with lightweight metadata, status flags, and atomic table swaps that avoid long-lived locks on the primary serving table.
 
 \subsubsection{Version Control}
 Each materialized view maintains version numbers to detect stale data:
