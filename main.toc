@@ -17,20 +17,20 @@
 \contentsline {paragraph}{GIS-Specific Databases.}{9}{paragraph*.7}%
 \contentsline {paragraph}{Why MySQL Remains in Use.}{9}{paragraph*.8}%
 \contentsline {section}{\numberline {3.2}Materialized Views}{10}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Indexing Strategies}{10}{section.3.3}%
+\contentsline {section}{\numberline {3.3}Indexing Strategies}{11}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Automatic Index Maintenance}{11}{subsection.3.3.1}%
 \contentsline {section}{\numberline {3.4}Materialized View Implementation for RUFA Score Management}{11}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Overview}{11}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Geographic Cascade Architecture}{12}{subsection.3.4.2}%
 \contentsline {subsubsection}{\numberline {3.4.2.1}Unified Statistics Table}{12}{subsubsection.3.4.2.1}%
-\contentsline {subsubsection}{\numberline {3.4.2.2}Relationship Mapping and Cascade Logic}{12}{subsubsection.3.4.2.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.2}Relationship Mapping and Cascade Logic}{13}{subsubsection.3.4.2.2}%
 \contentsline {paragraph}{Trigger-Based Updates}{13}{paragraph*.9}%
-\contentsline {paragraph}{Scheduled Batch Processing}{13}{paragraph*.10}%
-\contentsline {paragraph}{Incremental Update Strategy}{14}{paragraph*.11}%
+\contentsline {paragraph}{Scheduled Batch Processing}{14}{paragraph*.10}%
+\contentsline {paragraph}{Incremental Update Strategy}{15}{paragraph*.11}%
 \contentsline {subsection}{\numberline {3.4.3}Data Consistency Safeguards}{15}{subsection.3.4.3}%
-\contentsline {subsubsection}{\numberline {3.4.3.1}Version Control}{15}{subsubsection.3.4.3.1}%
+\contentsline {subsubsection}{\numberline {3.4.3.1}Version Control}{16}{subsubsection.3.4.3.1}%
 \contentsline {subsubsection}{\numberline {3.4.3.2}Atomic Updates}{16}{subsubsection.3.4.3.2}%
-\contentsline {subsection}{\numberline {3.4.4}Performance Optimization}{16}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.4}Performance Optimization}{17}{subsection.3.4.4}%
 \contentsline {subsubsection}{\numberline {3.4.4.1}Selective Refresh}{17}{subsubsection.3.4.4.1}%
 \contentsline {subsubsection}{\numberline {3.4.4.2}Parallel Processing}{17}{subsubsection.3.4.4.2}%
 \contentsline {subsubsection}{\numberline {3.4.4.3}Caching Strategy}{17}{subsubsection.3.4.4.3}%

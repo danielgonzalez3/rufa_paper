@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.20)  20 APR 2026 01:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.20)  21 APR 2026 00:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1156,7 +1156,7 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 90.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 92.
- [13] [14] [15] [16] [17]
+ [13] [14] [15] [16] [17] [18]
 Underfull \hbox (badness 2080) in paragraph at lines 257--257
 []|\OT1/cmr/m/n/12 Database Ta-ble (No
  []
@@ -1166,9 +1166,9 @@ Underfull \hbox (badness 2080) in paragraph at lines 258--258
 []|\OT1/cmr/m/n/12 Database Ta-ble (In-
  []
 
-[18] [19] [20]) (./chapters/chapter04.tex [21]
+[19] [20]) (./chapters/chapter04.tex [21]
 Chapter 4.
-<figures/rufa_system.png, id=572, 2074.75125pt x 1360.08125pt>
+<figures/rufa_system.png, id=574, 2074.75125pt x 1360.08125pt>
 File: figures/rufa_system.png Graphic file (type png)
 <use figures/rufa_system.png>
 Package pdftex.def Info: figures/rufa_system.png  used on input line 12.
@@ -1242,16 +1242,16 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 Here is how much of TeX's memory you used:
  37713 strings out of 469515
  701436 string characters out of 5470807
- 1673968 words of memory out of 5000000
+ 1688967 words of memory out of 5000000
  65513 multiletter control sequences out of 15000+600000
  637411 words of font info for 75 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 99i,11n,118p,1428b,2105s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,11n,118p,1449b,2105s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (50 pages, 533889 bytes).
+Output written on main.pdf (50 pages, 534192 bytes).
 PDF statistics:
- 859 PDF objects out of 1000 (max. 8388607)
- 764 compressed objects within 8 object streams
+ 862 PDF objects out of 1000 (max. 8388607)
+ 767 compressed objects within 8 object streams
  272 named destinations out of 1000 (max. 500000)
  495 words of extra memory for PDF output out of 10000 (max. 10000000)
 

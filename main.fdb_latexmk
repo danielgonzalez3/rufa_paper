@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1776673278.19027 "main.bcf" "main.bbl" "main" 1776673747.58086 0
+["biber main"] 1776673278.19027 "main.bcf" "main.bbl" "main" 1776755863.96128 0
   "bibliography/references.bib" 1776672091.63346 3047 c206b7b53516a5aabc5b24e6ec532bec ""
-  "main.bcf" 1776673747.51477 109481 e03bb55b2b0e31b417111540c89247c9 "pdflatex"
+  "main.bcf" 1776755863.89808 109481 e03bb55b2b0e31b417111540c89247c9 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1776673746.46607 "/home/minerva/dev/rufa_paper/main.tex" "main.pdf" "main" 1776673747.58108 0
+["pdflatex"] 1776755862.86538 "/home/minerva/dev/rufa_paper/main.tex" "main.pdf" "main" 1776755863.96148 0
   "/home/minerva/dev/rufa_paper/main.tex" 1776441916.47433 7143 f66a2c58427a7f6ac13337939da0f9e9 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1775415801 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1775415801 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -231,12 +231,12 @@
   "appendices/appendix01.tex" 1776672091.63346 793 f16cff6aff325cada2f949ea75498802 ""
   "appendices/outline.tex" 1776441916.46979 296 259a30b0f6559a571ff3eed17390b795 ""
   "bibliography/bib_info.tex" 1776441916.46979 561 0b48295036a54975d0ae5c53a70a2ecb ""
-  "chapters/chapter01.tex" 1776441916.4699 1632 aa31364ac08befd6ddf468fe7a85e1c2 ""
-  "chapters/chapter02.tex" 1776441916.46996 5288 19fc654fb8d9854ec17e21fcff935944 ""
-  "chapters/chapter03.tex" 1776673746.31346 21911 7b6bc51270591a789fd3dd78b084a5c3 ""
+  "chapters/chapter01.tex" 1776755559.24823 1652 ebdbb52947541863ca858a2ae8ce0178 ""
+  "chapters/chapter02.tex" 1776755437.32562 5276 10ebde6aad5293d0a9e7410b7966a166 ""
+  "chapters/chapter03.tex" 1776755862.71224 22389 ad1e1860c73de460e9f4ce59c161c876 ""
   "chapters/chapter04.tex" 1776672091.63346 3278 49ed2a58224db87acf86e7fb5bd86ddd ""
   "chapters/chapter05.tex" 1776672091.63346 9101 fba55c046ae85f42e309873978720c59 ""
-  "chapters/chapter06.tex" 1776672091.63346 5049 cec2109c04a0ee1934da033b42962f21 ""
+  "chapters/chapter06.tex" 1776755560.09137 5086 32debd29e367f96dad185e373c252dae ""
   "chapters/outline.tex" 1776441916.46996 167 1334e5b6d278936b9d90a543e5d68e40 ""
   "cpthesis.cls" 1776441916.46996 49929 8571e43ed3562298597a791add5a5840 ""
   "figures/Rufa_Database.jpeg" 1776441916.47039 162794 d0f85ab6a0f7948337d7ad734ceb154c ""
@@ -248,14 +248,14 @@
   "frontmatter/listings.tex" 1776441916.47248 206 d7a75e5bf2b9186f348fbe08b26a0462 ""
   "frontmatter/nomenclature.tex" 1776441916.47248 141 d56a823274ef38bde57f36eb115acf6c ""
   "frontmatter/preamble.tex" 1776441916.47248 833 a4e89eb3ea01f4f7d1f994899cfd4595 ""
-  "main.aux" 1776673747.51308 14292 298621656c5cd3cb915c6fe44b0476e8 "pdflatex"
+  "main.aux" 1776755863.89612 14292 11a195cdb4028151bcfbfdf296cee630 "pdflatex"
   "main.bbl" 1776673278.64811 16231 05de70df9667286b0f0901346b754925 "biber main"
-  "main.lof" 1776673747.51684 331 a2b1d6a72ac986338c5c88f0ccb19ead "pdflatex"
-  "main.lot" 1776673747.51684 497 ea6c9c2ea161814b4531c452fa463415 "pdflatex"
-  "main.out" 1776673747.51434 11574 596af0f07effd57408dc360daf5a23ee "pdflatex"
-  "main.run.xml" 1776673747.51684 2318 ebd98b15c298057d75c6637c1a71e311 "pdflatex"
+  "main.lof" 1776755863.90016 331 a2b1d6a72ac986338c5c88f0ccb19ead "pdflatex"
+  "main.lot" 1776755863.90016 497 ea6c9c2ea161814b4531c452fa463415 "pdflatex"
+  "main.out" 1776755863.89697 11574 596af0f07effd57408dc360daf5a23ee "pdflatex"
+  "main.run.xml" 1776755863.90016 2318 ebd98b15c298057d75c6637c1a71e311 "pdflatex"
   "main.tex" 1776441916.47433 7143 f66a2c58427a7f6ac13337939da0f9e9 ""
-  "main.toc" 1776673747.51684 5962 77ba3158eea686cdae4f019af0927b2b "pdflatex"
+  "main.toc" 1776755863.90016 5962 54e27441e54ee2463b2d17675de62556 "pdflatex"
   "uct12.clo" 1776441916.47433 18635 588f5223083671c26f51bdfe62713828 ""
   (generated)
   "main.aux"

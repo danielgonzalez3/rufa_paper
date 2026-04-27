@@ -26,15 +26,15 @@ The RUFA database consists of several tables designed to minimize redundancy and
 
 \subsection{Alternative Database Solutions}
 
-While MySQL serves as the database choice for the RUFA, there are several alternative systems that offer enhanced capabilities for spatial data management and analysis. Given that the RUFA project relies on precise geographical information—such as census tracts, city boundaries, and tree coordinates—optimizing spatial queries and performance can be a critical consideration.
+While MySQL serves as the database choice for the RUFA, there are several alternative systems that offer enhanced capabilities for spatial data management and analysis. Given that the RUFA project relies on precise geographical information, including census tracts, city boundaries, and tree coordinates, optimizing spatial queries and performance can be a critical consideration.
 
 \paragraph{PostgreSQL/PostGIS.} One of the most commonly cited alternatives for spatially intensive applications is PostgreSQL coupled with its PostGIS extension \cite{postgis2005}. PostGIS extends the relational engine to include advanced geospatial data types, indexing methods (e.g., GiST, SP-GiST), and an extensive library of geospatial functions (for instance, ST\_Intersect, S\_Buffer, and ST\_Distance). These features support complex spatial queries, such as determining which trees fall within a specific bounding polygon or calculating nearest-neighbor distances between tree points. Additionally, PostGIS’s robust handling of coordinate reference systems (CRS) and transformations can greatly simplify cross-regional comparisons within the RUFA framework.
 
-\paragraph{MongoDB with Geospatial Indexes.} MongoDB, a NoSQL document database, also offers geospatial indexing that can handle queries for distance-based searches on points, lines, and polygons \cite{cattell2011}. This schema-free approach can be advantageous for storing heterogeneous tree data—especially when the attributes of different species vary significantly—since new fields can be added without redefining a rigid schema.
+\paragraph{MongoDB with Geospatial Indexes.} MongoDB, a NoSQL document database, also offers geospatial indexing that can handle queries for distance-based searches on points, lines, and polygons \cite{cattell2011}. This schema-free approach can be advantageous for storing heterogeneous tree data, especially when species attributes vary significantly, since new fields can be added without redefining a rigid schema.
 
 \paragraph{GIS-Specific Databases.} Some organizations adopt specialized spatial database solutions, such as \textit{Esri’s ArcGIS Enterprise} or \textit{Oracle Spatial and Graph}, for high-volume or enterprise-level spatial data management. These systems offer robust toolsets for spatial analyses, but they can come with higher licensing costs and steeper learning curves. For smaller projects or open-source-driven initiatives, this may pose resource constraints and limit broad community involvement.
 
-\paragraph{Why MySQL Remains in Use.} Despite these more spatially advanced alternatives, MySQL remains the primary choice for the RUFA project due to its historical ties with the selectree.calpoly.edu infrastructure. Many existing scripts, tools, and user-facing applications are already deeply integrated with MySQL, making a complete or partial transition to another platform expensive in terms of development effort and time. Moreover, while MySQL’s native spatial features are comparatively limited, they can still manage a variety of spatial queries by leveraging \textit{SPATIAL indexes} on MyISAM or InnoDB tables.
+\paragraph{Why MySQL Remains in Use.} Despite these more spatially advanced alternatives, MySQL remains the primary choice for the RUFA project due to its historical ties with the \href{https://selectree.calpoly.edu}{selectree.calpoly.edu} infrastructure. Many existing scripts, tools, and user-facing applications are already deeply integrated with MySQL, making a complete or partial transition to another platform expensive in terms of development effort and time. Moreover, while MySQL’s native spatial features are comparatively limited, they can still manage a variety of spatial queries by leveraging \textit{SPATIAL indexes} on MyISAM or InnoDB tables.
 
 For MyISAM and InnoDB tables, search operations in columns containing spatial data can be optimized using SPATIAL indexes. The most typical operations are:
 
@@ -43,9 +43,9 @@ For MyISAM and InnoDB tables, search operations in columns containing spatial da
     \item \textit{Region queries} that search for all objects overlapping a specified region
 \end{itemize}
 
-MySQL uses \textit{R-Trees} with quadratic splitting for SPATIAL indexes on geometry columns. A SPATIAL index is built using the \textit{minimum bounding rectangle} (MBR) of a geometry. For most geometries, the MBR is the smallest rectangle that completely encloses the shape. For a horizontal or vertical linestring, the MBR degenerates to that linestring; and for a point, it degenerates to a single point. It is also possible to create normal (non-SPATIAL) indexes on spatial columns, although these indexes have more restrictions—for instance, in a non-SPATIAL index, you must generally restrict the data to a specific storage engine or data type to ensure efficient lookups.
+MySQL uses \textit{R-Trees} with quadratic splitting for SPATIAL indexes on geometry columns. A SPATIAL index is built using the \textit{minimum bounding rectangle} (MBR) of a geometry. For most geometries, the MBR is the smallest rectangle that completely encloses the shape. For a horizontal or vertical linestring, the MBR degenerates to that linestring; and for a point, it degenerates to a single point. Spatial predicates on full \texttt{GEOMETRY} values (for example, point-in-polygon or intersection tests) are evaluated using these \texttt{SPATIAL} indexes; a conventional B-tree index is not the mechanism used to index the geometry column itself for that style of query. When applications need fast relational access to \emph{scalar} values derived from geometry (such as individual coordinates or numeric projections), the usual pattern is to store those values in stored generated columns or, in MySQL~8.0.13 and later, to define functional key parts on expressions, and then apply ordinary B-tree indexes to those generated or expression columns, rather than to the raw geometry column.
 
-Ultimately, although PostgreSQL/PostGIS/MongoDB with geospatial indexes, or specialized GIS databases may outperform MySQL in certain spatial workflows, the RUFA project’s current operational environment and alignment with Selectree’s architecture underscore MySQL’s continued use. Future iterations of RUFA could incorporate or migrate to these alternatives if spatial demands grow significantly—potentially leveraging hybrid architectures that pair MySQL’s relational strengths with specialized spatial extensions in a multi-database ecosystem.
+Ultimately, although PostgreSQL/PostGIS/MongoDB has geospatial indexes, or specialized GIS databases may outperform MySQL in certain spatial workflows, the RUFA project’s current operational environment and alignment with \href{https://selectree.calpoly.edu}{Selectree}’s architecture underscore MySQL’s continued use. Future iterations of RUFA could incorporate or migrate to these alternatives if spatial demands grow significantly, for example by leveraging hybrid architectures that pair MySQL’s relational strengths with specialized spatial extensions in a multi-database ecosystem.
 
 \section{Materialized Views}
 
@@ -63,9 +63,9 @@ Modern relational database management systems (RDBMS) handle index maintenance a
 
 \subsection{Overview}
 
-The RUFA system relies on complex calculations involving multiple metrics—canopy cover percentage (CCP), trees per capita (TPC), tree diversity (TD-50), and tree evenness (TE)—to generate composite RUFA scores for census-designated places across California. Given the computational intensity of these calculations and the need for responsive user queries, implementing materialized views becomes essential for maintaining system performance while ensuring data accuracy.
+The RUFA system relies on complex calculations involving multiple metrics (canopy cover percentage (CCP), trees per capita (TPC), tree diversity (TD-50), and tree evenness (TE)) to generate composite RUFA scores for census-designated places across California. Given the computational intensity of these calculations and the need for responsive user queries, implementing materialized views becomes essential for maintaining system performance while ensuring data accuracy.
 
-The system faces a unique challenge in that geographic areas are hierarchically related—when tree data changes in a city like Los Angeles, the system must update not only the city-level statistics but also all associated ZIP codes, census tracts, climate zones, and county-level aggregations. This cascading update requirement necessitates a sophisticated materialized view strategy that can efficiently propagate changes through the geographic hierarchy.
+The system faces a unique challenge in that geographic areas are hierarchically related: when tree data changes in a city like Los Angeles, the system must update not only the city-level statistics but also all associated ZIP codes, census tracts, climate zones, and county-level aggregations. This cascading update requirement necessitates a sophisticated materialized view strategy that can efficiently propagate changes through the geographic hierarchy.
 
 \subsection{Geographic Cascade Architecture}
 
@@ -158,7 +158,7 @@ Rather than full table refreshes, the system implements incremental updates that
 
 \subsection{Data Consistency Safeguards}
 
-Because refresh is multi-step (read base data, recompute aggregates, write serving tables), readers can otherwise see \emph{transient inconsistency}---mismatched rollups across geographic levels, mixed snapshots across partitions, or a schedule table that disagrees with what was published when triggers and batch jobs overlap.
+Because refresh is multi-step (read base data, recompute aggregates, write serving tables), readers can otherwise see \emph{transient inconsistency}, namely mismatched rollups across geographic levels, mixed snapshots across partitions, or a schedule table that disagrees with what was published when triggers and batch jobs overlap.
 
 RUFA therefore enforces operational goals of \textbf{detectability}, so materialized tables expose whether they are current, in progress, or stale; \textbf{atomic publication}, so score tables never appear half-updated during a refresh; and \textbf{cascade alignment}, so dependent geographic levels shown together reflect the same logical version of the underlying data.
 
@@ -266,7 +266,7 @@ The initial approach of storing all tree data in a single CSV file on Amazon S3 
 
 \subsubsection{S3 Per-City CSV Files}
 
-Partitioning the data into individual CSV files per city showed significant improvement, reducing average query times to 3.12 seconds—a 63\% performance improvement over the single file approach. This approach eliminated the need to process irrelevant data for city-specific queries. However, the system still faced overhead from file system operations and CSV parsing, limiting its scalability for real-time applications.
+Partitioning the data into individual CSV files per city showed significant improvement, reducing average query times to 3.12 seconds, a 63\% performance improvement over the single file approach. This approach eliminated the need to process irrelevant data for city-specific queries. However, the system still faced overhead from file system operations and CSV parsing, limiting its scalability for real-time applications.
 
 \subsubsection{Database Table Without Indexing}
 
@@ -274,7 +274,7 @@ Direct queries against the MySQL database table without proper indexing yielded 
 
 \subsubsection{Database Table With City Indexing}
 
-The implementation of a B-tree index on the city column resulted in dramatic performance improvements, reducing average query times to just 145 milliseconds—a 95\% improvement over the non-indexed approach. The low standard deviation ($\sigma = 25$ ms) demonstrates consistent performance across different query patterns. This approach achieved a throughput of 6.90 queries per second, making it suitable for interactive web applications and real-time dashboard updates.
+The implementation of a B-tree index on the city column resulted in dramatic performance improvements, reducing average query times to just 145 milliseconds, a 95\% improvement over the non-indexed approach. The low standard deviation ($\sigma = 25$ ms) demonstrates consistent performance across different query patterns. This approach achieved a throughput of 6.90 queries per second, making it suitable for interactive web applications and real-time dashboard updates.
 
 \subsection{Memory and Storage Impact}
 
