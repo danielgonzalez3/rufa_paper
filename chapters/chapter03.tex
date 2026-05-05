@@ -3,9 +3,41 @@
 In this chapter, we delve into the rationale behind the relational database for the RUFA project, a system designed to track tree records across various geographic and ecological dimensions. A relational database provides an ideal solution for managing structured data, such as tree attributes, geographic metrics, and hierarchical relationships between places, zip codes, and tracts. We will explore the MySQL workflow, emphasizing data integrity, normalization principles, materialized views for efficient querying, and indexing strategies to optimize database performance. These features ensure scalable, accurate, and high-performance data management for the RUFA project.
 
 
+\section{Proximity Point Search}
+
+\subsection{Baseline Geospatial Filter}
+
+The most intuitive proximity search pattern is to draw a bounding box around a target coordinate and apply a distance-constrained \texttt{WHERE} clause. Conceptually, this is straightforward and easy to explain in user-facing tools. However, at RUFA scale (tens of millions of rows), the naive implementation can degrade into near table-scan behavior when the engine cannot prune enough records early in execution.
+
+\subsection{Why Separate Latitude/Longitude Indexes Plateau}
+
+
+\subsubsection{Hash-Based Spatial Partitioning}
+
+Hash-based approaches (for example fixed grids, geohash variants \cite{niemeyer2008}, or Cartesian tiering) divide the map into smaller cells and assign records to cell keys. In plain terms, the earth is bucketed into many small boxes, and queries first retrieve matching buckets before testing exact geometry. This is often simple to implement and scales well for coarse filtering.
+
+The tradeoff is that cell quality depends heavily on resolution choice. If cells are too large, many unrelated trees collapse into the same bucket and candidate sets grow quickly. If cells are too small, index management and boundary effects increase. Another limitation for RUFA is geometric fidelity: polygon membership and boundary precision are approximated by the selected grid resolution before exact tests are applied.
+
+\subsubsection{Tree-Based Spatial Indexing}
+
+Tree-based methods preserve spatial hierarchy by recursively partitioning space and are generally better suited for variable density data:
+
+\paragraph{Quadtree.} Recursively splits 2D space into four quadrants \cite{finkel1974}. It is simple and effective for many point-heavy workloads, but balance and depth can vary widely with uneven urban density.
+
+\paragraph{Google S2.} Projects the globe onto hierarchical cells over a cube-based decomposition \cite{veach2017s2}. It is robust for global-scale consistency and spherical geometry, especially when cross-region precision matters.
+
+\paragraph{R-tree.} Organizes geometry by nested minimum bounding rectangles (MBRs), enabling efficient pruning of large regions that cannot contain a match \cite{guttman1984}. This is particularly effective for polygon layers and mixed point/polygon workflows.
+
+\subsection{RUFA Approach: R-tree Candidate Pruning Plus Exact Geometry}
+
+RUFA uses an R-tree-oriented workflow for polygon layers such as place, ZIP, and tract boundaries. At index-build time, each polygon's MBR is inserted into the tree as a searchable envelope \cite{guttman1984}. During lookup, a point query retrieves a very small set of nearest or intersecting envelope candidates, and then runs an exact geometry containment test against the candidate polygons.
+
+This two-phase strategy is important: the tree handles fast candidate pruning, while exact polygon containment preserves correctness at boundaries. In other words, RUFA avoids scanning every row while still returning topologically accurate geographic assignments. These proximity-search requirements directly shape the relational design choices in RUFA, including how tables are normalized, how keys connect geographic entities, and where indexes are introduced for predictable query performance.
+
+
 \section{SQL Workflow}
 
-A well-defined SQL workflow is crucial for maintaining data integrity and ensuring efficient data retrieval \cite{codd1970}. The following subsections will detail the tables used in the RUFA database, the normalization process adopted, and the overall database schema design.
+With that spatial-query context established, a well-defined SQL workflow is crucial for maintaining data integrity and ensuring efficient data retrieval \cite{codd1970}. The following subsections detail the tables used in the RUFA database, the normalization process adopted, and the overall database schema design.
 
 
 \subsection{Tables and Normalization}
@@ -14,7 +46,8 @@ The RUFA database consists of several tables designed to minimize redundancy and
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=6.3in]{figures/Rufa_Database.jpeg}
+    \resizebox{\linewidth}{!}{\input{figures/rufa_database_erd}}%
+    \captionsetup{font={normalsize,it,singlespacing}}
     \caption{Entity Relationship Diagram (ERD) for the RUFA database schema}
     \label{fig:RUFA_ERD}
 \end{figure}
@@ -151,7 +184,7 @@ DELIMITER ;
 Rather than full table refreshes, the system implements incremental updates that only recalculate scores for affected geographic areas:
 
 \begin{itemize}
-    \item \textbf{Spatial Partitioning}: RUFA scores are partitioned by climate zones and counties to isolate updates
+    \item \textbf{Spatial Partitioning}: RUFA scores are partitioned by counties to isolate updates
     \item \textbf{Change Detection}: Modified tree records trigger updates only for their specific census-designated places
     \item \textbf{Dependency Tracking}: A dependency graph ensures that changes to base data propagate correctly through all dependent materialized views
 \end{itemize}

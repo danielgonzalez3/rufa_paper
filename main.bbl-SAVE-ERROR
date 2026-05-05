@@ -87,77 +87,6 @@
       \verb 10.1145/362384.362685
       \endverb
     \endentry
-    \entry{finkel1974}{article}{}{}
-      \name{author}{2}{}{%
-        {{hash=458098e59c20065c4fbc70d8d47adcfc}{%
-           family={Finkel},
-           familyi={F\bibinitperiod},
-           given={R.\bibnamedelimi A.},
-           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=89c13900e5b97003ff22ddea2f201502}{%
-           family={Bentley},
-           familyi={B\bibinitperiod},
-           given={J.\bibnamedelimi L.},
-           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {english}%
-      }
-      \strng{namehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \strng{fullhash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \strng{fullhashraw}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \strng{bibnamehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \strng{authorbibnamehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \strng{authornamehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \strng{authorfullhash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \strng{authorfullhashraw}{e1a8c85a410cf8e1a24ef6ca8d40b566}
-      \field{sortinit}{F}
-      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Acta Informatica}
-      \field{number}{1}
-      \field{title}{Quad Trees: A Data Structure for Retrieval on Composite Keys}
-      \field{volume}{4}
-      \field{year}{1974}
-      \field{pages}{1\bibrangedash 9}
-      \range{pages}{9}
-      \verb{doi}
-      \verb 10.1007/BF00288933
-      \endverb
-    \endentry
-    \entry{guttman1984}{inproceedings}{}{}
-      \name{author}{1}{}{%
-        {{hash=93ca8a901b127c76e5ebc9e5c435b4b1}{%
-           family={Guttman},
-           familyi={G\bibinitperiod},
-           given={A.},
-           giveni={A\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {english}%
-      }
-      \strng{namehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \strng{fullhash}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \strng{fullhashraw}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \strng{bibnamehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \strng{authorbibnamehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \strng{authornamehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \strng{authorfullhash}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \strng{authorfullhashraw}{93ca8a901b127c76e5ebc9e5c435b4b1}
-      \field{sortinit}{G}
-      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the ACM SIGMOD International Conference on Management of Data}
-      \field{title}{R-Trees: A Dynamic Index Structure for Spatial Searching}
-      \field{year}{1984}
-      \field{pages}{47\bibrangedash 57}
-      \range{pages}{11}
-      \verb{doi}
-      \verb 10.1145/602259.602266
-      \endverb
-    \endentry
     \entry{livesley2016}{article}{}{}
       \true{moreauthor}
       \true{morelabelname}
@@ -285,30 +214,6 @@
       \verb 10.48044/jauf.2018.008
       \endverb
     \endentry
-    \entry{niemeyer2008}{misc}{}{}
-      \name{author}{1}{}{%
-        {{hash=79e5cc4814c8247784feefa93e3ddff3}{%
-           family={Niemeyer},
-           familyi={N\bibinitperiod},
-           given={G.},
-           giveni={G\bibinitperiod}}}%
-      }
-      \strng{namehash}{79e5cc4814c8247784feefa93e3ddff3}
-      \strng{fullhash}{79e5cc4814c8247784feefa93e3ddff3}
-      \strng{fullhashraw}{79e5cc4814c8247784feefa93e3ddff3}
-      \strng{bibnamehash}{79e5cc4814c8247784feefa93e3ddff3}
-      \strng{authorbibnamehash}{79e5cc4814c8247784feefa93e3ddff3}
-      \strng{authornamehash}{79e5cc4814c8247784feefa93e3ddff3}
-      \strng{authorfullhash}{79e5cc4814c8247784feefa93e3ddff3}
-      \strng{authorfullhashraw}{79e5cc4814c8247784feefa93e3ddff3}
-      \field{sortinit}{N}
-      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{note}{Available at \url{http://geohash.org}}
-      \field{title}{Geohash}
-      \field{year}{2008}
-    \endentry
     \entry{postgis2005}{misc}{}{}
       \name{author}{2}{}{%
         {{hash=da545cfdabdb3af30e84becc024bb262}{%
@@ -341,37 +246,6 @@
       \field{title}{PostGIS Documentation}
       \field{year}{2005}
     \endentry
-    \entry{samet2006}{book}{}{}
-      \name{author}{1}{}{%
-        {{hash=57d688b3873b263f594dbb71b55288b4}{%
-           family={Samet},
-           familyi={S\bibinitperiod},
-           given={H.},
-           giveni={H\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {english}%
-      }
-      \list{publisher}{1}{%
-        {Morgan Kaufmann}%
-      }
-      \strng{namehash}{57d688b3873b263f594dbb71b55288b4}
-      \strng{fullhash}{57d688b3873b263f594dbb71b55288b4}
-      \strng{fullhashraw}{57d688b3873b263f594dbb71b55288b4}
-      \strng{bibnamehash}{57d688b3873b263f594dbb71b55288b4}
-      \strng{authorbibnamehash}{57d688b3873b263f594dbb71b55288b4}
-      \strng{authornamehash}{57d688b3873b263f594dbb71b55288b4}
-      \strng{authorfullhash}{57d688b3873b263f594dbb71b55288b4}
-      \strng{authorfullhashraw}{57d688b3873b263f594dbb71b55288b4}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{isbn}{9780123694461}
-      \field{title}{Foundations of Multidimensional and Metric Data Structures}
-      \field{year}{2006}
-      \true{nocite}
-    \endentry
     \entry{sanusi2016}{article}{}{}
       \true{moreauthor}
       \true{morelabelname}
@@ -400,36 +274,6 @@
       \field{journaltitle}{Journal of Environmental Quality}
       \field{title}{Street orientation and side of the street greatly influence the microclimatic benefits street trees}
       \field{year}{2016}
-    \endentry
-    \entry{veach2017s2}{misc}{}{}
-      \true{moreauthor}
-      \true{morelabelname}
-      \name{author}{1}{}{%
-        {{hash=2ee4bba29b67221f275d1e485adf6739}{%
-           family={Veach},
-           familyi={V\bibinitperiod},
-           given={Eric},
-           giveni={E\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {english}%
-      }
-      \strng{namehash}{5a7e849c6d4180967e6c46d05652227f}
-      \strng{fullhash}{5a7e849c6d4180967e6c46d05652227f}
-      \strng{fullhashraw}{5a7e849c6d4180967e6c46d05652227f}
-      \strng{bibnamehash}{5a7e849c6d4180967e6c46d05652227f}
-      \strng{authorbibnamehash}{5a7e849c6d4180967e6c46d05652227f}
-      \strng{authornamehash}{5a7e849c6d4180967e6c46d05652227f}
-      \strng{authorfullhash}{5a7e849c6d4180967e6c46d05652227f}
-      \strng{authorfullhashraw}{5a7e849c6d4180967e6c46d05652227f}
-      \field{sortinit}{V}
-      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://s2geometry.io}}
-      \field{note}{Open-sourced by Google. Available at \url{https://github.com/google/s2geometry}}
-      \field{title}{S2 Geometry Library}
-      \field{year}{2017}
     \endentry
     \entry{ventura2022}{article}{}{}
       \name{author}{13}{}{%

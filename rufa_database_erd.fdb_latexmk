@@ -1,0 +1,14 @@
+# Fdb version 4
+["pdflatex"] 1777959313.97435 "figures/rufa_database_erd.tex" "rufa_database_erd.pdf" "rufa_database_erd" 1777959314.09338 2
+  "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1775415801 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1775415801 1328 c834bbb027764024c09d3d2bf908b5f0 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1775415801 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1775415801 43569 fd570f2fa160877d211e859f687312ba ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1776672819 2328191 65c2e52dcac57f6341028d4469bbe4ef ""
+  "figures/rufa_database_erd.tex" 1777959269.32597 2954 b4cc5188d4c9411b4b2181ea9c81ffc2 ""
+  "rufa_database_erd.aux" 1777959305.97403 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  (generated)
+  "rufa_database_erd.aux"
+  "rufa_database_erd.log"
+  "rufa_database_erd.pdf"
+  (rewritten before read)
