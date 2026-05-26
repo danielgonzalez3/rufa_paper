@@ -1,40 +1,31 @@
-% Chapter 5
-\chapter{CONCLUSIONS} \label{sec:Conclusions}
+\chapter{Conclusions} \label{sec:Conclusions}
 
-The development of the Rapid Urban Forest Assessment (RUFA) system represents a significant advancement in urban forestry management and evaluation. This thesis has presented a comprehensive approach to creating an automated tree assessment system that integrates aerial imagery analysis with extensive urban tree inventories to provide scalable and accurate urban forest assessments for California's census-designated places.
+This thesis addressed two engineering problems encountered in building the Rapid Urban Forest Assessment (RUFA) dashboard: querying and aggregating millions of tree records across hundreds of California census-designated places in real time, and producing stable spatial summaries at multiple zoom levels without recomputing cluster assignments on every map interaction. Each problem was approached by characterizing the workload, prototyping a straightforward solution, measuring where it broke down, and replacing it with an implementation that scales to the production dataset.
 
-The RUFA system successfully addresses several critical challenges in urban forestry management. By leveraging convolutional neural networks to extract tree coordinates from high-resolution multispectral aerial imagery and combining this with detailed tree inventory data from multiple sources, the system provides a robust foundation for urban forest evaluation. The integration of diverse data sources, including inventories from private arborist firms such as West Coast Arborists, Davey Tree Company, and APlus Tree Care, alongside public entities like CAL FIRE, ensures comprehensive coverage and high data quality.
+On the data side, RUFA's MySQL schema combines normalized inventory and aerial-detection tables with cascading materialized views that propagate RUFA Score metrics from census places to ZIP codes, tracts, and counties. Spatial indexing strategies were evaluated for assigning tree points to administrative polygons, and indexed queries achieved sub-second response times against the full California inventory. The resulting design preserves compatibility with the existing \href{https://selectree.calpoly.edu}{selectree.calpoly.edu} infrastructure while delivering the interactive performance required by the dashboard.
 
-The system's composite scoring methodology, which incorporates four equally weighted metrics (canopy cover percentage, trees per capita, tree diversity (TD-50), and tree evenness), provides urban planners and forestry professionals with an intuitive and actionable assessment tool. The RUFA Score formula, which normalizes these components to create a standardized index ranging from 0 to 100, enables meaningful comparisons across different geographic areas and varying urban contexts.
+On the visualization side, the clustering pipeline evolved from a fixed-$k$ K-means baseline, which produced overlapping markers in dense neighborhoods and recomputed assignments on every zoom event, to a SuperCluster index paired with Voronoi tessellation. The final implementation precomputes a multi-resolution cluster hierarchy and derives per-cell tree density and TD-50 diversity scores at query time, yielding zoom-aware summaries that match the uneven density of urban tree distributions.
 
-The database design choices, particularly the decision to maintain MySQL compatibility with the existing \href{https://selectree.calpoly.edu}{selectree.calpoly.edu} infrastructure, demonstrate the importance of balancing technological advancement with practical implementation considerations. While more advanced spatial database solutions like PostgreSQL/PostGIS offer enhanced geospatial capabilities, the RUFA system's architecture prioritizes integration with established workflows and existing tools used by urban forestry professionals.
-
-The implementation of materialized views and strategic indexing approaches ensures that the system can handle large-scale data processing efficiently while maintaining real-time responsiveness for user queries. This performance optimization is crucial for supporting the system's intended use by urban planners, foresters, and environmental agencies who require timely access to assessment results.
-
-The RUFA system's outputs provide valuable insights for Urban and Community Forestry (U\&CF) programs, enabling evidence-based decision-making for urban forest management. The percentage-based scores for key metrics allow stakeholders to quickly identify areas requiring attention and track improvements over time. This capability is particularly important as cities increasingly recognize the critical role of urban forests in providing ecosystem services, mitigating urban heat islands, and supporting community well-being.
-
-The success of this project demonstrates the potential for technology to enhance traditional forestry practices while maintaining accessibility and practical utility for end users. Future enhancements will continue to build upon this foundation, expanding the system's capabilities while preserving its core mission of supporting effective urban forest management through accurate, timely, and actionable assessments.
+Together with the AWS-based three-tier deployment described in \autoref{sec:SystemDesign}, these contributions form a system that aggregates inventory and aerial-detection data, computes the four-component RUFA Score, and serves interactive assessments to urban foresters, planners, and researchers. The composite score reduces a complex, multi-source dataset to a single comparable index, supporting evidence-based decisions about planting, maintenance, and policy across California communities.
 
 \section{Future Work}
 
-While the current RUFA system provides a solid foundation for urban forest assessment, several areas present opportunities for enhancement and expansion.
+Several directions extend RUFA beyond the scope of this thesis.
 
-\subsection{Allometry Feature}
+\subsection{Allometric Estimation}
 
-A significant enhancement planned for future versions of RUFA involves the integration of allometric equations to improve tree estimations.
+UFEI's AllomeTree tool \cite{ufeiAllometree} exposes species-specific allometric equations for California's urban forest, predicting diameter at breast height (DBH), height, and canopy width with 95\% prediction intervals from either DBH or tree age. The equations derive from the U.S. Forest Service Urban Tree Database \cite{mcpherson2016utd}, which fits 365 equation sets across 171 species and 16 climate regions. Integrating these models into RUFA would let the system estimate structural attributes for trees with incomplete inventory records and for the aerial-only detections produced by the Ventura et al.\ pipeline, which currently provide location and canopy extent but no DBH or height. With those estimates, RUFA could extend its reporting to ecosystem services such as carbon storage, leaf area, and stormwater interception, derived per-tree rather than aggregated from sparse inventory measurements.
 
-TBD
+\subsection{Incremental Data Integration}
 
+The current materialized-view refresh runs as a batch process. Incremental refresh triggered by inventory updates or new aerial detections would keep RUFA Scores current without recomputing every dependent view, and would support partner organizations contributing inventory data on a rolling basis.
 
+\subsection{Mobile and Field Interfaces}
 
-\section{Architecture Changes}
+A field-oriented interface would let urban foresters capture or correct inventory records on site and view RUFA assessments from mobile devices. Bidirectional sync between field captures and the central database would tighten the loop between assessment and on-the-ground management.
 
-Several architectural improvements could enhance the system's scalability and functionality:
+\subsection{Geographic Expansion}
 
-\textbf{Real-time Data Integration}: TBD
+Extending RUFA beyond California requires adapting the schema, score normalization, and species references to other climate zones and regulatory contexts. The data model and clustering pipeline are state-agnostic; the main work lies in re-binning each metric against a new statewide distribution and incorporating regional species lists.
 
-\textbf{User Interface Expansion}: Development of mobile applications and enhanced web interfaces to support field data collection and real-time assessment updates. This would enable urban foresters to contribute data directly during field surveys and access RUFA assessments from mobile devices.
-
-\textbf{Multi-State Expansion}: Extension of the RUFA system beyond California to support urban forest assessment in other states and regions. This would require adaptation of the assessment criteria and database schema to accommodate different climate zones, species compositions, and regulatory frameworks.
-
-The RUFA system represents a significant step forward in urban forest assessment technology. Its combination of automated analysis, comprehensive data integration, and user-friendly output provides urban forestry professionals with powerful tools for evidence-based decision-making. As urban areas continue to grow and face increasing environmental challenges, systems like RUFA will play an increasingly important role in supporting sustainable urban development and community well-being.
+As urban areas continue to grow and face increasing environmental pressure, tools that quantify urban forest structure, diversity, and equity will become more important to municipal planning. RUFA contributes to that toolset by combining automated detection, inventory aggregation, and interactive visualization in a single, comparable assessment.

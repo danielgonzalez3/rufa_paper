@@ -1,3 +1,5 @@
 \hbox to \linewidth {\hspace {1.5em}Figure\hfill Page}
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Entity Relationship Diagram (ERD) for the RUFA database schema}}{10}{figure.caption.7}%
-\contentsline {figure}{\numberline {4.1}{\ignorespaces AWS-based system architecture for the RUFA platform.}}{26}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Entity Relationship Diagram (ERD) for the RUFA database schema}}{14}{figure.caption.11}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces AWS-based system architecture for the RUFA platform.}}{30}{figure.caption.20}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces K-means clustering of Los Angeles tree coordinates. Scaling $k$ with input size produced overlapping clusters in dense neighborhoods (\subref {fig:la_kmeans}) and failed to yield stable multi-scale summaries when the viewport changed (\subref {fig:la_kmeans_2}).}}{33}{figure.caption.22}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces SuperClustering with Voronoi tessellation applied to San Luis Obispo. Each cell summarizes local tree density and species diversity within boundaries that adapt to the underlying point distribution.}}{35}{figure.caption.23}%
