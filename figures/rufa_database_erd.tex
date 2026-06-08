@@ -1,0 +1,174 @@
+% TikZ ERD fragment for chapters/chapter03.tex
+% Use directly in the figure environment (do NOT wrap in \resizebox).
+% Recommended wrapper:
+% \centering
+% \begin{tikzpicture}[x=1cm,y=1cm,scale=0.78,transform shape]
+
+\tikzset{
+  table/.style={
+    draw,
+    rounded corners=3pt,
+    minimum width=5.05cm,
+    text width=4.97cm,
+    inner sep=5.5pt,
+    outer sep=1.35pt,
+    font=\large,
+    align=left,
+    anchor=center
+  },
+  rel/.style={
+    -{Latex[length=1.85mm]},
+    thin,
+    shorten <=2pt,
+    shorten >=2pt
+  }
+}
+
+% #1=name, #2=(x,y), #3=columns (body), #4=table title
+\providecommand{\RUFAerdTablebox}[4]{%
+  \node[table] (#1) at #2 {%
+      {\bfseries\large #4}\par\vspace{4pt}\hrule height 0.55pt\vspace{5pt}%
+      {\linespread{1.085}\large\selectfont #3}%
+  };%
+}
+
+\begin{tikzpicture}[x=1cm,y=1cm,scale=0.78,transform shape]
+
+\pgfmathsetmacro{\InvX}{-11.05}
+\pgfmathsetmacro{\MidX}{-10.25}
+\pgfmathsetmacro{\CityX}{-3.9}
+\pgfmathsetmacro{\PlaceX}{6.6}
+\pgfmathsetmacro{\ZipX}{3.4}
+\pgfmathsetmacro{\TractX}{10.8}
+
+\pgfmathsetmacro{\Ytop}{15.8}
+\pgfmathsetmacro{\Yinv}{6.2}
+\pgfmathsetmacro{\Ycity}{10.7}
+\pgfmathsetmacro{\Yjunction}{7.1}
+\pgfmathsetmacro{\Yzip}{1.8}
+\pgfmathsetmacro{\Ymetrics}{-3.9}
+
+\RUFAerdTablebox{inventory}{(\InvX,\Yinv)}{
+latitude\\
+longitude\\
+species\\
+family\\
+genus\\
+native\_range\\
+max\_height\\
+tree\_shape\\
+foliage\_type\\
+dbh\_avg\\
+height\_avg\\
+canopy\_avg\\
+\textit{\ldots}%
+}{rufa\_inventory\_point}
+
+\RUFAerdTablebox{detector}{(\MidX,\Ytop)}{
+longitude\\
+latitude\\
+place\_fp\\
+zip\\
+tract%
+}{rufa\_detector\_point}
+
+\RUFAerdTablebox{city}{(\CityX,\Ycity)}{
+city\_id (PK)\\
+city\_name\\
+place\_id (FK)\\
+tree\_count\\
+detector\_tree\_count\\
+human\_population\\
+td\_50\\
+trees\_per\_km\\
+std\_trees\_per\_km\\
+can\_p\\
+trees\_per\_capita\\
+\textit{\ldots}%
+}{rufa\_city}
+
+\RUFAerdTablebox{place}{(\PlaceX,\Ytop)}{
+place\_id (PK)\\
+place\_name\\
+intptlat\\
+intptlon\\
+aland\\
+place\_polygon%
+}{rufa\_place}
+
+\RUFAerdTablebox{pzip}{(\ZipX,\Yjunction)}{
+id (PK)\\
+place\_id (FK)\\
+zip\_id (FK)%
+}{rufa\_place\_zip\_intersection}
+
+\RUFAerdTablebox{ptract}{(\TractX,\Yjunction)}{
+id (PK)\\
+place\_id (FK)\\
+tract\_id (FK)%
+}{rufa\_place\_tract\_intersection}
+
+\RUFAerdTablebox{zip}{(\ZipX,\Yzip)}{
+zip\_id (PK)\\
+zip\_name\\
+intptlat\\
+intptlon\\
+aland\\
+zip\_polygon%
+}{rufa\_zip}
+
+\RUFAerdTablebox{tract}{(\TractX,\Yzip)}{
+tract\_id (PK)\\
+tract\_name\\
+intptlat\\
+intptlon\\
+aland\\
+tract\_polygon%
+}{rufa\_tract}
+
+\RUFAerdTablebox{zipm}{(\ZipX,\Ymetrics)}{
+zip\_id (PK)\\
+area\_km\\
+td\_50\\
+trees\_per\_km\\
+tree\_evenness\\
+tree\_canopy%
+}{rufa\_zip\_metrics}
+
+\RUFAerdTablebox{tractm}{(\TractX,\Ymetrics)}{
+tract\_id (PK)\\
+area\_km\\
+td\_50\\
+trees\_per\_km\\
+tree\_evenness\\
+tree\_canopy%
+}{rufa\_tract\_metrics}
+
+% Relationships
+\draw[rel, rounded corners=2pt]
+  (city.east) -- ++(0.9,0) |- (place.west);
+
+% Vertical into junction tops; stems start on bottom edge (clamp junction x onto [south west,south east])
+\coordinate (pzTgt) at ([yshift=2pt]pzip.north);
+\coordinate (ptrTgt) at ([yshift=2pt]ptract.north);
+\path let
+    \p1=(place.south west),
+    \p2=(place.south east),
+    \p3=(pzTgt),
+    \p4=(ptrTgt),
+    \n{xpz}={min(max(\x3,\x1),\x2)},
+    \n{xtr}={min(max(\x4,\x1),\x2)},
+    \n{ybot}={\y1}
+  in
+    coordinate (pZipStemStart) at (\n{xpz}, \n{ybot})
+    coordinate (pTrStemStart) at (\n{xtr}, \n{ybot});
+\draw[rel] (pZipStemStart) -- (pzTgt);
+\draw[rel] (pTrStemStart) -- (ptrTgt);
+
+\draw[rel] (pzip.south) -- (zip.north);
+\draw[rel] (ptract.south) -- (tract.north);
+
+\draw[rel] (zip.south) -- (zipm.north);
+\draw[rel] (tract.south) -- (tractm.north);
+
+\end{tikzpicture}

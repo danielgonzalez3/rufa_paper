@@ -1,100 +1,47 @@
-\chapter{Clustering}
-Clustering Algorithms
+\chapter{Clustering} \label{sec:Clustering}
 
-The clustering component of the RUFA system provides efficient spatial grouping of urban tree data to enable rapid analysis and visualization at various geographic scales. This chapter presents the evolution of clustering algorithms implemented, from basic K-means to advanced SuperClustering with Voronoi diagrams, demonstrating progressive performance improvements for handling California's 6.6 million tree inventory records.
+The clustering component of RUFA groups millions of tree coordinates for interactive map visualization at multiple zoom levels. This chapter describes the algorithms evaluated during development, from an initial K-means prototype through SuperClustering with Voronoi tessellation, and the performance trade-offs that motivated each transition.
 
 \section{K-Means}
 
-The initial clustering implementation utilized the traditional K-means algorithm for spatial grouping of tree coordinates. K-means partitions the dataset into k clusters by minimizing the within-cluster sum of squares (WCSS):
-
+The first implementation applied Lloyd's K-means algorithm to tree coordinates, minimizing the within-cluster sum of squares (WCSS):
 \begin{equation}
-WCSS = \sum_{i=1}^{k} \sum_{x \in C_i} ||x - \mu_i||^2
+    \text{WCSS} = \sum_{i=1}^{k} \sum_{x \in C_i} \|x - \mu_i\|^2,
 \end{equation}
+where $C_i$ is cluster $i$, $\mu_i$ its centroid, and $x$ an individual tree location. Centroids were initialized with K-means++, distances were computed with the Haversine formula, and iteration continued until centroid movement fell below $0.001^\circ$ or 100 iterations were reached.
 
-where $C_i$ represents cluster $i$, $\mu_i$ is the centroid of cluster $i$, and $x$ represents individual tree coordinates.
+Because cluster count must be specified in advance, $k$ was chosen dynamically as a function of the number of input points and the map zoom level, typically ranging from 50 to 500 clusters. The intent was to preserve local structure in dense areas while limiting marker overlap at wider views.
 
-\textbf{Implementation Details:}
-The basic K-means implementation processes tree coordinates using the Lloyd's algorithm with the following specifications:
-\begin{itemize}
-\item \textbf{Distance Metric:} Haversine distance for geographic coordinates
-\item \textbf{Initialization:} K-means++ for optimal initial centroid selection
-\item \textbf{Convergence Criteria:} Maximum 100 iterations or centroid movement < 0.001°
-\item \textbf{Cluster Count:} Dynamic k selection based on zoom level (k = 50-500)
-\end{itemize}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{la_k_means.png}
+    \caption{Dynamic $k$ as a function of point count.}
+    \label{fig:la_kmeans}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{la_k_means_2.png}
+    \caption{Insufficient segmentation at city scale.}
+    \label{fig:la_kmeans_2}
+\end{subfigure}
+\caption{K-means clustering of Los Angeles tree coordinates. Scaling $k$ with input size produced overlapping clusters in dense neighborhoods (\subref{fig:la_kmeans}) and failed to yield stable multi-scale summaries when the viewport changed (\subref{fig:la_kmeans_2}).}
+\label{fig:kmeans_la}
+\end{figure}
 
-\textbf{Performance Characteristics:}
-Initial benchmarking revealed significant computational overhead for large datasets:
-\begin{itemize}
-\item Average execution time: 2.3 seconds for 100,000 trees
-\item Memory usage: 45MB for coordinate processing
-\item Scalability limitation: O(nkt) complexity where n=points, k=clusters, t=iterations
-\end{itemize}
+\autoref{fig:kmeans_la} illustrates the limitation on Los Angeles data. Even when $k$ increased with point count, clusters in high-density neighborhoods remained visually indistinguishable, and recomputing assignments for each zoom or pan interaction incurred $O(nkt)$ cost that did not scale to California's full inventory. Benchmarking on 100{,}000 trees averaged 2.3 seconds per run with 45\,MB of working memory. K-means provided a workable baseline but could not meet RUFA's requirement for responsive, zoom-aware aggregation over millions of points.
 
-The basic K-means approach provided adequate clustering quality but suffered from performance issues when processing the full California dataset, necessitating optimization strategies.
+\section{Intermediate Approaches}
 
-\section{K-Means with Caching}
-
-To address performance limitations, the second iteration implemented comprehensive caching mechanisms for both intermediate computations and final cluster results.
-
-\textbf{Caching Strategy:}
-\begin{itemize}
-\item \textbf{Centroid Cache:} Cached cluster centroids
-
-\textbf{Performance Improvements:}
-The caching implementation achieved significant performance gains:
-\end{itemize}
-
-\begin{itemize}
-\item point1 foo bar baz
-\item point2 foo bar baz
-\end{itemize}
-
-\section{Additional Approaches}
-
-Recognizing the limitations of standard K-means for geographic data, several alternative clustering approaches were evaluated and implemented.
-
-\subsection{Hierarchical Clustering}
-Agglomerative hierarchical clustering was implemented to create multi-level tree groupings supporting zoom-dependent visualizations:
-
-\begin{itemize}
-\item \textbf{Linkage Criteria:} Ward linkage minimizing within-cluster variance
-\item \textbf{Distance Matrix:} Sparse matrix optimization for geographic coordinates
-\item \textbf{Dendrogram Pruning:} Dynamic tree cutting based on zoom level requirements
-\end{itemize}
-
-Performance analysis showed hierarchical clustering provided better multi-scale representations but with increased computational complexity O(n³), making it suitable only for smaller regional datasets.
-
-\subsection{Grid-Based Clustering}
-A custom grid-based approach was another approach for rapid initial clustering:
-
-\begin{itemize}
-\item \textbf{Grid Resolution:} Adaptive cell size based on tree density (0.001° - 0.01°)
-\item \textbf{Spatial Index:} R-tree spatial indexing for efficient range queries
-\item \textbf{Aggregation:} Statistical summaries computed per grid cell
-\end{itemize}
-
-Grid-based clustering achieved O(n) complexity but lacked the flexibility needed for variable-density urban environments.
+Several refinements were explored before adopting a hierarchical tile-based strategy. Result caching stored centroid positions and cluster assignments across repeated queries, reducing redundant computation when users returned to previously viewed regions, but did not address the fundamental cost of recomputing clusters at each zoom level.
 
 \section{SuperClustering with Voronoi Diagrams}
 
-This clustering implementation combines hierarchical clustering with Voronoi diagram generation to analyze urban tree data efficiently. The approach creates spatial boundaries at multiple zoom levels, enabling both detailed local analysis and broader regional insights.
+The production implementation combines SuperCluster, a hierarchical point-clustering library used in web mapping, with Voronoi tessellation to define spatial analysis regions at each zoom level. SuperCluster precomputes a pyramid of clusters from zoom 0 to 10; at query time, RUFA requests only the clusters intersecting the current bounding box, avoiding full-dataset recomputation on pan and zoom events.
 
-\subsection{System Overview}
-
-The system integrates two key technologies:
-\begin{itemize}
-\item \textbf{SuperCluster}: Hierarchical point clustering across zoom levels 0--10
-\item \textbf{Voronoi Diagrams}: Spatial tessellation for regional boundary creation
-\end{itemize}
-
-This combination enables multi-scale spatial analysis with efficient point aggregation and real-time visualization capabilities.
-
-\subsection{SuperCluster Configuration}
-
-The clustering process uses pysupercluster with the following parameters:
-
-\begin{lstlisting}[language=Python, caption=Basic SuperCluster Setup]
-# Initialize clustering with key parameters
+\begin{lstlisting}[language=Python, caption=SuperCluster initialization and zoom-level processing]
 index = pysupercluster.SuperCluster(
     detector_points,
     min_zoom=0,
@@ -103,121 +50,21 @@ index = pysupercluster.SuperCluster(
     extent=512
 )
 
-# Process zoom levels
 for zoom in range(5, 10):
     clusters = index.getClusters(bbox, zoom)
     if len(clusters) >= 4:
         voronoi_data = process_voronoi(clusters, zoom)
 \end{lstlisting}
 
-\textbf{Key Configuration Parameters:}
-\begin{description}
-\item[Zoom Range] 0 to 10 levels for hierarchical analysis
-\item[Cluster Radius] 5-pixel aggregation radius
-\item[Tile Extent] 512-pixel spatial indexing
-\item[Coverage] Global bounding box (-180°, 90°) to (180°, -90°)
-\end{description}
+For zoom levels with at least four cluster centroids, RUFA generates a Voronoi diagram from the centroid set and converts each cell into a polygon bounded by the viewport. Trees are assigned to cells by point-in-polygon containment, and each cell receives tree density (trees per km\textsuperscript{2}) and a TD-50 diversity score computed from species counts within the cell (\autoref{eq:td50}). Invalid or unbounded Voronoi regions are clipped to the query extent before export as GeoJSON features for the dashboard.
 
-\subsection{Voronoi Diagram Generation}
+SuperCluster initialization runs in $O(n \log n)$ time; Fortune's algorithm generates the Voronoi diagram in $O(m \log m)$ for $m$ centroids, and point assignment is $O(mn)$ in the naive formulation used during development. In practice, the hierarchical index limits $m$ to the clusters visible at each zoom, and cached tile results make zoom-level switching near instantaneous. Higher zoom levels expose local density variation; lower zoom levels collapse detail into regional summaries suitable for statewide comparison.
 
-For each zoom level with sufficient cluster points, Voronoi diagrams create spatial boundaries:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/slo_voronoi.png}
+\caption{SuperClustering with Voronoi tessellation applied to San Luis Obispo. Each cell summarizes local tree density and species diversity within boundaries that adapt to the underlying point distribution.}
+\label{fig:slo_voronoi}
+\end{figure}
 
-\begin{lstlisting}[language=Python, caption=Simplified Voronoi Processing]
-def process_voronoi(cluster_points, zoom):
-    # Generate Voronoi diagram
-    vor = Voronoi(cluster_points)
-    
-    # Create polygons from Voronoi edges
-    polygons = create_polygons_from_voronoi(vor)
-    
-    # Process each Voronoi cell
-    for polygon in polygons:
-        # Calculate area and tree metrics
-        area_km = calculate_area(polygon)
-        trees_in_cell = count_trees_in_polygon(polygon)
-        
-        # Compute diversity and density
-        tree_density = trees_in_cell / area_km
-        diversity_score = calculate_td_50(polygon)
-        
-        # Add to results with color mapping
-        add_feature_to_geojson(polygon, tree_density, diversity_score)
-\end{lstlisting}
-
-\subsection{Spatial Analysis Metrics}
-
-Each Voronoi cell generates comprehensive urban forestry metrics:
-
-\begin{description}
-\item[Tree Density] Trees per square kilometer within each cell
-\item[Species Diversity] TD-50 index measuring ecological diversity
-\item[Color Mapping] Normalized visualization based on density values
-\item[Geometric Validation] Ensures valid polygon output for mapping
-\end{description}
-
-\subsection{Point Assignment Algorithm}
-
-Trees are efficiently assigned to Voronoi cells using spatial containment:
-
-\begin{lstlisting}[language=Python, caption=Point-in-Polygon Assignment]
-def assign_trees_to_cells(points, voronoi_polygons):
-    for polygon in voronoi_polygons:
-        trees_in_cell = []
-        for tree_point in points:
-            if polygon.contains(tree_point):
-                trees_in_cell.append(tree_point)
-        
-        # Calculate metrics for this cell
-        process_cell_metrics(polygon, trees_in_cell)
-\end{lstlisting}
-
-\subsection{TD-50 Diversity Calculation}
-
-The TD-50 index measures species diversity within each Voronoi cell:
-
-\begin{lstlisting}[language=Python, caption=Regional Diversity Assessment]
-def calculate_td_50(species_counts):
-    if not species_counts:
-        return 0
-    
-    # Sort species by abundance
-    sorted_counts = sorted(species_counts, reverse=True)
-    total_trees = sum(sorted_counts)
-    
-    # Find species needed for 50% of trees
-    cumulative = 0
-    for i, count in enumerate(sorted_counts):
-        cumulative += count
-        if cumulative >= total_trees * 0.5:
-            return i + 1
-\end{lstlisting}
-
-\subsection{Performance Characteristics}
-
-The SuperClustering implementation demonstrates significant computational efficiency:
-
-\textbf{Algorithmic Complexity:}
-\begin{itemize}
-\item SuperCluster initialization: $O(n \log n)$
-\item Voronoi generation: $O(n \log n)$ using Fortune's algorithm
-\item Point assignment: $O(kn)$ where $k$ is the number of cells
-\item Overall complexity: $O(n \log n + kn)$
-\end{itemize}
-
-\textbf{Multi-Scale Benefits:}
-\begin{itemize}
-\item Higher zoom levels provide detailed local analysis
-\item Lower zoom levels enable regional pattern recognition
-\item Cached results allow rapid zoom-level switching
-\item Hierarchical structure supports interactive exploration
-\end{itemize}
-
-\textbf{Output Features:}
-\begin{itemize}
-\item Valid GeoJSON format for web mapping integration
-\item Color-coded visualization based on tree density
-\item Species diversity metrics for ecological assessment
-\item Scalable performance across California's metropolitan regions
-\end{itemize}
-
-This approach successfully combines the hierarchical efficiency of SuperCluster with the spatial analysis power of Voronoi diagrams, enabling comprehensive urban forestry assessment at multiple scales.
+\autoref{fig:slo_voronoi} shows the final pipeline on San Luis Obispo data. Voronoi cells partition the city into regions aligned with SuperCluster centroids, and color mapping reflects per-cell tree density. This replaces the overlapping K-means markers in \autoref{fig:kmeans_la} with a stable, zoom-aware representation suitable for statewide deployment.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.4)  19 SEP 2025 18:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.4)  25 MAY 2026 21:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -862,7 +862,15 @@ Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
 \g__lipsum_par_int=\count482
 \l__lipsum_a_int=\count483
 \l__lipsum_b_int=\count484
- (/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex))) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowinset=\dimen314
+\pgfarrowlength=\dimen315
+\pgfarrowwidth=\dimen316
+\pgfarrowlinewidth=\dimen317
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
  (/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
@@ -881,7 +889,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count485
 )
-\@linkdim=\dimen314
+\@linkdim=\dimen318
 \Hy@linkcounter=\count486
 \Hy@pagecounter=\count487
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
@@ -908,15 +916,15 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4446.
 \c@Hy@tempcnt=\count489
 LaTeX Info: Redefining \url on input line 4784.
-\XeTeXLinkMargin=\dimen315
+\XeTeXLinkMargin=\dimen319
  (/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
  (/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 \Fld@menulength=\count490
-\Field@Width=\dimen316
-\Fld@charsize=\dimen317
+\Field@Width=\dimen320
+\Fld@charsize=\dimen321
 Package hyperref Info: Hyper figures OFF on input line 6063.
 Package hyperref Info: Link nesting OFF on input line 6068.
 Package hyperref Info: Hyper index ON on input line 6071.
@@ -1037,13 +1045,13 @@ Package caption Info: End \AtBeginDocument code.
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count498
-\scratchdimen=\dimen318
+\scratchdimen=\dimen322
 \scratchbox=\box76
 \nofMPsegments=\count499
 \nofMParguments=\count500
 \everyMPshowfont=\toks53
 \MPscratchCnt=\count501
-\MPscratchDim=\dimen319
+\MPscratchDim=\dimen323
 \MPnumerator=\count502
 \makeMPintoPDFobject=\count503
 \everyMPtoPDFconversion=\toks54
@@ -1102,7 +1110,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
  [9
 
-] (./main.lof)
+] (./main.lof
+Overfull \hbox (2.58795pt too wide) in paragraph at lines 5--5
+ [][] [][]\OT1/cmr/m/n/12 SuperClustering with Voronoi tes-sel-la-tion ap-plied to San Luis Obispo. 
+ []
+
+)
 \tf@lof=\write9
 \openout9 = `main.lof'.
 
@@ -1110,105 +1123,126 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] (./chapters/outline.tex (./chapters/chapter01.tex
 Chapter 1.
-) (./chapters/chapter02.tex [1
+[1
 
 ]
+Overfull \hbox (6.50043pt too wide) in paragraph at lines 13--14
+[]\OT1/cmr/m/n/12 Progressive clus-ter-ing al-go-rithms, from K-means to Su-per-Clus-ter-ing with Voronoi
+ []
+
+) (./chapters/chapter02.tex [2]
 Chapter 2.
-[2
 
-] [3]
-Overfull \hbox (2.39227pt too wide) in paragraph at lines 23--24
-\OT1/cmr/m/n/12 The Rapid Ur-ban For-est As-sess-ment (RUFA) sys-tem also pro-vides a com-pos-ite ``RUFA
+Overfull \hbox (4.96434pt too wide) in paragraph at lines 7--8
+[]\OT1/cmr/m/n/12 UFEI's mis-sion is to con-nect sci-en-tific re-search with prac-ti-cal tools that ur-ban foresters,
  []
 
-) [4] (./chapters/chapter03.tex [5]
+[3
+
+] [4] [5] [6] [7] [8]) (./chapters/chapter03.tex [9]
 Chapter 3.
-<figures/Rufa_Database.jpeg, id=449, 1457.445pt x 1339.0025pt>
-File: figures/Rufa_Database.jpeg Graphic file (type jpg)
-<use figures/Rufa_Database.jpeg>
-Package pdftex.def Info: figures/Rufa_Database.jpeg  used on input line 17.
-(pdftex.def)             Requested size: 455.30121pt x 418.29424pt.
+[10
 
-Overfull \hbox (21.6812pt too wide) in paragraph at lines 17--18
- [][] 
- []
+] [11] [12] (./figures/rufa_database_erd.tex)
 
-[6
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-] [7 <./figures/Rufa_Database.jpeg>] [8] [9]
-Overfull \hbox (0.55476pt too wide) in paragraph at lines 56--57
+[13] [14] [15] [16]
+Overfull \hbox (0.55476pt too wide) in paragraph at lines 89--90
 \OT1/cmr/m/n/12 Effective in-dex-ing is es-sen-tial for op-ti-miz-ing query per-for-mance in the RUFA database.
  []
 
-[10] [11]
-Overfull \hbox (14.94252pt too wide) in paragraph at lines 78--79
+[17] [18]
+Overfull \hbox (14.94252pt too wide) in paragraph at lines 111--112
 \OT1/cmr/m/n/12 The sys-tem main-tains a cen-tral \OT1/cmtt/m/n/12 tree[]-stats[]-by[]-location \OT1/cmr/m/n/12 ta-ble that stores pre-calculated
  []
 
-[12] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
-)
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 90.
-LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 91.
+) [19]
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 123.
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 124.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 92.
- [13] [14] [15] [16] [17]
-Underfull \hbox (badness 2080) in paragraph at lines 253--253
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 125.
+ [20] [21] [22] [23] [24]
+Underfull \hbox (badness 2080) in paragraph at lines 290--290
 []|\OT1/cmr/m/n/12 Database Ta-ble (No
  []
 
 
-Underfull \hbox (badness 2080) in paragraph at lines 254--254
+Underfull \hbox (badness 2080) in paragraph at lines 291--291
 []|\OT1/cmr/m/n/12 Database Ta-ble (In-
  []
 
-[18] [19]) (./chapters/chapter04.tex [20] [21]
+[25] [26] [27]) (./chapters/chapter04.tex [28]
 Chapter 4.
-[22
-
-]) (./chapters/chapter05.tex [23] [24]
-Chapter 5.
-[25
+<figures/rufa_system.png, id=643, 2074.75125pt x 1360.08125pt>
+File: figures/rufa_system.png Graphic file (type png)
+<use figures/rufa_system.png>
+Package pdftex.def Info: figures/rufa_system.png  used on input line 12.
+(pdftex.def)             Requested size: 411.93768pt x 270.03989pt.
+[29
 
 ]
-Overfull \hbox (14.63783pt too wide) in paragraph at lines 30--31
-[]\OT1/cmr/m/n/12 Scalability lim-i-ta-tion: O(nkt) com-plex-ity where n=points, k=clusters, t=iterations 
+Overfull \hbox (10.00421pt too wide) in paragraph at lines 25--25
+[]|\OT1/cmr/bx/n/12 Connection| 
  []
 
-[26]
-Overfull \hbox (4.8421pt too wide) in paragraph at lines 57--58
-\OT1/cmr/m/n/12 Agglomerative hi-er-ar-chi-cal clus-ter-ing was im-ple-mented to cre-ate multi-level tree group-
+[30 <./figures/rufa_system.png>]) (./chapters/chapter05.tex [31]
+Chapter 5.
+<figures/la_k_means.png, id=659, 1064.97874pt x 679.53876pt>
+File: figures/la_k_means.png Graphic file (type png)
+<use figures/la_k_means.png>
+Package pdftex.def Info: figures/la_k_means.png  used on input line 19.
+(pdftex.def)             Requested size: 208.13574pt x 132.80504pt.
+<figures/la_k_means_2.png, id=660, 727.71875pt x 679.53876pt>
+File: figures/la_k_means_2.png Graphic file (type png)
+<use figures/la_k_means_2.png>
+Package pdftex.def Info: figures/la_k_means_2.png  used on input line 26.
+(pdftex.def)             Requested size: 208.13574pt x 194.3549pt.
+
+Underfull \hbox (badness 5260) in paragraph at lines 27--27
+[][]|\OT1/cmr/m/it/12 In-suf-fi-cient seg-men-ta-tion at city
  []
 
-[27] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+[32
+
+] [33 <./figures/la_k_means.png> <./figures/la_k_means_2.png>]
+Overfull \hbox (3.21434pt too wide) in paragraph at lines 42--43
+\OT1/cmr/m/n/12 The pro-duc-tion im-ple-men-ta-tion com-bines Su-per-Clus-ter, a hi-er-ar-chi-cal point-clustering
+ []
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
-) [28] [29] [30] [31]) (./chapters/chapter06.tex [32]
+) [34]
+<figures/slo_voronoi.png, id=697, 1560.83125pt x 898.35625pt>
+File: figures/slo_voronoi.png Graphic file (type png)
+<use figures/slo_voronoi.png>
+Package pdftex.def Info: figures/slo_voronoi.png  used on input line 65.
+(pdftex.def)             Requested size: 411.93768pt x 237.09001pt.
+) (./chapters/chapter06.tex [35 <./figures/slo_voronoi.png>]
 Chapter 6.
+[36
 
-Overfull \hbox (3.73656pt too wide) in paragraph at lines 8--9
-[]\OT1/cmr/m/n/12 The sys-tem's com-pos-ite scor-ing method-ol-ogy, which in-cor-po-rates four equally weighted
+] [37])) (./bibliography/bib_info.tex) [38] [39
+
+]
+Overfull \hbox (3.4852pt too wide) in paragraph at lines 212--212
+\OT1/cmr/m/n/12 Large-Scale Ur-ban En-vi-ron-ments us-ing High-Resolution Mul-ti-spec-tral Im-agery''.
  []
 
-[33
-
-] [34])) [35] (./bibliography/bib_info.tex) [36] [37
-
-] (./appendices/outline.tex (./appendices/appendix01.tex [38]
+(./appendices/outline.tex (./appendices/appendix01.tex [40]
 Appendix A.
 
 Package lipsum Warning: Unknown language 'latin'. Hyphenation patterns for
 (lipsum)                'english' will be used instead.
 
-)) [39
+[41
 
-]
-
-Package caption Warning: Unused \captionsetup[subfigure] on input line 39.
-See the caption package documentation for explanation.
-
+]))
 
 Package caption Warning: Unused \captionsetup[subtable] on input line 40.
 See the caption package documentation for explanation.
@@ -1217,30 +1251,30 @@ See the caption package documentation for explanation.
 Package caption Warning: Unused \captionsetup[algorithm] on input line 104.
 See the caption package documentation for explanation.
 
-[40] (./main.aux)
+[42] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C5DE5B2E315617C48FD527D14BC36F93;13136.
+(rerunfilecheck)             Checksum: 2C778A1560464B3DD9B70FBE85F3DB6C;12094.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37428 strings out of 476106
- 699821 string characters out of 5793934
- 2013975 words of memory out of 5000000
- 58573 multiletter control sequences out of 15000+600000
- 567759 words of font info for 71 fonts, out of 8000000 for 9000
+ 38004 strings out of 476106
+ 714873 string characters out of 5793934
+ 2020975 words of memory out of 5000000
+ 59174 multiletter control sequences out of 15000+600000
+ 568413 words of font info for 73 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 99i,11n,107p,1428b,2120s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,11n,107p,1224b,2119s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/minerva/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tctt1200.600pk> </home/minerva/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on main.pdf (50 pages, 421413 bytes).
+Output written on main.pdf (52 pages, 3085702 bytes).
 PDF statistics:
- 906 PDF objects out of 1000 (max. 8388607)
- 812 compressed objects within 9 object streams
- 280 named destinations out of 1000 (max. 500000)
- 570 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 881 PDF objects out of 1000 (max. 8388607)
+ 781 compressed objects within 8 object streams
+ 244 named destinations out of 1000 (max. 500000)
+ 505 words of extra memory for PDF output out of 10000 (max. 10000000)
 
