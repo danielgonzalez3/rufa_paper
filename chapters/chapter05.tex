@@ -1,5 +1,4 @@
-\chapter{Clustering}
-Clustering Algorithms
+\chapter{Clustering} \label{sec:Clustering}
 
 The clustering component of the RUFA system provides efficient spatial grouping of urban tree data to enable rapid analysis and visualization at various geographic scales. This chapter presents the evolution of clustering algorithms implemented, from basic K-means to advanced SuperClustering with Voronoi diagrams, demonstrating progressive performance improvements for handling California's 6.6 million tree inventory records.
 
@@ -38,16 +37,10 @@ To address performance limitations, the second iteration implemented comprehensi
 
 \textbf{Caching Strategy:}
 \begin{itemize}
-\item \textbf{Centroid Cache:} Cached cluster centroids
-
-\textbf{Performance Improvements:}
-The caching implementation achieved significant performance gains:
+\item \textbf{Centroid Cache:} Cached cluster centroids across repeated queries for the same viewport
 \end{itemize}
 
-\begin{itemize}
-\item point1 foo bar baz
-\item point2 foo bar baz
-\end{itemize}
+Caching reduced redundant computation when users returned to previously viewed regions, but did not address the cost of recomputing clusters at each zoom level.
 
 \section{Additional Approaches}
 

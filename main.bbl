@@ -244,6 +244,7 @@
       \field{title}{Urban Tree Database and Allometric Equations}
       \field{type}{Gen. Tech. Rep.}
       \field{year}{2016}
+      \true{nocite}
       \field{pages}{86}
       \range{pages}{1}
       \verb{doi}

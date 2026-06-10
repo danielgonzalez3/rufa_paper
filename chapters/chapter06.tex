@@ -1,5 +1,4 @@
-% Chapter 5
-\chapter{CONCLUSIONS}
+\chapter{Conclusions} \label{sec:Conclusions}
 
 The development of the Rapid Urban Forest Assessment (RUFA) system represents a significant advancement in urban forestry management and evaluation. This thesis has presented a comprehensive approach to creating an automated tree assessment system that integrates aerial imagery analysis with extensive urban tree inventories to provide scalable and accurate urban forest assessments for California's census-designated places.
 
@@ -21,9 +20,7 @@ While the current RUFA system provides a solid foundation for urban forest asses
 
 \subsection{Allometry Feature}
 
-A significant enhancement planned for future versions of RUFA involves the integration of allometric equations to improve tree estimations.
-
-FOO BAR BAZ
+A significant enhancement planned for future versions of RUFA involves the integration of allometric equations to improve tree estimations. UFEI's AllomeTree tool \cite{ufeiAllometree} exposes species-specific equations for California's urban forest, predicting DBH, height, and canopy width from either DBH or tree age. Integrating these models would let RUFA estimate structural attributes for aerial-only detections and extend reporting to ecosystem services such as carbon storage and stormwater interception.
 
 
 
@@ -31,7 +28,7 @@ FOO BAR BAZ
 
 Several architectural improvements could enhance the system's scalability and functionality:
 
-\textbf{Real-time Data Integration}: FOO BAR BAZ
+\textbf{Real-time Data Integration}: Incremental materialized-view refresh triggered by inventory updates or new aerial detections would keep RUFA Scores current without recomputing every dependent view.
 
 \textbf{User Interface Expansion}: Development of mobile applications and enhanced web interfaces to support field data collection and real-time assessment updates. This would enable urban foresters to contribute data directly during field surveys and access RUFA assessments from mobile devices.
 
