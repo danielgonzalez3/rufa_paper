@@ -1,5 +1,31 @@
 ---
 
+# Why RUFA?
+
+Urban forestry programs need to compare **canopy, equity, diversity, and density** across hundreds of California cities — but the data lives in separate inventories, aerial detections, and census boundaries.
+
+<v-clicks>
+
+- **7M+** tree records across **702+** census-designated places
+- No standardized way to compare one city to another
+- Naive queries and map rendering break down at that scale
+
+</v-clicks>
+
+<div v-click class="mt-8 text-lg font-semibold text-green-700">
+This thesis builds the data systems that turn that raw input into a 0–100 RUFA Score and an interactive map.
+</div>
+
+<!--
+- So why RUFA?
+- We have rich urban forestry data, but it is fragmented across private arborist inventories, CAL FIRE records, and CNN-derived tree coordinates extracted from aerial imagery. These datasets use different formats, geographic boundaries, and standards, making it difficult to integrate them into a unified view of what's truly going on.
+- Planners still need to answer practical questions: how much canopy does this city have, are trees equitably distributed, is the species mix resilient, and which neighborhoods need intervention?
+- RUFA consolidates those sources and computes four metrics — canopy cover, trees per capita, TD-50 diversity, and tree evenness — into a single comparable score.
+- My contribution is the engineering underneath: sub-second database queries over the full inventory, and multi-scale map clustering over millions of points.
+-->
+
+---
+
 # Agenda
 
 1. **Introduction:** urban forest assessment problem
