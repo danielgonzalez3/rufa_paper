@@ -1,5 +1,38 @@
 ---
 
+# Before RUFA
+
+**Urban Forest Ecosystems Institute (UFEI)** at Cal Poly maintains a suite of public tools for tree selection, identification, and spatial analysis across California.
+
+<div class="grid grid-cols-2 gap-6 items-center mt-3">
+<div class="text-left text-base">
+
+- **[SelecTree](https://selectree.calpoly.edu/)** — tree selection guide used by **tens of thousands of visitors per month**
+- My prior work: engineering and infrastructure on the **SelecTree / UFEI stack** (shared MySQL, APIs, and deployment)
+- RUFA extends that same institute mission — from species-level guides to **statewide forest assessment**
+
+</div>
+<div>
+
+<img src="../public/selectree_screenshot.png" class="rounded shadow max-h-[42vh] max-w-full object-contain mx-auto" />
+
+</div>
+</div>
+
+<!--
+Before RUFA, UFEI already operated several tools that the public uses every day 
+
+This includes several projects such as SelecTree, California Big Trees, the Urban Tree Key, and the Urban Tree Inventory.
+
+SelecTree alone draws tens of thousands of monthly visitors. My contributions there were keeping the UFEI infrastructure reliable and scalable
+
+That is the same stack RUFA builds on, which is why, naturally, this project made sense for my thesis
+
+RUFA is a superset of prior tools, providing a normalized view for statewide forest assessment
+-->
+
+---
+
 # The Problem
 
 Urban and Community Forestry programs need to answer:
@@ -22,9 +55,31 @@ Urban and Community Forestry programs need to answer:
 </div>
 
 <!--
-Before diving into the technicals, we first must define the problem.
+This project emerged from ongoing urban forestry efforts led by the U.S. Forest Service and its partners.
 
-Effective urban forest management begins with measurement. California expanded its Urban and Community Forestry programs in response to these trends — but planners still need standardized answers to the questions on this slide.
+According to Green Schoolyards America (2022–2024), California has some of the lowest urban tree cover per capita in the U.S., with schoolyards averaging about 6.4% median canopy.
+
+A UC Davis study (2023) covering 2018–2022 found that approximately 85% of California elementary schools lost tree canopy, with the most severe losses occurring in the Central Valley.
+
+Research published in Urban Forestry & Urban Greening (2021–2024) found that California has experienced some of the highest urban tree cover losses in the U.S., driven by wildfire, drought, and pests.
+
+In response, California expanded its Urban and Community Forestry programs to support increased tree planting and maintenance in cities and schoolyards.
+
+To solve a problem as broad as urban forestry, you first need to measure it.
+
+Some of the questions we seek to answer are:
+
+How much tree canopy does a city have?
+
+How are trees distributed?
+
+Is the urban forest mix resilient?
+
+Which cities need intervention?
+
+Where should resources and efforts be prioritized?
+
+Effective urban forest management will begin with measurement.
 -->
 
 ---
@@ -68,28 +123,35 @@ RUFA begins with **two complementary datasets**:
 Together they support a single platform for planners and stakeholders.
 
 <div class="mt-6 text-lg font-semibold text-green-700">
-This thesis contributes the engineering underneath: sub-second database queries over the full inventory, and multi-scale map clustering over millions of points.
+  Contributions
 </div>
 
+<ul class="mt-2 text-lg font-semibold text-green-700 list-disc pl-6">
+  <li>Sub-second database queries over the full inventory.</li>
+  <li>Multi-scale map clustering over millions of points.</li>
+</ul>
+
 <!--
-So why RUFA, and how does it help solve the problem on the previous slide?
+So why RUFA, and how does it help solve the problem on the prior slides?
 
-RUFA starts from two data sources we already had: detailed inventory records and broad detector output from aerial imagery. Inventory gives species and structure where cities surveyed trees; detection fills spatial gaps with coordinates across the state.
+RUFA starts from two data sources we already had: detailed inventory records and broad detector tree data from aerial imagery. 
 
-Planners still need practical answers — canopy, equity, diversity, and where to intervene — on a common scale across California.
+Inventory gives species and structure where cities surveyed trees; 
+
+detection fills spatial gaps with coordinates across the state.
 
 My contribution focused on the system architecture that makes large-scale urban forestry analysis practical
 
-optimizing queries across more than seven million records and developing multi-scale spatial clustering techniques that maintain interactive performance across all map scales.
+optimizing queries across millions of records and developing multi-scale spatial clustering techniques that maintain interactive performance across all maps.
 -->
 
 ---
 
 # Agenda
 
-1. **Data Sources + System Design:** Inventories, CNN detection, and RUFA Score
-2. **Database Design:** spatial indexing, schema, and materialized views
-3. **System Design:** AWS architecture and data flow
+1. **RUFA Score and Tree Records:** Unified tree data and derived urban forest scoring metric.
+2. **Data Sources + System Design:** Inventories, CNN detection
+3. **Database Design:** spatial indexing, schema, and materialized views
 4. **Clustering:** K-means to SuperCluster and Voronoi
 
 <!--
@@ -101,7 +163,7 @@ optimizing queries across more than seven million records and developing multi-s
 class: text-lg
 ---
 
-# The Four Score Metrics
+# The RUFA Score
 
 Each component is binned **1–5** against the California distribution, then combined:
 
@@ -121,11 +183,21 @@ Equal weight · **0–100** scale · **100** = top quintile on all four · **25*
 </div>
 
 <!--
-So that score from earlier is defined via the canopy cover percentage, trees per capita, tree diversity, and the tree evenness metrics
+The formula for the rufa score is deliberately simple.
 
-each metric is ranked against every other place in California, binned from 1 to 5, and those four bins combine into a score out of 100.
+The binning step is what makes it powerful
 
-That is why a Sacramento planner can look at 68, Fresno at 55, and Stockton at 71 and know immediately who is ahead — and drill into whether the gap is canopy, density, diversity, or uneven distribution before zooming to a ZIP code.
+Take canopy cover percentage
+
+Instead of comparing raw canopy percentages across cities of wildly different sizes and geographies, you compare each city's canopy against the California distribution and assign it a 1-through-5 bin.
+
+A city in the second quintile on canopy gets a 2, regardless of whether that means 12% canopy or 35%.
+
+That normalization is what makes scores comparable across cities like Los Angeles and a small Central Valley town.
+
+The equal weighting is a design choice 
+
+Equal weighting keeps the system interpretable and neutral.
 
 The next four slides define each metric a little further
 -->
@@ -136,17 +208,29 @@ class: text-lg
 
 # Canopy Cover (CCP)
 
-**Canopy Cover Percentage** — proportion of land area covered by tree canopy
+**Canopy Cover Percentage** — share of land area covered by tree canopy
 
-- **How:** aggregate CNN-detected tree locations and canopy extent within each place, ZIP, or tract boundary (Ventura et al.)
-- **Why it matters:** shade and urban cooling, stormwater retention, reduced heat island effect
+<div class="grid grid-cols-2 gap-6 items-center mt-2">
+<div class="text-left text-base">
+
+- **Source:** [EarthDefine](https://www.earthdefine.com/treemap/) **2018** California canopy product — purchased for the state by the **U.S. Forest Service** ([USDA dataset](https://www.fs.usda.gov/detailfull/r5/communityforests/?cid=fseprd647442))
+- Percentage of land area with canopy where EarthDefine data overlaps the census-designated place boundary
+- Supports California's goal of a **10% urban canopy increase by 2035** (Urban Forestry Act of 1978)
+
+</div>
+<div>
+
+<img src="../public/ccp_earthdefine.png" class="rounded shadow max-h-[42vh] max-w-full object-contain mx-auto" />
+
+</div>
+</div>
 
 <!--
-CCP is primarily an aerial-detection metric. The Ventura pipeline identifies individual trees and their canopy extent from multispectral imagery; RUFA sums that coverage as a percentage of land area inside each boundary.
+Canopy Cover comes from EarthDefine's 2018 TreeMap for California, an open dataset the U.S. Forest Service purchased for the state.
 
-Inventory canopy spread fills gaps where cities have ground-truthed measurements. This is coverage, not species composition — it answers how much of the city is actually under canopy.
+For each city we calculate what share of land area is under canopy. EarthDefine's urban boundaries do not always align with census-designated places, so we compute the percentage only where canopy data exists for that place, but report it against the full place boundary.
 
-This is valuable as it provides shade, urban cooling, and reduced heat island effects
+Canopy cover is a standard urban forestry metric in California — the 1978 Urban Forestry Act set a statewide goal to increase urban canopy 10% by 2035. RUFA lets cities compare their CCP against every other community in the state.
 -->
 
 ---
@@ -157,16 +241,31 @@ class: text-lg
 
 **Trees Per Capita** — tree count relative to population size
 
-- **How:** total trees in a geographic area ÷ U.S. Census population for that area
-- **Tree count:** California Urban Forest Inventory records **plus** Ventura detections, deduplicated and assigned to the place, ZIP, or tract polygon
-- **Population:** census `human_population` stored in the RUFA database, propagated to ZIP and tract rollups
+<div class="grid grid-cols-2 gap-6 items-center mt-2">
+<div class="text-left text-base">
+
+- Trees in the city's urban area ÷ residents in that city
+- **Tree count:** UFEI **TreeDetector** data (Ventura et al. aerial detections)
+- **Population:** **2020 U.S. Decennial Census**, stored as `human_population` in the RUFA database
+
+</div>
+<div>
+
+<img src="../public/tpc_screenshot.png" class="rounded shadow max-h-[42vh] max-w-full object-contain mx-auto" />
+
+</div>
+</div>
 
 <!--
-trees per capita is a density-equity metric, not total tree count. A large city can have many trees but still score low if the population is high and canopy is uneven.
+Trees per capita
 
-Both data sources feed the numerator; census data feeds the denominator. That pairing is what lets RUFA compare a Central Valley town to Los Angeles on the same scale.
+For each city we divide tree count within the urban area by the number of people living there.
 
-human population derives from recent census data
+The numerator is UFEI's TreeDetector dataset — aerial-detected tree coordinates assigned to each place. The denominator is population from the 2020 Census
+
+Trees per capita answers a simple question: how many trees per resident does this city have? It measures overall access to trees and supports goals like planting one tree per resident statewide.
+
+It is an equity metric, not a total-tree count — a large city can have many trees but still score low if population is high or canopy is uneven.
 -->
 
 ---
@@ -177,19 +276,17 @@ class: text-lg
 
 **Tree Diversity (TD)** — TD-50 index (Love et al., 2022)
 
-- **How:** rank species by abundance; count how many species are needed to reach **≥ 50%** of all trees in the area
-- **Source:** inventory species counts only — the detector provides coordinates, not species labels
+- Rank species by abundance; count how many species are needed to reach **≥ 50%** of all trees in the area
+- **Source:** inventory species counts only; the detector provides coordinates, not species labels
 - **Low TD-50** (e.g., 2): a few species dominate — high vulnerability to pests and disease
 - **High TD-50** (e.g., 20): abundance spread across many species — greater ecological resilience
 
 <!--
-TD-50 is the smallest k where the cumulative share of the k most abundant species reaches half the forest. 
+Tree diversity measures future resilience. California forests face heat, drought, and pests — if one species dominates and fails, canopy loss can be severe.
 
-RUFA evaluates this from manual inventory records assigned to each geographic unit at refresh time.
+TD-50 is the smallest number of species needed to account for half the trees. RUFA computes it from inventory records at refresh time.
 
-If an Arizona Ash makes up 40% of a city's trees, TD-50 stays low and one pest outbreak can wipe out a large share of canopy. 
-
-Higher TD-50 means no single species carries disproportionate risk.
+Low TD-50 means dominance — if Arizona ash is 40% of a city, one outbreak wipes out a large share of canopy. High TD-50 means risk is spread across many species.
 -->
 
 ---
@@ -200,58 +297,87 @@ class: text-lg
 
 **Tree Evenness** — how uniformly trees are distributed **spatially** within a place
 
-- **How:** subdivide the place into **census tracts**; compute tree density (trees/km²) in each block
+- **How:** subdivide the place into **census blocks**; compute tree density (trees/km²) in each block
 - **TE = standard deviation** of those block-level densities
 - **Higher TE → less even access** — blocks deviate further from the city-wide average density
 - **Example:** TE of 250 means blocks typically sit about **±250 trees/km²** above or below the city average
 
 <!--
-TE is not species evenness. 
+Tree evenness is not about species — it is about where trees sit on the map. 
 
-It measures whether residents across neighborhoods experience similar tree density, or whether trees cluster in one part of the city.
+We split each city into census blocks, count trees in each block, and convert that to density in trees per square kilometer.
 
-A place can have acceptable city-wide trees per capita but high tree evenness if canopy concentrates in parks or wealthier districts. TE surfaces that spatial imbalance inside the boundary using the census tract data.
+Tree Evenness is the standard deviation of those block densities. 
+
+A high score means neighborhoods diverge from the city average — trees cluster in parks or wealthier districts while other blocks often fall short.
+
+A city can have decent trees per capita overall and still score poorly on evenness if the distribution is not equitable.
 -->
 
 ---
-class: text-lg
+layout: default
 ---
 
 # System Pipeline
 
-```
-Inventory Records          CNN Aerial Detection
-(species, size, location)  (detected tree coordinates)
-         │                          │
-         └──────────┬───────────────┘
-                    ▼
-         Point-in-Polygon Assignment
-         (R-tree spatial lookup)
-                    │
-         ┌──────────┴──────────────┐
-         ▼                         ▼
-   Relational Schema          Materialized Views
-   (3NF, MySQL/MariaDB)       (cached score rollups)
-         │
-         ▼
-   RUFA Score (0–100)
-   per city / ZIP / tract
-         │
-         ▼
-   Interactive Map
-   (SuperCluster + Voronoi)
-```
+<div class="flex flex-col items-center gap-1.5 w-full max-w-6xl mx-auto text-sm leading-tight">
+
+<div class="grid grid-cols-2 gap-5 w-full">
+<div class="py-3 px-4 rounded-lg bg-green-800 text-white text-center shadow">
+<strong class="text-lg">Inventory Records</strong><br />
+<span class="opacity-90 text-xs">species, size, location</span>
+</div>
+<div class="py-3 px-4 rounded-lg bg-green-800 text-white text-center shadow">
+<strong class="text-lg">CNN Aerial Detection</strong><br />
+<span class="opacity-90 text-xs">detected tree coordinates</span>
+</div>
+</div>
+
+<div class="text-xl text-green-700 leading-none">▼</div>
+
+<div class="py-3 px-4 rounded-lg bg-green-100 border-2 border-green-700 text-center w-full shadow">
+<strong class="text-lg">Point-in-Polygon Assignment</strong><br />
+<span class="text-green-900 text-xs">R-tree spatial lookup</span>
+</div>
+
+<div class="text-xl text-green-700 leading-none">▼</div>
+
+<div class="grid grid-cols-2 gap-5 w-full">
+<div class="py-3 px-4 rounded-lg bg-green-50 border-2 border-green-600 text-center shadow">
+<strong class="text-lg">Relational Schema</strong><br />
+<span class="text-xs">3NF · MySQL / MariaDB</span>
+</div>
+<div class="py-3 px-4 rounded-lg bg-green-50 border-2 border-green-600 text-center shadow">
+<strong class="text-lg">Materialized Views</strong><br />
+<span class="text-xs">cached score rollups</span>
+</div>
+</div>
+
+<div class="text-xl text-green-700 leading-none">▼</div>
+
+<div class="grid grid-cols-2 gap-5 w-full">
+<div class="py-3 px-4 rounded-lg bg-green-700 text-white text-center shadow">
+<strong class="text-lg">RUFA Score (0–100)</strong><br />
+<span class="opacity-90 text-xs">per city · ZIP · tract</span>
+</div>
+<div class="py-3 px-4 rounded-lg bg-green-800 text-white text-center shadow">
+<strong class="text-lg">Interactive Map</strong><br />
+<span class="opacity-90 text-xs">SuperCluster + Voronoi</span>
+</div>
+</div>
+
+</div>
 
 <!--
-explain diagram
+explain top down
 -->
 
 ---
 
 # AWS Architecture Overview
 
-<div class="flex justify-center mt-4">
-<img src="../public/rufa_system.png" class="max-h-[35vh] max-w-full rounded shadow object-contain" />
+<div class="flex justify-center items-center mt-2 h-[72vh] -translate-y-[105px]">
+<img src="../public/rufa_system.png" class="max-h-full max-w-full rounded shadow object-contain" />
 </div>
 
 <!--

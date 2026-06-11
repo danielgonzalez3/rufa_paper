@@ -24,11 +24,10 @@ Every design decision — indexing strategy, normalization level, refresh mechan
 
 <!--
 - Before diving into the specific techniques, it is worth establishing what the database actually has to do.
-- It is not enough to just store records correctly — it has to support three very different workloads simultaneously.
+- It is not enough to just store records correctly — it has to support very different workloads simultaneously.
 - First, spatial ingestion: assigning millions of points to polygons.
-- Second, analytical aggregation: computing canopy cover, TD-50, and the other metrics over those assignments. IE tree diversity in Los Angeles
-- Third, low-latency serving: answering dashboard queries in under 200 milliseconds.
-- A naive relational design can handle any one of these, but handling all three at once requires careful design.
+- Second, analytical aggregation: computing trees per capita, TD-50, and the other metrics over those assignments. IE tree diversity in Los Angeles.
+- A naive relational design can handle any one of these, but handling both at once requires careful design.
 -->
 
 ---
@@ -39,14 +38,14 @@ The schema separates raw data, geographic boundaries, and precomputed results.
 
 <div class="text-[0.95em] leading-7 mt-4">
 
-| Table | Role |
+| Role | Table |
 |---|---|
-| `rufa_place`, `rufa_zip`, `rufa_tract` | polygon geometry |
-| `tree_inventory` | raw tree records |
-| `tree_detected` | CNN tree coordinates |
-| `tree_stats_by_location` | ready-to-display scores |
-| `mv_refresh_schedule` | what needs to be updated |
-| `mv_version_control` | which version is live |
+| polygon geometry | `rufa_place`, `rufa_zip`, `rufa_tract` |
+| raw tree records | `tree_inventory` |
+| CNN tree coordinates | `tree_detected` |
+| ready-to-display scores | `tree_stats_by_location` |
+| what needs to be updated | `mv_refresh_schedule` |
+| which version is live | `mv_version_control` |
 
 </div>
 
@@ -62,19 +61,57 @@ The next slide shows how these tables connect.
 
 # Schema Diagram
 
-<div class="flex justify-center mt-1">
-<img src="../public/rufa_database_erd_fit.png" class="max-h-[37vh] max-w-full rounded shadow object-contain" />
+<div class="flex justify-center items-center mt-0 h-[64vh]">
+<img src="../public/rufa_database_erd_fit.png" class="max-h-full max-w-full rounded shadow object-contain" />
 </div>
 
 <!--
-Walk through the ERD left to right: inventory and detector points feed in as raw data; place, ZIP, and tract tables hold polygon geometry; intersection tables link geographic levels; metrics tables store precomputed scores at each rollup.
+explain from the source
 
-With this structure in place, the next challenge is assigning millions of points to the right polygons efficiently — that is where spatial indexing comes in.
+rufa city is the main table
+
+mention zip and tract metrics
+-->
+
+---
+
+# B+ Tree Indexes
+
+<div class="grid grid-cols-2 gap-6 items-center mt-1">
+<div class="text-left text-base">
+
+A **B+ tree index** is a sorted, layered lookup structure. The database follows branches to narrow the search instead of reading the whole table.
+
+- **Row by row:** O(n) — scan millions of records
+- **B+ tree:** O(log n) — jump toward the matching rows
+- MySQL / MariaDB use B+ trees for standard indexes (including primary keys)
+
+This idea comes back when we talk about spatial indexes and dashboard query performance.
+
+</div>
+<div class="flex justify-center">
+<img src="../public/b_tree_index.webp" class="rounded shadow max-h-[48vh] max-w-full object-contain" />
+</div>
+</div>
+
+<!--
+B+ trees vs row per row ingestion is like
+
+reading every page of a phone book versus opening to the right letter and going straight to the name
+
+As the diagram shows, values are organized in branches from low to high.
+
+The database compares the search key at each level and narrows the branch instead of scanning the whole table, allowing us to reach our desired field in O(log(n)) time instead of O(n).
+
+That same idea can extend to spatial indexing next
 -->
 
 ---
 
 # Naive Proximity Search
+
+<div class="grid grid-cols-2 gap-6 items-start mt-2">
+<div>
 
 The simple idea: draw a box around the area we care about, then ask the database for trees inside it.
 
@@ -97,11 +134,16 @@ Show trees near the target.
 This works for small data. At RUFA scale, the box can still include a huge number of trees, so the database may still check far too many rows.
 </div>
 
+</div>
+<div class="flex justify-center items-center">
+<img src="../public/naive_proximity_search.png" class="rounded shadow max-h-[52vh] max-w-full object-contain mx-auto" />
+</div>
+</div>
+
 <!--
 - RUFA at it's core boils down to a problem of proximity search
 - A problem solved by day to day tools like google maps for example
 - in short we are given sets of dynamics points and are looking to see if they fit within a static polygon, ie: rufa polygon. This can be a census tract, zip, or census place
-
 - Given this, how do we retrieve the data we need
 - The baseline and what most will reach for is to add a bounding box around the latitude and longitude ranges.
 - This bounding box is cheap to express as a range query on lat and lon columns.
@@ -307,7 +349,6 @@ This gives RUFA both speed and correctness: it avoids scanning everything, but s
 - Phase one is fast but approximate: the MBR of a polygon is larger than the polygon itself, so you can get false positives where a point is inside the MBR but outside the actual polygon.
 - That is fine — the R-tree is not meant to give you exact answers, it is meant to give you a very small candidate set very quickly.
 - Phase two is slow but exact: ST_Contains runs the actual point-in-polygon algorithm on the polygon's true boundary.
-- Because you are only running it on 2 to 5 candidates rather than 702, the total cost is tiny.
 - The correctness benefit is significant: California has many irregular polygon shapes — coastal cities, cities with holes, census tracts that follow highways.
 - Without exact containment testing, you would misassign trees near boundaries.
 - With the two-phase approach, you get both speed and accuracy.
@@ -315,7 +356,7 @@ This gives RUFA both speed and correctness: it avoids scanning everything, but s
 
 ---
 
-# Why MySQL / MariaDB
+# MySQL / MariaDB
 
 RUFA uses MySQL/MariaDB because it fits the existing Selectree system.
 
@@ -327,15 +368,14 @@ The important point: MySQL still supports the spatial index RUFA needs for fast 
 - This is an honest engineering tradeoff.
 - PostgreSQL with PostGIS is objectively more capable for spatial workloads.
 - It has better index types, a much richer spatial function library, native coordinate reference system transformations, and true materialized views with concurrent refresh.
-- But all of those require migrating away from the existing infrastructure, which means rewriting every Selectree integration, every data pipeline, and retraining every user.
-- RUFA's thesis is that you can deliver a high-quality spatial system within the MySQL constraint — and the benchmark at the end of this section shows that the 95% performance improvement achievable with MySQL's spatial indexing is sufficient for the dashboard use case.
+- But all of those require migrating away from the existing infrastructure, which means rewriting every Selectree integration and every data pipeline.
+- RUFA's thesis is that you can deliver a high-quality spatial system within the MySQL constraint
 -->
 
 ---
 
-# Materialized Views
+# RUFA should not recompute scores every time
 
-RUFA should not recompute scores every time someone opens the dashboard.
 
 For one city, the score needs several expensive metrics:
 
@@ -406,7 +446,7 @@ Dashboard gets the finished version.
 - The flag accumulates over time as inventory records come in.
 - The batch job — which runs on a cron schedule — opens a cursor over all rows where needs_refresh is TRUE and calls CalculateRUFAScore for each one.
 - This is where the expensive computation happens, but it happens off the critical path, not during a dashboard request.
-- The atomic swap in layer three is the most technically interesting part: RENAME TABLE in MySQL acquires a metadata lock and swaps the table names in a single atomic DDL operation.
+- The atomic swap in layer three is the most technically interesting part: RENAME TABLE in MySQL acquires a metadata lock and swaps the table names in a single atomic operation.
 - Dashboard queries will either see the old complete table or the new complete table — they can never see a half-populated temporary table.
 - This eliminates transient inconsistency entirely.
 -->

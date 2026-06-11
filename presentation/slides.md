@@ -27,8 +27,6 @@ Urban Forest Ecosystems Institute
 Good afternoon. I'm Daniel Gonzalez, and today I'll present my master's thesis on the Rapid Urban Forest Assessment system, also known as RUFA.
 
 RUFA is a UFEI platform that combines tree inventories and aerial detection into a comparable score and interactive map for California communities.
-
-This thesis addresses two engineering challenges: efficeint management of spatial points in real time, and atomic delivery of complex data.
 -->
 
 ---
@@ -38,23 +36,23 @@ class: text-left
 
 # Acknowledgments
 
-- **Professor Matt Ritter** and **Jenn Yost** — Entrusting me with the UFEI infrastructure and the RUFA project
-- **Dr. Alex Dekhtyar** — continuous guidance and insightful feedback throughout this research
+- **Matt Ritter** and **Jenn Yost** — Entrusting me with the UFEI infrastructure and the RUFA project
+- **Alex Dekhtyar** — continuous guidance and insightful feedback throughout this research
 - **Cami Pawlak** — for RUFA data and scoring formulas essential to implementation and testing
 - **SJSU team** (Rosa Chang, Cameron Squire, Dylan Lewis, Eric Tong, Kristian Markov, Katherin Clark) — for developing the RUFA front end
 
 <!--
-Before we begin, I want to thank the people who made this work possible.
+Before we begin, I wanted to thank the people who made this work possible.
 
 Matt Ritter and Jenn Yost at UFEI gave me access to the infrastructure and the RUFA project.
 
 Alex Dekhtyar guided the thesis from start to finish. 
 
-Cami Pawlak(pav-lock), who provided the data, formulas that define the RUFA Score, and support on the project. 
+Cami Pawlak(pav-lock), who provided the data, formulas that define the RUFA Score, and support throughout the project. 
 
-The San Jose State team, who helped support the build of the dashboard.
+The San Jose State team, which helped support the build of the dashboard.
 
-I also want to acknowledge everyone else who supported this research along the way.
+as well as anyone else who supported this research along the way.
 -->
 
 ---

@@ -4,7 +4,23 @@ layout: section
 
 # Conclusion
 
-Demo · Questions · Future work
+Contributions · Questions
+
+<!--
+To wrap up: this thesis is not the RUFA Score formula itself but engineering underneath.
+
+On the data side, we normalized inventory and detector records, assigned them to census boundaries with R-tree pruning plus containment checks, and precomputed scores in materialized views so the dashboard reads indexed tables instead of running heavy aggregations live.
+
+The benchmark showed indexed MySQL bringing city queries under two hundred milliseconds.
+
+On the map side, we reproduced the clustered BigQuery starting from K-means, learning where it broke, and landing on SuperCluster.
+
+Together, that is a system that ingests two data sources, computes the four-component RUFA Score, and serves it interactively at statewide scale.
+
+If asked about next steps: AllomeTree for structural estimates on aerial-only trees, incremental refresh as inventory grows, mobile field capture, and geographic expansion — the architecture is not California-specific.
+
+Thank you — happy to take questions, or walk through the live demo.
+-->
 
 ---
 

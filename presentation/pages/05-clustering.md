@@ -4,32 +4,51 @@ layout: section
 
 # Clustering
 
-K-means · Grid-based · Hierarchical · SuperCluster + Voronoi
+K-means · SuperCluster · Voronoi
 
 ---
 
-# The Visualization Problem
+# What UFEI Wanted on the Map
 
-Rendering 7 million individual tree points on a web map is not feasible.
+When RUFA was first proposed, UFEI already had a **Google BigQuery** dashboard with a working clustered tree map:
+
+<div class="flex justify-center mt-3">
+<img src="../public/ventura_result.gif" class="rounded shadow max-h-[48vh] max-w-full object-contain mx-auto" />
+</div>
+
+- **Zoom-aware clusters** — density summaries at state, city, and neighborhood scale
+- **Per-region metrics** — tree density and species diversity visible as you explore
+- **Interactive pan and zoom** — without reloading or recomputing the full dataset
+
+<!--
+When RUFA was scoped, we were pointed to the BigQuery UI UFEI was already using
+
+where tree points aggregated into clusters as you zoomed, with enough detail to see forest patterns across California.
+
+That prototype proved the product vision. Our job was to reproduce and extend that clustering behavior inside the new RUFA stack.
+-->
+
+---
+
+# Why This Is Hard
 
 <div class="grid grid-cols-2 gap-4 mt-6">
 <div>Browser maps degrade around <strong>10k–50k</strong> visible elements</div>
-<div><strong>7M</strong> markers is unusable at city scale</div>
-<div>Overlapping dots hide spatial patterns</div>
-<div>Users need zoom-appropriate aggregation</div>
+<div><strong>500k</strong> markers is unusable at city scale</div>
+<div>Overlapping dots hide spatial patterns that may be relevant</div>
+<div>Clusters must update instantly on pan and zoom; no full-dataset recomputation</div>
 </div>
 
-**Requirements**: zoom-adaptive aggregation, preserved forest metrics per region, fast re-render on pan/zoom, GeoJSON-compatible output.
+**Requirements**: zoom-adaptive aggregation, preserved forest metrics per region, fast re-render on pan/zoom.
 
 <!--
-- This is a frontend performance problem as much as it is an algorithmic one.
-- Web map libraries like Leaflet and Mapbox GL render points using the browser's canvas or WebGL pipeline.
-- Even with WebGL acceleration, rendering 6.6 million points simultaneously saturates GPU memory and fills the screen with undifferentiated color — there is no information gain from showing every individual tree at the city scale.
-- What you actually want is: at zoom level 5 (state scale), show me regional density clusters.
-- At zoom level 10 (neighborhood scale), show me individual neighborhoods.
-- At zoom level 15 (street scale), show me individual tree points.
-- Each zoom level needs a different level of aggregation, and switching between them needs to be instant.
-- That is the core requirement the clustering system has to satisfy.
+The BigQuery UI hid the hard part — it ran on Google's infrastructure. In RUFA we had to deliver the same visual on a MySQL-backed API with millions of points per city.
+
+Web maps saturate around tens of thousands of rendered elements. 
+
+At statewide scale you need regional clusters; at neighborhood scale you need local density — and switching zoom levels has to feel instant.
+
+That is why this chapter walks through the K-means, hierarchical clustering, and finally SuperCluster with Voronoi cells solutions.
 -->
 
 ---
@@ -176,33 +195,28 @@ Each zoom level has its own spatial index, so RUFA can quickly answer: "which cl
 
 # Voronoi Diagrams — Spatial Regions
 
-SuperCluster gives you **cluster centers**. Voronoi diagrams give you **spatial regions**.
+SuperCluster gives **cluster centers**. Voronoi turns them into **interactive map regions**.
 
-```python
-def process_voronoi(cluster_points, zoom):
-    vor = Voronoi(cluster_points)          # Fortune's algorithm — O(n log n)
-    polygons = create_polygons_from_voronoi(vor)
+<div class="grid grid-cols-2 gap-6 items-center mt-2">
+<div class="text-left text-base">
 
-    for polygon in polygons:
-        area_km2 = calculate_area(polygon)
-        trees_in_cell = count_trees_in_polygon(polygon)
+- Each cell = trees closest to one cluster center
+- Per cell: **tree density** (trees/km²) and **TD-50** diversity
+- Same `calculate_td_50` as the RUFA Score but now at map-cell scale
+- Exported as **GeoJSON** for the dashboard
 
-        tree_density  = trees_in_cell / area_km2
-        diversity     = calculate_td_50(polygon)   # same function from data sources
+</div>
+<div>
 
-        add_feature_to_geojson(polygon, tree_density, diversity)
-```
+<img src="../public/vornoi_result.gif" class="rounded shadow max-h-[42vh] max-w-full object-contain mx-auto" />
 
-Voronoi tessellation turns cluster centers into map regions. Each cell supports tree density, TD-50 diversity, color mapping, and cached GeoJSON output.
+</div>
+</div>
 
 <!--
-- A Voronoi diagram takes a set of points — in this case, the SuperCluster centroids — and partitions the plane into cells such that every location in a cell is closer to that cell's seed point than to any other seed.
-- This gives you natural spatial regions for every cluster.
-- Fortune's algorithm computes this in O(n log n) time using a sweep line approach.
-- The practical benefit is that these cells give the user a geographic region to interact with on the map — not just a dot.
-- When you hover over a Voronoi cell, you see: this cell covers 12 square kilometers, contains 4,200 trees, has a TD-50 of 8.
-- That is much more informative than a single point marker.
-- Notice that the calculate_td_50 function here is the same function we looked at in the data sources section — the same algorithm runs at city scale for the RUFA Score and at Voronoi cell scale for the map visualization. Code reuse across scales.
+SuperCluster gives you dots; Voronoi gives you regions. Every location in a cell is closer to that cell's seed than any other — so each polygon is a natural neighborhood for density and diversity stats.
+
+Fortune's algorithm builds the tessellation in O(n log n). Hover a cell, and you see area, tree count, and TD-50 — much richer than a point marker alone.
 -->
 
 ---
@@ -223,11 +237,11 @@ Output capabilities:
 Valid **GeoJSON** supports Leaflet, Mapbox GL, and Deck.gl. Density maps are color-coded per Voronoi cell, TD-50 is calculated per cell.
 
 <!--
-- The complexity comparison tells the story clearly.
-- K-means at O(nkt) would take over two hours for the full dataset.
-- Grid-based is fast but lacks the spatial richness.
-- Hierarchical is simply infeasible at this scale.
-- SuperCluster plus Voronoi achieves the O(n log n) complexity of the best sorting algorithms, processes the full 7 million point dataset in under a minute.
-- Once the cache is built, the marginal cost of serving the clustering visualization to any number of dashboard users is essentially zero.
-- The GeoJSON output format is the universal language of web mapping — any modern map library can consume it directly without transformation.
+So where did all of that land us?
+
+K-means was the obvious first try, but at seven million trees it would take on the order of two hours per run — and you would still re-run it every time someone zooms. Grid-based methods are fast but too coarse. Full hierarchical clustering does not scale at all.
+
+SuperCluster plus Voronoi is the combination that actually fits RUFA. One index build, about forty-five seconds upfront, and then pan and zoom are cheap because we are reading from a precomputed hierarchy — not re-clustering the whole state on every interaction.
+
+The output is plain GeoJSON: density and TD-50 per Voronoi cell, ready for the dashboard. That closes the loop back to what the BigQuery prototype had — but now it runs on our stack.
 -->
