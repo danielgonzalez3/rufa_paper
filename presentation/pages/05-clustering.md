@@ -167,7 +167,7 @@ Each zoom level has its own spatial index, so RUFA can quickly answer: "which cl
 - Instead of running the same expensive radius search against the original tree points for every zoom level, SuperCluster reuses the previous level.
 - At the most detailed zoom level, it clusters actual points. The next zoom level clusters those clusters using weighted centroids.
 - Because every level has fewer inputs than the level below it, the amount of work drops quickly as the map zooms out.
-- This idea is hierarchical greedy clustering, popularized by Dave Leaver's Leaflet.markercluster plugin.
+- This idea is hierarchical greedy clustering, popularized by Dave Leaver's Leaflet. markercluster plugin.
 - SuperCluster also builds a spatial index at each zoom level. That solves two expensive operations: finding nearby points within a radius and finding clusters inside the current map viewport.
 - The result is fast enough for millions of points and good enough for interactive map browsing.
 -->

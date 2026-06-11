@@ -4,7 +4,7 @@ layout: section
 
 # Database Design
 
-Proximity search · Spatial indexing · Schema · Materialized views · Performance
+Schema · Spatial indexing · Materialized views · Performance
 
 ---
 
@@ -26,10 +26,50 @@ Every design decision — indexing strategy, normalization level, refresh mechan
 - Before diving into the specific techniques, it is worth establishing what the database actually has to do.
 - It is not enough to just store records correctly — it has to support three very different workloads simultaneously.
 - First, spatial ingestion: assigning millions of points to polygons.
-- Second, analytical aggregation: computing canopy cover, TD-50, and the other metrics over those assignments.
+- Second, analytical aggregation: computing canopy cover, TD-50, and the other metrics over those assignments. IE tree diversity in Los Angeles
 - Third, low-latency serving: answering dashboard queries in under 200 milliseconds.
 - A naive relational design can handle any one of these, but handling all three at once requires careful design.
-- The 200ms target comes directly from the indexed benchmark result I will show at the end of this section.
+-->
+
+---
+
+# Relational Schema
+
+The schema separates raw data, geographic boundaries, and precomputed results.
+
+<div class="text-[0.95em] leading-7 mt-4">
+
+| Table | Role |
+|---|---|
+| `rufa_place`, `rufa_zip`, `rufa_tract` | polygon geometry |
+| `tree_inventory` | raw tree records |
+| `tree_detected` | CNN tree coordinates |
+| `tree_stats_by_location` | ready-to-display scores |
+| `mv_refresh_schedule` | what needs to be updated |
+| `mv_version_control` | which version is live |
+
+</div>
+
+<!--
+Before we talk about spatial indexes, here is the data model they support.
+
+(go through it)
+
+The next slide shows how these tables connect.
+-->
+
+---
+
+# Schema Diagram
+
+<div class="flex justify-center mt-1">
+<img src="../public/rufa_database_erd_fit.png" class="max-h-[37vh] max-w-full rounded shadow object-contain" />
+</div>
+
+<!--
+Walk through the ERD left to right: inventory and detector points feed in as raw data; place, ZIP, and tract tables hold polygon geometry; intersection tables link geographic levels; metrics tables store precomputed scores at each rollup.
+
+With this structure in place, the next challenge is assigning millions of points to the right polygons efficiently — that is where spatial indexing comes in.
 -->
 
 ---
@@ -59,40 +99,17 @@ This works for small data. At RUFA scale, the box can still include a huge numbe
 
 <!--
 - RUFA at it's core boils down to a problem of proximity search
-- we are given sets of dynamics points and are looking to see if they fit within a static polygon
+- A problem solved by day to day tools like google maps for example
+- in short we are given sets of dynamics points and are looking to see if they fit within a static polygon, ie: rufa polygon. This can be a census tract, zip, or census place
 
-- The baseline approach for proximity search and what most reach for first is a bounding box or circle.
-- The bounding box is cheap to express as a range query on lat and lon columns.
-- At small scale — say, a single city's trees — this works fine.
-- At RUFA scale, step 2 is the bottleneck.
-- In a dense city like Los Angeles, a bounding box around a neighborhood could contain tens of thousands of candidate rows before ST_Distance gets a chance to filter.
-- If the lat and lon columns have ordinary B-tree indexes, each index prunes one dimension but not both simultaneously.
+- Given this, how do we retrieve the data we need
+- The baseline and what most will reach for is to add a bounding box around the latitude and longitude ranges.
+- This bounding box is cheap to express as a range query on lat and lon columns.
+- In a dense city like Los Angeles, a bounding box around a neighborhood could contain tens of thousands of rows.
+- even If the lat and lon columns have ordinary B-tree indexes, each index prunes one dimension but not both simultaneously.
 - The result is that even a moderately selective lat range still leaves a huge candidate set for the lon filter to scan.
 - That is the 1D index saturation problem.
-- This is whats unique to the rufa problem as most indexes in databases design revolve optimization around a single field
--->
-
----
-
-# Why Separate Lat/Lon Indexes Fail
-
-Adding indexes on latitude and longitude helps, but it does not fully solve the problem.
-
-The database can quickly find a latitude range or a longitude range. But a map search is really asking a two-dimensional question: "which trees are inside this shape?"
-
-That is why RUFA needs a real **spatial index**.
-
-Instead of searching rows one by one, the database first narrows the map down to a small candidate area.
-
-<!--
-- This is a subtle but important point.
-- B+ tree indexes are designed for ordered 1D data.
-- They are excellent at answering "give me all rows where latitude is between 34.0 and 34.1" — that is a single contiguous range in the index.
-- But the geographic query you actually want — "give me all rows within 500 meters of this point" — is a 2D circle, not a 1D range.
-- You can decompose a circle into lat and lon ranges, but the intersection of two B-tree range scans is inefficient in most query planners.
-- The engine will use one index, scan that result set, and then apply the other condition as a filter on the already-fetched rows.
-- For a city like San Francisco with enormous tree density per square kilometer, even a narrow lat band contains enough rows to make this painful.
-- Spatial indexes solve this by encoding both dimensions into a single index entry.
+- And that is whats unique to the rufa problem as most indexes in databases design revolve optimization around a single field
 -->
 
 ---
@@ -104,9 +121,9 @@ Instead of searching rows one by one, the database first narrows the map down to
 
 **Hash-Based**
 
-Split the map into boxes, like a grid. Records get a bucket key.
+Split the map into boxes, like a grid.
 
-Fast and easy. Cell size is the key tradeoff — too big and you over-include, too small and you fragment.
+Fast and easy. Cell size is the key tradeoff; too big and you over-include, too small and you fragment.
 
 **Example: Geohash**
 
@@ -117,7 +134,7 @@ Fast and easy. Cell size is the key tradeoff — too big and you over-include, t
 
 Organize space hierarchically. Each level subdivides the level above.
 
-Better for irregular density — denser areas get more subdivision automatically.
+Better for irregular density (hint hint)
 
 **Examples: Quadtree, R-tree**
 
@@ -178,9 +195,9 @@ Each character of the string halves the cell size.
 
 The main issues with this approach
 
-Nearby points can fall into different GeoHashes, so you miss close matches unless you also check neighboring cells for example AC and CA
-Cells aren’t consistent in real-world distance due to Earth curvature and latitude effects
-Fixed precision levels, GeoHash uses discrete lengths which may miss points when applying polygons
+- Nearby points can fall into different GeoHashes, so you miss close matches unless you also check neighboring cells for example if we place LA in the middle of all 4 quadrants
+- Additionally, Cells aren’t consistent in real-world distance due to Earth's curvature and latitude effects
+- Fixed precision levels, GeoHash uses discrete lengths, which may miss points when applying polygons
 -->
 
 ---
@@ -298,53 +315,6 @@ This gives RUFA both speed and correctness: it avoids scanning everything, but s
 
 ---
 
-# Relational Schema
-
-The schema separates raw data, geographic boundaries, and precomputed results.
-
-<div class="text-[0.95em] leading-7 mt-4">
-
-| Table | Role |
-|---|---|
-| `rufa_place`, `rufa_zip`, `rufa_tract` | polygon geometry |
-| `tree_inventory` | raw tree records |
-| `tree_detected` | CNN tree coordinates |
-| `tree_stats_by_location` | ready-to-display scores |
-| `mv_refresh_schedule` | what needs to be updated |
-| `mv_version_control` | which version is live |
-
-</div>
-
-<!--
-- The normalization in this slide is not just academic tidiness. It is what makes the refresh system work correctly.
-- If place metadata and tree statistics were denormalized into one big table, updating a city's population count would require touching every tree record for that city.
-- By separating the geographic boundary tables from the statistics tables from the inventory tables, updates are isolated and the cascade logic becomes tractable.
-- The first three tables hold raw data — polygons, inventory points, detected points.
-- The next table — tree_stats_by_location — is the precomputed serving layer that the dashboard actually reads from.
-- The last two tables are operational metadata: which rows are stale, which version is currently being served.
-- The next slide shows how all of these connect.
--->
-
----
-
-# Schema Diagram
-
-<div class="flex justify-center mt-1">
-<img src="../public/rufa_database_erd_fit.png" class="max-h-[37vh] max-w-full rounded shadow object-contain" />
-</div>
-
-<!--
-- This is the ERD from Chapter 3 of the thesis.
-- Walk through it left to right: inventory and detector points on the far left feed into the system as raw data.
-- In the center, the rufa_city table is the human-facing view of a place — it stores the precomputed stats like td_50, trees_per_km, trees_per_capita.
-- The place, zip, and tract tables on the right hold the actual polygon geometry that the R-tree indexes.
-- The two intersection tables in the middle — rufa_place_zip_intersection and rufa_place_tract_intersection — encode which ZIPs and tracts belong to which place. These are the relationships the cascade logic walks when a city's data changes.
-- At the bottom, the zip_metrics and tract_metrics tables hold the precomputed scores for those finer geographies.
-- The whole structure is normalized to 3NF — every fact lives in exactly one place, and updates propagate through the intersection and metrics tables in a controlled way.
--->
-
----
-
 # Why MySQL / MariaDB
 
 RUFA uses MySQL/MariaDB because it fits the existing Selectree system.
@@ -357,8 +327,6 @@ The important point: MySQL still supports the spatial index RUFA needs for fast 
 - This is an honest engineering tradeoff.
 - PostgreSQL with PostGIS is objectively more capable for spatial workloads.
 - It has better index types, a much richer spatial function library, native coordinate reference system transformations, and true materialized views with concurrent refresh.
-- MongoDB with geospatial indexes would give you schema flexibility for heterogeneous tree attributes.
-- Oracle Spatial and ArcGIS Enterprise exist for enterprise use.
 - But all of those require migrating away from the existing infrastructure, which means rewriting every Selectree integration, every data pipeline, and retraining every user.
 - RUFA's thesis is that you can deliver a high-quality spatial system within the MySQL constraint — and the benchmark at the end of this section shows that the 95% performance improvement achievable with MySQL's spatial indexing is sufficient for the dashboard use case.
 -->
@@ -405,7 +373,7 @@ The `location_relationships` table stores those connections so updates can casca
 - A user looking at a map can see city-level scores, then zoom into ZIP codes, then census tracts — all on the same screen.
 - If a city's tree inventory was just updated but the ZIP scores haven't refreshed yet, the user would see inconsistent numbers: the city score says 72 but the ZIPs inside it average to 58.
 - That mismatch destroys trust in the data.
-- The location_relationships table is what prevents this: it is a pre-computed mapping from "this city" to "all the ZIPs and tracts that intersect it," built at database setup time.
+- This location_relationships table is what prevents this: it is a pre-computed mapping from "this city" to "all the ZIPs and tracts that intersect it," built at database setup time.
 - When the refresh stored procedure processes a stale city, it looks up all related geographic levels in location_relationships and marks them for refresh too.
 - The cascade is automatic and the dashboard always sees a logically consistent snapshot.
 -->
@@ -457,13 +425,9 @@ Dataset: **7.2 million records**, 702 cities. Each scenario executed **100 times
 | MySQL table, no index | 2,890 ms | ±290 ms | 0.35 q/s |
 | **MySQL table, B-tree index** | **145 ms** | **±25 ms** | **6.90 q/s** |
 
-<v-click>
-
 Main takeaway: putting the data in MySQL and adding the right index brings dashboard reads under the 200 ms target.
 
 That is why RUFA precomputes the hard work, then serves simple indexed reads.
-
-</v-click>
 
 <!--
 - Let me walk through the four strategies.
