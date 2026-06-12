@@ -453,10 +453,45 @@ Dashboard gets the finished version.
 
 ---
 
-# Performance Benchmark
+# Performance Benchmark — Setups Tested
 
-Test environment: AWS EC2 **t3.large** (2 vCPU, 8 GB RAM), **MariaDB 10.5.23** on Amazon RDS.
-Dataset: **7.2 million records**, 702 cities. Each scenario executed **100 times**.
+Compared **four storage and indexing strategies** on a production-scale dataset:
+
+| Setup | Description |
+|---|---|
+| **S3 — single CSV** | Entire 7.2M-record file on object storage |
+| **S3 — per-city CSV** | One file per city, fetch only what you need |
+| **MySQL — no index** | Relational table, full table scan on city lookup |
+| **MySQL — tree index** | Same table, indexed city column |
+
+**Test environment:** AWS EC2 **t3.large** (2 vCPU, 8 GB RAM) · **MariaDB 10.5.23** on Amazon RDS
+
+**Dataset:** **7.2 million** tree records across **702** California cities
+
+<!--
+In order to benchmark our database  
+
+we set up a manifest for fetching all the points of a given census place and run this test for all given cities
+
+the first set up involves us fetching of the full s3 csv file directly and then parsing the desired city
+
+the second being a pre split set of csvs where we essentially directly fetch all the points for the city
+
+the third being the raw points bootstrapped onto the MySQL database without an index
+
+and the last being the same table with the previous discussed index applied to the database
+
+we run this test on a t3.large AWS machine, talking to MariaDB on RDS, using the full California inventory scale — 7.2 million rows, 702 cities. Give or take
+-->
+
+---
+
+# Performance Benchmark — Workload & Results
+
+**Workload:** city-specific query — retrieve all tree inventory rows for one census place (typical dashboard request)
+
+- **100 executions** per setup · timing via MySQL profiling
+- **Target:** sub-**200 ms** dashboard reads
 
 | Storage Strategy | Avg. Latency | Std. Dev | Throughput |
 |---|---:|---:|---:|
@@ -465,17 +500,18 @@ Dataset: **7.2 million records**, 702 cities. Each scenario executed **100 times
 | MySQL table, no index | 2,890 ms | ±290 ms | 0.35 q/s |
 | **MySQL table, B-tree index** | **145 ms** | **±25 ms** | **6.90 q/s** |
 
-Main takeaway: putting the data in MySQL and adding the right index brings dashboard reads under the 200 ms target.
-
-That is why RUFA precomputes the hard work, then serves simple indexed reads.
+**Takeaway:** indexed MySQL brings reads under the 200 ms target — RUFA precomputes the hard work, then serves simple indexed lookups.
 
 <!--
-- Let me walk through the four strategies.
-- The S3 single-CSV approach requires downloading and parsing the entire 7.2 million record file for every query — hence the 8.4 second average and the huge standard deviation, which reflects network latency variance.
-- The per-city CSV files are better: you only download the relevant city's file.
-- But you still pay file system overhead and CSV parsing on every request.
-- The unindexed MySQL table is slightly faster than per-city CSVs because there is no file system overhead — but without an index, every city-name query is an O(n) full table scan across 7.2 million rows.
-- Adding a B-tree index on the city name column brings the latency down to 145 milliseconds — a 95% reduction — because the index turns a full scan into an O(log n) tree traversal followed by a small set of row fetches.
-- The standard deviation of 25 milliseconds is low, which means consistent performance even under load.
-- The storage overhead of 300 megabytes for a 95% latency improvement is an obvious engineering win.
+The workload mirrors what the dashboard actually does: given a city name, return that city's trees.
+
+Each setup ran 100 times for stable averages. 
+
+S3 single-file pays download and parse cost on all 7.2 million rows every time. 
+
+Per-city CSV is better but still parses on every request.
+
+Unindexed MySQL avoids file I/O but scans O(n). 
+
+Lastly, the B-tree index on city drops latency to 145 ms — a 95% improvement — with low variance, which is what you need for interactive use.
 -->

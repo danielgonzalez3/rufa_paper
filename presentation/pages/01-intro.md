@@ -151,11 +151,11 @@ optimizing queries across millions of records and developing multi-scale spatial
 
 1. **RUFA Score and Tree Records:** Unified tree data and derived urban forest scoring metric.
 2. **Data Sources + System Design:** Inventories, CNN detection
-3. **Database Design:** spatial indexing, schema, and materialized views
+3. **Database Design:** Spatial indexing, schema, and materialized views
 4. **Clustering:** K-means to SuperCluster and Voronoi
 
 <!--
-- I'm going to walk through five sections today
+- I'm going to walk through these four sections today
 - If you have questions as we go, feel free to hold them until the end or interrupt if something is unclear.
 -->
 
