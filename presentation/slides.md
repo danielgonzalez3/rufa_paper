@@ -26,7 +26,7 @@ Urban Forest Ecosystems Institute
 <!--
 Good afternoon. I'm Daniel Gonzalez, and today I'll present my master's thesis on the Rapid Urban Forest Assessment system, also known as RUFA.
 
-RUFA is a UFEI platform that combines tree inventories and aerial detection into a comparable score and interactive map for California communities.
+RUFA is a UFEI platform that combines tree inventories and aerial detection into a comparable scores and interactive maps for California communities.
 -->
 
 ---

@@ -74,7 +74,11 @@ Each center shifts to the middle of its trees. Repeat.
 </div>
 </div>
 
-<div class="mt-5">
+<div class="mt-4">
+<img src="../public/k_means.gif" class="rounded shadow max-h-[28vh] max-w-full object-contain mx-auto" />
+</div>
+
+<div class="mt-4">
 Works on small data. At <strong>7M trees</strong> it is too slow, and one fixed <code>k</code> cannot handle both dense downtowns and sparse suburbs at the same time (Los Angeles VS Half Moon Bay)
 </div>
 

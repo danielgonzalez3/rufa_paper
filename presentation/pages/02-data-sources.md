@@ -83,10 +83,9 @@ The join works through **point-in-polygon spatial assignment**: detected coordin
 
 <!--
 - The complementarity here is important to understand.
-- Canopy cover percentage and trees per capita can be estimated from detected points alone — you just need locations and a population figure.
+- Trees per capita can be estimated from detected points alone — you just need locations and a population figure.
 - But TD-50 species diversity requires species counts, which only come from the inventory.
-- So in a city with good inventory coverage, all four metrics are computed from inventory data.
-- In a city with poor inventory but good aerial detection, you still get the spatial metrics, but diversity scores are limited or absent.
+- In a polygon with poor inventory but good aerial detection, you still get the spatial metrics, but diversity scores are limited or absent.
 - The system is designed to degrade gracefully rather than refuse to compute a score entirely.
 -->
 
@@ -105,4 +104,6 @@ Two datasets are not enough — RUFA must turn them into comparable scores at sc
 Inventory and detection answer different questions, but the dashboard needs one coherent view.
 
 Before we score anything, every tree point has to land in the right polygon, inventory species data has to attach where it exists, and the results have to roll up cleanly across geographic levels — fast enough for an interactive map.
+
+Although we have points and formulas, we need a strategy for fetching both efficiently
 -->

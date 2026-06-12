@@ -25,8 +25,11 @@ Every design decision — indexing strategy, normalization level, refresh mechan
 <!--
 - Before diving into the specific techniques, it is worth establishing what the database actually has to do.
 - It is not enough to just store records correctly — it has to support very different workloads simultaneously.
+
 - First, spatial ingestion: assigning millions of points to polygons.
+
 - Second, analytical aggregation: computing trees per capita, TD-50, and the other metrics over those assignments. IE tree diversity in Los Angeles.
+
 - A naive relational design can handle any one of these, but handling both at once requires careful design.
 -->
 
@@ -284,7 +287,7 @@ Needs a real tree structure, not just a string column.
 - This density-adaptive behavior is the key advantage over fixed-grid approaches like geohash. Los Angeles and a rural county can coexist in the same index without forcing a compromise on cell size.
 - The implementation cost is higher because you need an actual tree data structure with parent-child pointers and rebalancing logic when records get inserted or deleted.
 - Search is top-down: start at the root, find which quadrant contains the query point, descend into that quadrant, repeat until the cell is small enough to enumerate.
-- For "find k nearest things" you keep descending until you have at least k candidates in your cell and possibly its neighbors.
+- For "find N nearest things" you keep descending until you have at least k candidates in your cell and possibly its neighbors.
 - Quadtrees are great for points. For polygons — which is what RUFA actually needs — R-trees do this better, which is the next slide.
 -->
 
@@ -349,7 +352,7 @@ This gives RUFA both speed and correctness: it avoids scanning everything, but s
 - Phase one is fast but approximate: the MBR of a polygon is larger than the polygon itself, so you can get false positives where a point is inside the MBR but outside the actual polygon.
 - That is fine — the R-tree is not meant to give you exact answers, it is meant to give you a very small candidate set very quickly.
 - Phase two is slow but exact: ST_Contains runs the actual point-in-polygon algorithm on the polygon's true boundary.
-- The correctness benefit is significant: California has many irregular polygon shapes — coastal cities, cities with holes, census tracts that follow highways.
+- The correctness benefit is significant: California has many irregular polygon shapes — coastal cities, cities with holes, census tracts that follow highways. Multi Polygons as well
 - Without exact containment testing, you would misassign trees near boundaries.
 - With the two-phase approach, you get both speed and accuracy.
 -->
@@ -391,10 +394,11 @@ Instead, RUFA computes the scores ahead of time and stores them in `tree_stats_b
 The dashboard reads the saved answer quickly. The expensive recalculation happens later, in the background.
 
 <!--
+- The other key point is score calculation, rufa should not recompute a score for a polygion each time
 - A materialized view is a cached query result stored as a table.
 - PostgreSQL has native support for them with REFRESH CONCURRENTLY, which lets you rebuild the cached table without locking out readers.
 - MariaDB does not have this feature.
-- What RUFA does instead is maintain regular tables that hold the same pre-computed results, and then manages the refresh lifecycle explicitly: a trigger marks a row as stale when underlying data changes, a batch job recomputes the stale rows on a schedule, and an atomic table swap publishes the new results.
+- What RUFA does instead is maintain regular tables that hold the pre-computed results, and then manages the refresh lifecycle explicitly: a trigger marks a row as stale when underlying data changes, a batch job recomputes the stale rows on a schedule, and an atomic table swap publishes the new results.
 - This is more operational complexity than native materialized views, but it achieves the same outcome — dashboard queries read from fast, pre-computed tables rather than running expensive aggregations on the fly.
 -->
 
@@ -469,6 +473,8 @@ Compared **four storage and indexing strategies** on a production-scale dataset:
 **Dataset:** **7.2 million** tree records across **702** California cities
 
 <!--
+So how did we do?
+
 In order to benchmark our database  
 
 we set up a manifest for fetching all the points of a given census place and run this test for all given cities
@@ -498,7 +504,7 @@ we run this test on a t3.large AWS machine, talking to MariaDB on RDS, using the
 | S3 — single CSV file | 8,450 ms | ±1,230 ms | 0.12 q/s |
 | S3 — per-city CSV files | 3,120 ms | ±480 ms | 0.32 q/s |
 | MySQL table, no index | 2,890 ms | ±290 ms | 0.35 q/s |
-| **MySQL table, B-tree index** | **145 ms** | **±25 ms** | **6.90 q/s** |
+| **MySQL table, tree index** | **145 ms** | **±25 ms** | **6.90 q/s** |
 
 **Takeaway:** indexed MySQL brings reads under the 200 ms target — RUFA precomputes the hard work, then serves simple indexed lookups.
 
@@ -513,5 +519,5 @@ Per-city CSV is better but still parses on every request.
 
 Unindexed MySQL avoids file I/O but scans O(n). 
 
-Lastly, the B-tree index on city drops latency to 145 ms — a 95% improvement — with low variance, which is what you need for interactive use.
+Lastly, the tree index on city drops latency to 145 ms — a 95% improvement — with low variance, which is what you need for interactive use.
 -->

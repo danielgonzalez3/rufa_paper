@@ -22,9 +22,11 @@
 <!--
 Before RUFA, UFEI already operated several tools that the public uses every day 
 
-This includes several projects such as SelecTree, California Big Trees, the Urban Tree Key, and the Urban Tree Inventory.
+This includes several projects such as SelecTree, California Big Trees, the Urban Tree Key, and the standalone Urban Tree Inventory.
 
-SelecTree alone draws tens of thousands of monthly visitors. My contributions there were keeping the UFEI infrastructure reliable and scalable
+SelecTree alone draws tens of thousands of monthly visitors and is one of our long on going projects. 
+
+My contributions there are mostly around keeping the infrastructure reliable and scalable
 
 That is the same stack RUFA builds on, which is why, naturally, this project made sense for my thesis
 
@@ -185,6 +187,8 @@ Equal weight · **0–100** scale · **100** = top quintile on all four · **25*
 <!--
 The formula for the rufa score is deliberately simple.
 
+It takes the binned values of the 4 metrics and scales it to a percentage
+
 The binning step is what makes it powerful
 
 Take canopy cover percentage
@@ -228,9 +232,13 @@ class: text-lg
 <!--
 Canopy Cover comes from EarthDefine's 2018 TreeMap for California, an open dataset the U.S. Forest Service purchased for the state.
 
-For each city we calculate what share of land area is under canopy. EarthDefine's urban boundaries do not always align with census-designated places, so we compute the percentage only where canopy data exists for that place, but report it against the full place boundary.
+For each city we calculate what share of land area is under canopy. 
 
-Canopy cover is a standard urban forestry metric in California — the 1978 Urban Forestry Act set a statewide goal to increase urban canopy 10% by 2035. RUFA lets cities compare their CCP against every other community in the state.
+EarthDefine's urban boundaries do not always align with census-designated places, so Cami computed the percentage only where canopy data exists for that place, but reports it against the full boundary.
+
+Canopy cover is a standard urban forestry metric in California — the 1978 Urban Forestry Act set a statewide goal to increase urban canopy 10% by 2035. 
+
+RUFA lets cities compare their CCP against every other community in the state.
 -->
 
 ---
