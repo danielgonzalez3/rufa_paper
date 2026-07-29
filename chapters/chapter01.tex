@@ -2,6 +2,8 @@
 
 Urban and community forestry (U\&CF) programs play a crucial role in nurturing and enhancing urban green spaces, contributing significantly to the environmental, social, and economic well-being of urban communities. To support these initiatives, the Urban Forest Ecosystems Institute (UFEI) at Cal Poly develops tools to evaluate and report on U\&CF activities across California. The Rapid Urban Forest Assessment (RUFA) system is UFEI's web-based platform for integrating, analyzing, and disseminating comprehensive urban forestry data. RUFA serves as a centralized hub for data collection and analysis, providing actionable insights into the health and management of urban green spaces while integrating resources with other UFEI products and services, such as the California tree identification portal SelecTree (\href{https://selectree.calpoly.edu}{selectree.calpoly.edu}).
 
+Comparable measurement remains difficult at statewide scale. California school campuses, for example, have only 6.4\% median tree canopy in student zones \cite{greenSchoolyards2024}, and about 85\% of urban public elementary schools lost some canopy between 2018 and 2022 \cite{velasquez2025}. RUFA responds by turning inventory and aerial-detection records into a composite score and multi-scale maps for California census-designated places.
+
 This thesis addresses two engineering problems encountered in building RUFA. The system must query and aggregate over seven million tree records across hundreds of California census-designated places in real time, yet naive storage and retrieval strategies produce multi-second latencies unsuitable for an interactive dashboard. It must also render spatial summaries at multiple zoom levels without recomputing cluster assignments on every pan or zoom event. Meeting these requirements drove the database design choices in \autoref{sec:Database} and the clustering work in \autoref{sec:Clustering}.
 
 The specific contributions of this thesis are as follows:
@@ -9,8 +11,8 @@ The specific contributions of this thesis are as follows:
     \item A MySQL relational schema with indexing and materialized views for sub-second city-level queries over RUFA's tree inventory, aerial-detection, and geographic boundary data.
     \item A cascading materialized-view architecture that pre-computes and propagates RUFA Score metrics across census places, ZIP codes, tracts, and counties.
     \item Evaluation of spatial indexing strategies for assigning tree points to administrative polygons at RUFA scale.
-    \item An AWS-based three-tier architecture for the RUFA dashboard.
     \item Progressive clustering algorithms, from K-means to SuperClustering with Voronoi diagrams, for multi-scale map visualization.
+    \item An AWS three-tier deployment compatible with the existing SelecTree stack, summarized as supporting infrastructure in \autoref{sec:SystemDesign}.
 \end{itemize}
 
-The rest of this document is organized as follows. \autoref{sec:Background} establishes the institutional and scientific context for RUFA. The following Chapters present the system in depth, covering data storage and query performance, deployment architecture, and interactive map clustering, before \autoref{sec:Conclusions} summarizes the contributions and discusses future work.
+The rest of this document is organized as follows. \autoref{sec:Background} establishes UFEI context, the RUFA Score, and the inventory and detection data sources. \autoref{sec:Database} covers spatial indexing, schema design, and materialized views. \autoref{sec:SystemDesign} summarizes deployment. \autoref{sec:Clustering} develops the map-clustering pipeline. \autoref{sec:Conclusions} summarizes the contributions and discusses future work.

@@ -2,6 +2,8 @@
 
 In this Chapter, we delve into the rationale behind the relational database for the RUFA project, a system designed to track tree records across various geographic and ecological dimensions. A relational database provides an ideal solution for managing structured data, such as tree attributes, geographic metrics, and hierarchical relationships between places, zip codes, and tracts. We will explore the MySQL workflow, emphasizing data integrity, normalization principles, materialized views for efficient querying, and indexing strategies to optimize database performance. These features ensure scalable, accurate, and high-performance data management for the RUFA project.
 
+At production scale, the workload includes on the order of 7.2 million detector coordinates and tens of millions of inventory-related rows across 702+ places, with interactive dashboard reads targeting well under 200\,ms. Before a score can be served, each tree point must be assigned to the correct administrative polygons---a two-dimensional locality problem for which independent one-dimensional indexes are a poor fit \cite{samet2006}.
+
 
 \section{Proximity Point Search}
 
@@ -11,6 +13,7 @@ The most intuitive proximity search pattern is to draw a bounding box around a t
 
 \subsection{Why Separate Latitude/Longitude Indexes Plateau}
 
+Ordinary B-tree indexes on latitude or longitude alone improve one dimension at a time. A latitude range becomes a horizontal band; longitude then filters that band after many candidates remain. Dense urban inventories make that residual set large enough that interactive dashboards feel unresponsive. Spatial indexes encode both dimensions in one access path \cite{samet2006}.
 
 \subsubsection{Hash-Based Spatial Partitioning}
 

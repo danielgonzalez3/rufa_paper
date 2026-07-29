@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.2 $
+% $ biblatex bbl format version 3.3 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -18,8 +18,67 @@
 
 
 \refsection{0}
-  \datalist[entry]{nty/global//global/global}
-    \entry{cattell2011}{article}{}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{agafonkin2016supercluster}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=5394be402511a06b16521a9b58b8acbf}{%
+           family={Agafonkin},
+           familyi={A\bibinitperiod},
+           given={Vladimir},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{fullhash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{fullhashraw}{5394be402511a06b16521a9b58b8acbf}
+      \strng{bibnamehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{authorbibnamehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{authornamehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{authorfullhash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{authorfullhashraw}{5394be402511a06b16521a9b58b8acbf}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://blog.mapbox.com/clustering-millions-of-points-on-a-map-with-supercluster-272046ec5c97}}
+      \field{note}{Mapbox blog post introducing hierarchical greedy clustering and the Supercluster library}
+      \field{title}{Clustering millions of points on a map with {Supercluster}}
+      \field{year}{2016}
+    \endentry
+    \entry{arthur2007kmeanspp}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=9490d5d9532dc965f9f300a7a5c9fa13}{%
+           family={Arthur},
+           familyi={A\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=b6fa64c3195f752823d0759db3cbca91}{%
+           family={Vassilvitskii},
+           familyi={V\bibinitperiod},
+           given={Sergei},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {SIAM}%
+      }
+      \strng{namehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{fullhash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{fullhashraw}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{bibnamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authorbibnamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authornamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authorfullhash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authorfullhashraw}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the Eighteenth Annual ACM-SIAM Symposium on Discrete Algorithms}
+      \field{title}{k-means{++}: The Advantages of Careful Seeding}
+      \field{year}{2007}
+      \field{pages}{1027\bibrangedash 1035}
+      \range{pages}{9}
+    \endentry
+    \entry{cattell2011}{article}{}{}
       \name{author}{1}{}{%
         {{hash=4150d492f71967b65dec2918f6486019}{%
            family={Cattell},
@@ -32,10 +91,12 @@
       }
       \strng{namehash}{4150d492f71967b65dec2918f6486019}
       \strng{fullhash}{4150d492f71967b65dec2918f6486019}
+      \strng{fullhashraw}{4150d492f71967b65dec2918f6486019}
       \strng{bibnamehash}{4150d492f71967b65dec2918f6486019}
       \strng{authorbibnamehash}{4150d492f71967b65dec2918f6486019}
       \strng{authornamehash}{4150d492f71967b65dec2918f6486019}
       \strng{authorfullhash}{4150d492f71967b65dec2918f6486019}
+      \strng{authorfullhashraw}{4150d492f71967b65dec2918f6486019}
       \field{sortinit}{C}
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{labelnamesource}{author}
@@ -51,7 +112,7 @@
       \verb 10.1145/1978915.1978919
       \endverb
     \endentry
-    \entry{codd1970}{article}{}
+    \entry{codd1970}{article}{}{}
       \name{author}{1}{}{%
         {{hash=575e6ec8dab1a34c19f7021664baaccc}{%
            family={Codd},
@@ -64,10 +125,12 @@
       }
       \strng{namehash}{575e6ec8dab1a34c19f7021664baaccc}
       \strng{fullhash}{575e6ec8dab1a34c19f7021664baaccc}
+      \strng{fullhashraw}{575e6ec8dab1a34c19f7021664baaccc}
       \strng{bibnamehash}{575e6ec8dab1a34c19f7021664baaccc}
       \strng{authorbibnamehash}{575e6ec8dab1a34c19f7021664baaccc}
       \strng{authornamehash}{575e6ec8dab1a34c19f7021664baaccc}
       \strng{authorfullhash}{575e6ec8dab1a34c19f7021664baaccc}
+      \strng{authorfullhashraw}{575e6ec8dab1a34c19f7021664baaccc}
       \field{sortinit}{C}
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{labelnamesource}{author}
@@ -83,7 +146,30 @@
       \verb 10.1145/362384.362685
       \endverb
     \endentry
-    \entry{finkel1974}{article}{}
+    \entry{earthdefineTreemap}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a3f19b3b0abfd8e92ca67fd312e3b470}{%
+           family={{EarthDefine}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \strng{fullhash}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \strng{fullhashraw}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \strng{bibnamehash}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \strng{authorbibnamehash}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \strng{authornamehash}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \strng{authorfullhash}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \strng{authorfullhashraw}{a3f19b3b0abfd8e92ca67fd312e3b470}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.earthdefine.com/treemap/}}
+      \field{note}{Accessed 2026}
+      \field{title}{{TreeMap}: High-Resolution Tree Canopy Cover}
+      \field{year}{2018}
+    \endentry
+    \entry{finkel1974}{article}{}{}
       \name{author}{2}{}{%
         {{hash=458098e59c20065c4fbc70d8d47adcfc}{%
            family={Finkel},
@@ -101,10 +187,12 @@
       }
       \strng{namehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
       \strng{fullhash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
+      \strng{fullhashraw}{e1a8c85a410cf8e1a24ef6ca8d40b566}
       \strng{bibnamehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
       \strng{authorbibnamehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
       \strng{authornamehash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
       \strng{authorfullhash}{e1a8c85a410cf8e1a24ef6ca8d40b566}
+      \strng{authorfullhashraw}{e1a8c85a410cf8e1a24ef6ca8d40b566}
       \field{sortinit}{F}
       \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
       \field{labelnamesource}{author}
@@ -120,7 +208,60 @@
       \verb 10.1007/BF00288933
       \endverb
     \endentry
-    \entry{guttman1984}{inproceedings}{}
+    \entry{fortune1987}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=d02b4e8e2ea11262609e99936cdb20be}{%
+           family={Fortune},
+           familyi={F\bibinitperiod},
+           given={Steven},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{d02b4e8e2ea11262609e99936cdb20be}
+      \strng{fullhash}{d02b4e8e2ea11262609e99936cdb20be}
+      \strng{fullhashraw}{d02b4e8e2ea11262609e99936cdb20be}
+      \strng{bibnamehash}{d02b4e8e2ea11262609e99936cdb20be}
+      \strng{authorbibnamehash}{d02b4e8e2ea11262609e99936cdb20be}
+      \strng{authornamehash}{d02b4e8e2ea11262609e99936cdb20be}
+      \strng{authorfullhash}{d02b4e8e2ea11262609e99936cdb20be}
+      \strng{authorfullhashraw}{d02b4e8e2ea11262609e99936cdb20be}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Algorithmica}
+      \field{title}{A Sweepline Algorithm for {Voronoi} Diagrams}
+      \field{volume}{2}
+      \field{year}{1987}
+      \field{pages}{153\bibrangedash 174}
+      \range{pages}{22}
+      \verb{doi}
+      \verb 10.1007/BF01840357
+      \endverb
+    \endentry
+    \entry{greenSchoolyards2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=ace0172fceaec6be64a47b37faac23ca}{%
+           family={{Green Schoolyards America}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{ace0172fceaec6be64a47b37faac23ca}
+      \strng{fullhash}{ace0172fceaec6be64a47b37faac23ca}
+      \strng{fullhashraw}{ace0172fceaec6be64a47b37faac23ca}
+      \strng{bibnamehash}{ace0172fceaec6be64a47b37faac23ca}
+      \strng{authorbibnamehash}{ace0172fceaec6be64a47b37faac23ca}
+      \strng{authornamehash}{ace0172fceaec6be64a47b37faac23ca}
+      \strng{authorfullhash}{ace0172fceaec6be64a47b37faac23ca}
+      \strng{authorfullhashraw}{ace0172fceaec6be64a47b37faac23ca}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.greenschoolyards.org/tree-canopy-equity}}
+      \field{note}{California K--12 public school campuses; 6.4\% median tree canopy in student zones. Research conducted with GreenInfo Network, 2022--2024}
+      \field{title}{Schoolyard Tree Canopy Equity Study}
+      \field{year}{2024}
+    \endentry
+    \entry{guttman1984}{inproceedings}{}{}
       \name{author}{1}{}{%
         {{hash=93ca8a901b127c76e5ebc9e5c435b4b1}{%
            family={Guttman},
@@ -133,10 +274,12 @@
       }
       \strng{namehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
       \strng{fullhash}{93ca8a901b127c76e5ebc9e5c435b4b1}
+      \strng{fullhashraw}{93ca8a901b127c76e5ebc9e5c435b4b1}
       \strng{bibnamehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
       \strng{authorbibnamehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
       \strng{authornamehash}{93ca8a901b127c76e5ebc9e5c435b4b1}
       \strng{authorfullhash}{93ca8a901b127c76e5ebc9e5c435b4b1}
+      \strng{authorfullhashraw}{93ca8a901b127c76e5ebc9e5c435b4b1}
       \field{sortinit}{G}
       \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
       \field{labelnamesource}{author}
@@ -150,7 +293,32 @@
       \verb 10.1145/602259.602266
       \endverb
     \endentry
-    \entry{livesley2016}{article}{}
+    \entry{leaver2012markercluster}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e08a896be3769959b920753e9583f492}{%
+           family={Leaver},
+           familyi={L\bibinitperiod},
+           given={Dave},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{e08a896be3769959b920753e9583f492}
+      \strng{fullhash}{e08a896be3769959b920753e9583f492}
+      \strng{fullhashraw}{e08a896be3769959b920753e9583f492}
+      \strng{bibnamehash}{e08a896be3769959b920753e9583f492}
+      \strng{authorbibnamehash}{e08a896be3769959b920753e9583f492}
+      \strng{authornamehash}{e08a896be3769959b920753e9583f492}
+      \strng{authorfullhash}{e08a896be3769959b920753e9583f492}
+      \strng{authorfullhashraw}{e08a896be3769959b920753e9583f492}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://leafletjs.com/2012/08/20/guest-post-markerclusterer-0-1-released.html}}
+      \field{note}{Guest post on Leaflet introducing hierarchical greedy marker clustering}
+      \field{title}{{Leaflet.MarkerCluster} 0.1 Released}
+      \field{year}{2012}
+    \endentry
+    \entry{livesley2016}{article}{}{}
       \true{moreauthor}
       \true{morelabelname}
       \name{author}{3}{}{%
@@ -175,10 +343,12 @@
       }
       \strng{namehash}{dea084a79b374748b05ce4c7866595be}
       \strng{fullhash}{dea084a79b374748b05ce4c7866595be}
+      \strng{fullhashraw}{dea084a79b374748b05ce4c7866595be}
       \strng{bibnamehash}{dea084a79b374748b05ce4c7866595be}
       \strng{authorbibnamehash}{dea084a79b374748b05ce4c7866595be}
       \strng{authornamehash}{dea084a79b374748b05ce4c7866595be}
       \strng{authorfullhash}{dea084a79b374748b05ce4c7866595be}
+      \strng{authorfullhashraw}{dea084a79b374748b05ce4c7866595be}
       \field{sortinit}{L}
       \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
       \field{labelnamesource}{author}
@@ -187,7 +357,38 @@
       \field{title}{The Urban Forest and Ecosystem Services: Impacts on Urban Water, Heat, and Pollution Cycles at the Tree, Street, and City Scale}
       \field{year}{2016}
     \endentry
-    \entry{love2022}{article}{}
+    \entry{lloyd1982}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=9eebbf108faad4338040e6421c636640}{%
+           family={Lloyd},
+           familyi={L\bibinitperiod},
+           given={S.\bibnamedelimi P.},
+           giveni={S\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{9eebbf108faad4338040e6421c636640}
+      \strng{fullhash}{9eebbf108faad4338040e6421c636640}
+      \strng{fullhashraw}{9eebbf108faad4338040e6421c636640}
+      \strng{bibnamehash}{9eebbf108faad4338040e6421c636640}
+      \strng{authorbibnamehash}{9eebbf108faad4338040e6421c636640}
+      \strng{authornamehash}{9eebbf108faad4338040e6421c636640}
+      \strng{authorfullhash}{9eebbf108faad4338040e6421c636640}
+      \strng{authorfullhashraw}{9eebbf108faad4338040e6421c636640}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Information Theory}
+      \field{number}{2}
+      \field{title}{Least Squares Quantization in {PCM}}
+      \field{volume}{28}
+      \field{year}{1982}
+      \field{pages}{129\bibrangedash 137}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1109/TIT.1982.1056489
+      \endverb
+    \endentry
+    \entry{love2022}{article}{}{}
       \name{author}{2}{}{%
         {{hash=df1110ea1a6c63f28863d15d48fe2760}{%
            family={Love},
@@ -205,10 +406,12 @@
       }
       \strng{namehash}{56ffa5a57f1372bca105aff97099419b}
       \strng{fullhash}{56ffa5a57f1372bca105aff97099419b}
+      \strng{fullhashraw}{56ffa5a57f1372bca105aff97099419b}
       \strng{bibnamehash}{56ffa5a57f1372bca105aff97099419b}
       \strng{authorbibnamehash}{56ffa5a57f1372bca105aff97099419b}
       \strng{authornamehash}{56ffa5a57f1372bca105aff97099419b}
       \strng{authorfullhash}{56ffa5a57f1372bca105aff97099419b}
+      \strng{authorfullhashraw}{56ffa5a57f1372bca105aff97099419b}
       \field{sortinit}{L}
       \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
       \field{labelnamesource}{author}
@@ -217,7 +420,7 @@
       \field{title}{Diversity and structure in California’s urban forest}
       \field{year}{2022}
     \endentry
-    \entry{mcpherson2018}{article}{}
+    \entry{mcpherson2018}{article}{}{}
       \name{author}{5}{}{%
         {{hash=174e99bd260faddce6094345d8a9ab90}{%
            family={McPherson},
@@ -252,10 +455,12 @@
       }
       \strng{namehash}{849fa7915aeb61fc7aa703457471c020}
       \strng{fullhash}{f2bd6739c419412b8bfe3f76cd6cba07}
+      \strng{fullhashraw}{f2bd6739c419412b8bfe3f76cd6cba07}
       \strng{bibnamehash}{849fa7915aeb61fc7aa703457471c020}
       \strng{authorbibnamehash}{849fa7915aeb61fc7aa703457471c020}
       \strng{authornamehash}{849fa7915aeb61fc7aa703457471c020}
       \strng{authorfullhash}{f2bd6739c419412b8bfe3f76cd6cba07}
+      \strng{authorfullhashraw}{f2bd6739c419412b8bfe3f76cd6cba07}
       \field{sortinit}{M}
       \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
       \field{labelnamesource}{author}
@@ -271,7 +476,7 @@
       \verb 10.48044/jauf.2018.008
       \endverb
     \endentry
-    \entry{mcpherson2016utd}{report}{}
+    \entry{mcpherson2016utd}{report}{}{}
       \name{author}{3}{}{%
         {{hash=7895e9420389d13fa4975c2616798fff}{%
            family={McPherson},
@@ -299,10 +504,12 @@
       }
       \strng{namehash}{dad51c9556ec785fc2a36ae27961476d}
       \strng{fullhash}{dad51c9556ec785fc2a36ae27961476d}
+      \strng{fullhashraw}{dad51c9556ec785fc2a36ae27961476d}
       \strng{bibnamehash}{dad51c9556ec785fc2a36ae27961476d}
       \strng{authorbibnamehash}{dad51c9556ec785fc2a36ae27961476d}
       \strng{authornamehash}{dad51c9556ec785fc2a36ae27961476d}
       \strng{authorfullhash}{dad51c9556ec785fc2a36ae27961476d}
+      \strng{authorfullhashraw}{dad51c9556ec785fc2a36ae27961476d}
       \field{sortinit}{M}
       \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
       \field{labelnamesource}{author}
@@ -317,7 +524,7 @@
       \verb 10.2737/RDS-2016-0005
       \endverb
     \endentry
-    \entry{niemeyer2008}{misc}{}
+    \entry{niemeyer2008}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=79e5cc4814c8247784feefa93e3ddff3}{%
            family={Niemeyer},
@@ -327,10 +534,12 @@
       }
       \strng{namehash}{79e5cc4814c8247784feefa93e3ddff3}
       \strng{fullhash}{79e5cc4814c8247784feefa93e3ddff3}
+      \strng{fullhashraw}{79e5cc4814c8247784feefa93e3ddff3}
       \strng{bibnamehash}{79e5cc4814c8247784feefa93e3ddff3}
       \strng{authorbibnamehash}{79e5cc4814c8247784feefa93e3ddff3}
       \strng{authornamehash}{79e5cc4814c8247784feefa93e3ddff3}
       \strng{authorfullhash}{79e5cc4814c8247784feefa93e3ddff3}
+      \strng{authorfullhashraw}{79e5cc4814c8247784feefa93e3ddff3}
       \field{sortinit}{N}
       \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
       \field{labelnamesource}{author}
@@ -339,7 +548,7 @@
       \field{title}{Geohash}
       \field{year}{2008}
     \endentry
-    \entry{postgis2005}{misc}{}
+    \entry{postgis2005}{misc}{}{}
       \name{author}{2}{}{%
         {{hash=da545cfdabdb3af30e84becc024bb262}{%
            family={Ramsey},
@@ -357,10 +566,12 @@
       }
       \strng{namehash}{d4d17ca91cbe728b169d6f23c7acb433}
       \strng{fullhash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \strng{fullhashraw}{d4d17ca91cbe728b169d6f23c7acb433}
       \strng{bibnamehash}{d4d17ca91cbe728b169d6f23c7acb433}
       \strng{authorbibnamehash}{d4d17ca91cbe728b169d6f23c7acb433}
       \strng{authornamehash}{d4d17ca91cbe728b169d6f23c7acb433}
       \strng{authorfullhash}{d4d17ca91cbe728b169d6f23c7acb433}
+      \strng{authorfullhashraw}{d4d17ca91cbe728b169d6f23c7acb433}
       \field{sortinit}{R}
       \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
       \field{labelnamesource}{author}
@@ -369,7 +580,7 @@
       \field{title}{PostGIS Documentation}
       \field{year}{2005}
     \endentry
-    \entry{samet2006}{book}{}
+    \entry{samet2006}{book}{}{}
       \name{author}{1}{}{%
         {{hash=57d688b3873b263f594dbb71b55288b4}{%
            family={Samet},
@@ -385,10 +596,12 @@
       }
       \strng{namehash}{57d688b3873b263f594dbb71b55288b4}
       \strng{fullhash}{57d688b3873b263f594dbb71b55288b4}
+      \strng{fullhashraw}{57d688b3873b263f594dbb71b55288b4}
       \strng{bibnamehash}{57d688b3873b263f594dbb71b55288b4}
       \strng{authorbibnamehash}{57d688b3873b263f594dbb71b55288b4}
       \strng{authornamehash}{57d688b3873b263f594dbb71b55288b4}
       \strng{authorfullhash}{57d688b3873b263f594dbb71b55288b4}
+      \strng{authorfullhashraw}{57d688b3873b263f594dbb71b55288b4}
       \field{sortinit}{S}
       \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
       \field{labelnamesource}{author}
@@ -396,9 +609,8 @@
       \field{isbn}{9780123694461}
       \field{title}{Foundations of Multidimensional and Metric Data Structures}
       \field{year}{2006}
-      \true{nocite}
     \endentry
-    \entry{sanusi2016}{article}{}
+    \entry{sanusi2016}{article}{}{}
       \true{moreauthor}
       \true{morelabelname}
       \name{author}{1}{}{%
@@ -413,10 +625,12 @@
       }
       \strng{namehash}{319654175ce78b507ed5bbc2be70e84d}
       \strng{fullhash}{319654175ce78b507ed5bbc2be70e84d}
+      \strng{fullhashraw}{319654175ce78b507ed5bbc2be70e84d}
       \strng{bibnamehash}{319654175ce78b507ed5bbc2be70e84d}
       \strng{authorbibnamehash}{319654175ce78b507ed5bbc2be70e84d}
       \strng{authornamehash}{319654175ce78b507ed5bbc2be70e84d}
       \strng{authorfullhash}{319654175ce78b507ed5bbc2be70e84d}
+      \strng{authorfullhashraw}{319654175ce78b507ed5bbc2be70e84d}
       \field{sortinit}{S}
       \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
       \field{labelnamesource}{author}
@@ -425,7 +639,75 @@
       \field{title}{Street orientation and side of the street greatly influence the microclimatic benefits street trees}
       \field{year}{2016}
     \endentry
-    \entry{ufeiAllometree}{misc}{}
+    \entry{urbanForestryAct1978}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=517e2b248f507d94375aa4fec63ead11}{%
+           family={{State of California}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{517e2b248f507d94375aa4fec63ead11}
+      \strng{fullhash}{517e2b248f507d94375aa4fec63ead11}
+      \strng{fullhashraw}{517e2b248f507d94375aa4fec63ead11}
+      \strng{bibnamehash}{517e2b248f507d94375aa4fec63ead11}
+      \strng{authorbibnamehash}{517e2b248f507d94375aa4fec63ead11}
+      \strng{authornamehash}{517e2b248f507d94375aa4fec63ead11}
+      \strng{authorfullhash}{517e2b248f507d94375aa4fec63ead11}
+      \strng{authorfullhashraw}{517e2b248f507d94375aa4fec63ead11}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://leginfo.legislature.ca.gov/}}
+      \field{note}{Statutory framework for California urban forestry programs; canopy-increase goals referenced in U\&CF planning}
+      \field{title}{California Urban Forestry Act of 1978}
+      \field{year}{1978}
+    \endentry
+    \entry{census2020}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=fb461c0c6976b357452502c0cb338c70}{%
+           family={{U.S. Census Bureau}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{fb461c0c6976b357452502c0cb338c70}
+      \strng{fullhash}{fb461c0c6976b357452502c0cb338c70}
+      \strng{fullhashraw}{fb461c0c6976b357452502c0cb338c70}
+      \strng{bibnamehash}{fb461c0c6976b357452502c0cb338c70}
+      \strng{authorbibnamehash}{fb461c0c6976b357452502c0cb338c70}
+      \strng{authornamehash}{fb461c0c6976b357452502c0cb338c70}
+      \strng{authorfullhash}{fb461c0c6976b357452502c0cb338c70}
+      \strng{authorfullhashraw}{fb461c0c6976b357452502c0cb338c70}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.census.gov/programs-surveys/decennial-census/decade/2020/2020-census-main.html}}
+      \field{note}{Decennial census population figures used as the TPC denominator in RUFA}
+      \field{title}{{2020} {Census} of Population and Housing}
+      \field{year}{2021}
+    \endentry
+    \entry{usfsEarthdefine}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=ccefc11d04e78e1e5842f84c88af8f3d}{%
+           family={{U.S. Forest Service}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \strng{fullhash}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \strng{fullhashraw}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \strng{bibnamehash}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \strng{authorbibnamehash}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \strng{authornamehash}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \strng{authorfullhash}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \strng{authorfullhashraw}{ccefc11d04e78e1e5842f84c88af8f3d}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.fs.usda.gov/detailfull/r5/communityforests/?cid=fseprd647442}}
+      \field{note}{Region 5 Community Forests; EarthDefine 2018 product purchased for California}
+      \field{title}{California Urban Tree Canopy Assessment Data}
+    \endentry
+    \entry{ufeiAllometree}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=2fc7b1f5c629004f3daa41514f5789d6}{%
            family={{Urban Forest Ecosystems Institute}},
@@ -433,10 +715,12 @@
       }
       \strng{namehash}{2fc7b1f5c629004f3daa41514f5789d6}
       \strng{fullhash}{2fc7b1f5c629004f3daa41514f5789d6}
+      \strng{fullhashraw}{2fc7b1f5c629004f3daa41514f5789d6}
       \strng{bibnamehash}{2fc7b1f5c629004f3daa41514f5789d6}
       \strng{authorbibnamehash}{2fc7b1f5c629004f3daa41514f5789d6}
       \strng{authornamehash}{2fc7b1f5c629004f3daa41514f5789d6}
       \strng{authorfullhash}{2fc7b1f5c629004f3daa41514f5789d6}
+      \strng{authorfullhashraw}{2fc7b1f5c629004f3daa41514f5789d6}
       \field{sortinit}{U}
       \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
       \field{labelnamesource}{author}
@@ -445,7 +729,7 @@
       \field{note}{Cal Poly Urban Forest Ecosystems Institute}
       \field{title}{{AllomeTree}: Allometric Equations for California's Urban Forest}
     \endentry
-    \entry{veach2017s2}{misc}{}
+    \entry{veach2017s2}{misc}{}{}
       \true{moreauthor}
       \true{morelabelname}
       \name{author}{1}{}{%
@@ -460,10 +744,12 @@
       }
       \strng{namehash}{5a7e849c6d4180967e6c46d05652227f}
       \strng{fullhash}{5a7e849c6d4180967e6c46d05652227f}
+      \strng{fullhashraw}{5a7e849c6d4180967e6c46d05652227f}
       \strng{bibnamehash}{5a7e849c6d4180967e6c46d05652227f}
       \strng{authorbibnamehash}{5a7e849c6d4180967e6c46d05652227f}
       \strng{authornamehash}{5a7e849c6d4180967e6c46d05652227f}
       \strng{authorfullhash}{5a7e849c6d4180967e6c46d05652227f}
+      \strng{authorfullhashraw}{5a7e849c6d4180967e6c46d05652227f}
       \field{sortinit}{V}
       \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
       \field{labelnamesource}{author}
@@ -473,7 +759,52 @@
       \field{title}{S2 Geometry Library}
       \field{year}{2017}
     \endentry
-    \entry{ventura2022}{article}{}
+    \entry{velasquez2025}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=e8a51444a1693a86aad83ce2fb859676}{%
+           family={Velasquez-Camacho},
+           familyi={V\bibinithyphendelim C\bibinitperiod},
+           given={Luisa},
+           giveni={L\bibinitperiod}}}%
+        {{hash=61f8f6e2c9ad4803de93bead47697a2b}{%
+           family={Willaredt},
+           familyi={W\bibinitperiod},
+           given={Moreen},
+           giveni={M\bibinitperiod}}}%
+        {{hash=f30425a3309173d29f9e1c5bf5ffb526}{%
+           family={Singh},
+           familyi={S\bibinitperiod},
+           given={Pooja},
+           giveni={P\bibinitperiod}}}%
+        {{hash=8a3f0c8380d2a9badb500a01b257d8e3}{%
+           family={Ossola},
+           familyi={O\bibinitperiod},
+           given={Alessandro},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{96364d94ce887277421edeb81ea060a5}
+      \strng{fullhash}{96364d94ce887277421edeb81ea060a5}
+      \strng{fullhashraw}{96364d94ce887277421edeb81ea060a5}
+      \strng{bibnamehash}{96364d94ce887277421edeb81ea060a5}
+      \strng{authorbibnamehash}{96364d94ce887277421edeb81ea060a5}
+      \strng{authornamehash}{96364d94ce887277421edeb81ea060a5}
+      \strng{authorfullhash}{96364d94ce887277421edeb81ea060a5}
+      \strng{authorfullhashraw}{96364d94ce887277421edeb81ea060a5}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Urban Forestry \& Urban Greening}
+      \field{title}{Bleeding green: {California}'s schools are rapidly losing tree canopy cover}
+      \field{volume}{113}
+      \field{year}{2025}
+      \field{pages}{129117}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.ufug.2025.129117
+      \endverb
+    \endentry
+    \entry{ventura2022}{article}{}{}
       \name{author}{13}{}{%
         {{hash=e9f110a1d919f44c93ba4ef10039a3f4}{%
            family={Ventura},
@@ -543,10 +874,12 @@
       }
       \strng{namehash}{3ca73da39c3280374e6bb4096992c79d}
       \strng{fullhash}{0b8d2eb8226aaa9369e80e0e3c9e90ba}
+      \strng{fullhashraw}{0b8d2eb8226aaa9369e80e0e3c9e90ba}
       \strng{bibnamehash}{3ca73da39c3280374e6bb4096992c79d}
       \strng{authorbibnamehash}{3ca73da39c3280374e6bb4096992c79d}
       \strng{authornamehash}{3ca73da39c3280374e6bb4096992c79d}
       \strng{authorfullhash}{0b8d2eb8226aaa9369e80e0e3c9e90ba}
+      \strng{authorfullhashraw}{0b8d2eb8226aaa9369e80e0e3c9e90ba}
       \field{sortinit}{V}
       \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
       \field{labelnamesource}{author}
@@ -556,7 +889,7 @@
       \field{title}{Individual Tree Detection in Large-Scale Urban Environments using High-Resolution Multispectral Imagery}
       \field{year}{2022}
     \endentry
-    \entry{xiao2016}{article}{}
+    \entry{xiao2016}{article}{}{}
       \name{author}{2}{}{%
         {{hash=05c874cddeb018e52d2f044b54580e01}{%
            family={Xiao},
@@ -574,10 +907,12 @@
       }
       \strng{namehash}{6289a489f726f621a78516cab922e760}
       \strng{fullhash}{6289a489f726f621a78516cab922e760}
+      \strng{fullhashraw}{6289a489f726f621a78516cab922e760}
       \strng{bibnamehash}{6289a489f726f621a78516cab922e760}
       \strng{authorbibnamehash}{6289a489f726f621a78516cab922e760}
       \strng{authornamehash}{6289a489f726f621a78516cab922e760}
       \strng{authorfullhash}{6289a489f726f621a78516cab922e760}
+      \strng{authorfullhashraw}{6289a489f726f621a78516cab922e760}
       \field{sortinit}{X}
       \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
       \field{labelnamesource}{author}
