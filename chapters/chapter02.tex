@@ -1,20 +1,31 @@
 \chapter{Background} \label{sec:Background}
 
-\section{Urban Forest Ecosystems Institute}
+This Chapter establishes the context for the RUFA system. \autoref{sec:UFEI} introduces the Urban Forest Ecosystems Institute and its related tools. \autoref{sec:RUFA_Overview} describes RUFA as a software application, its core use cases, and its data sources. \autoref{sec:Diversity_Metrics}, \autoref{sec:Canopy_Density}, and \autoref{sec:RUFA_Score} define the ecological metrics and composite score that RUFA computes.
 
-The Urban Forest Ecosystems Institute (UFEI) at Cal Poly addresses the growing need for improved management of California's urban forests. UFEI develops and maintains a suite of public-facing tools and research resources that support tree selection, identification, spatial analysis, and urban forest assessment across the state. These include \href{https://selectree.calpoly.edu}{SelecTree}, an online tree selection guide covering hundreds of species; the Urban Tree Key for field identification; California Big Trees, which documents champion trees statewide; and the Urban Tree Map, a spatial analysis platform for California's inventoried urban trees. UFEI also supports applied research projects that apply remote sensing, machine learning, and ecological modeling to urban forestry questions.
+\section{Urban Forest Ecosystems Institute} \label{sec:UFEI}
+
+The Urban Forest Ecosystems Institute (UFEI) at Cal Poly addresses the growing need for improved management of California's urban forests. UFEI develops and maintains a suite of public-facing tools and research resources that support tree selection, identification, spatial analysis, and urban forest assessment across the state. These include SelecTree\footnote{\url{https://selectree.calpoly.edu}}, an online tree selection guide covering hundreds of species; the Urban Tree Key\footnote{\url{https://urbantreekey.calpoly.edu}} for field identification; California Big Trees\footnote{\url{https://californiabigtrees.calpoly.edu/}}, which documents champion trees statewide; and the Urban Tree Map\footnote{\url{https://ucfmtm.calpoly.edu}}, a spatial analysis platform for California's inventoried urban trees. UFEI also supports applied research projects that apply remote sensing, machine learning, and ecological modeling to urban forestry questions.
 
 UFEI's mission is to connect scientific research with practical tools that urban foresters, planners, and community members can use to make informed decisions about tree planting, maintenance, and policy. The institute collaborates with municipal agencies, nonprofit organizations, and private arborist firms to aggregate urban tree inventory data, and partners with researchers at Cal Poly and beyond to develop new methods for measuring urban forest structure, diversity, and ecosystem services. Projects supported by UFEI span species-diversity assessment, urban heat mitigation, canopy mapping, and automated tree detection from aerial imagery.
 
-RUFA is one of UFEI's flagship assessment tools. It was conceived to give California communities a standardized, data-driven view of their urban forest health by combining the institute's extensive inventory compilations with automated tree detection from high-resolution aerial imagery. Where earlier UFEI resources provided species-level information or static inventory maps, RUFA aggregates these data sources into a single dashboard that computes comparable metrics and composite scores for every census-designated place in the state.
+The Rapid Urban Forest Assessment (RUFA) is one of UFEI's flagship assessment tools. It was conceived to give California communities a standardized, data-driven view of their urban forest health by combining the institute's extensive inventory compilations with automated tree detection from high-resolution aerial imagery. Where earlier UFEI resources provided species-level information or static inventory maps, RUFA aggregates these data sources into a single dashboard that computes comparable metrics and composite scores for every census-designated place in the state.
 
-\section{RUFA System Overview}
+\section{RUFA System Overview} \label{sec:RUFA_Overview}
 
-The Rapid Urban Forest Assessment (RUFA) system integrates two primary data sources to provide comprehensive insights into urban forest ecosystems. The first data source offers highly detailed tree characteristics, derived from an extensive compilation of California urban forest inventories. These inventories were aggregated from diverse sources, including private arborist firms (West Coast Arborists, Davey Tree Company, APlus Tree Care) and public entities such as CAL FIRE \cite{love2022}. This robust dataset ensures a high level of granularity and accuracy in tree attribute information, including species, genus, family, structural measurements, and per-tree canopy estimates.
+RUFA is a read-only web dashboard designed for urban foresters, planners, and researchers who need to compare forest conditions across California communities without managing underlying inventory data. Its core use cases are as follows: a user selects a city or town and views an overview page showing the RUFA Score and component statistics; the user explores an interactive map of detected and inventoried trees, zooming in and out to review density and diversity patterns at city, ZIP-code, and tract levels; and the user compares scores across places to identify communities that outperform or lag statewide norms. \autoref{fig:rufa_map} illustrates the map view, which supports multi-scale exploration of tree density within a selected city.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/slo_voronoi.png}
+\caption{Interactive map view in RUFA showing tree density by Voronoi cell for San Luis Obispo.}
+\label{fig:rufa_map}
+\end{figure}
+
+RUFA integrates two primary data sources to provide comprehensive insights into urban forest ecosystems. The first data source offers highly detailed tree characteristics, derived from an extensive compilation of California urban forest inventories. These inventories were aggregated from diverse sources, including private arborist firms (West Coast Arborists, Davey Tree Company, APlus Tree Care) and public entities such as CAL FIRE \cite{love2022}. This robust dataset ensures a high level of granularity and accuracy in tree attribute information, including species, genus, family, structural measurements, and per-tree canopy estimates.
 
 The second data source supplies tree coordinates detected through a deep learning pipeline developed by Ventura et al.\ \cite{ventura2022}. This method employs high-resolution multispectral aerial imagery to identify individual trees in urban settings; a convolutional neural network generates a confidence map by regressing detected tree locations, enabling precise spatial quantification of urban tree coverage in areas where formal inventory data are incomplete or absent.
 
-Together, these sources allow RUFA to report metrics---canopy cover, trees per capita, species diversity, and evenness---at the census-place, ZIP-code, and tract levels, and to compute a composite RUFA Score that supports side-by-side comparison of urban forest performance across California communities. The RUFA application implements its own metric for diversity and health of the urban tree cover, described in \autoref{sec:RUFA_Score}.
+Together, these sources allow RUFA to report metrics---canopy cover, trees per capita, species diversity, and evenness---at the census-place, ZIP-code, and tract levels, and to compute a composite RUFA Score developed at UFEI that supports side-by-side comparison of urban forest performance across California communities. The RUFA application implements its own metric for diversity and health of the urban tree cover, described in \autoref{sec:RUFA_Score}.
 
 \section{Diversity Metrics} \label{sec:Diversity_Metrics}
 
@@ -54,12 +65,14 @@ The Rapid Urban Forest Assessment (RUFA) system provides a composite ``RUFA Scor
 
 Each component metric is computed within RUFA from the data sources described above, then \textit{binned} into a score of 1 to 5 based on its distribution across California. Summing these binned values yields a maximum of 20 possible points. The final RUFA Score is then calculated as:
 \begin{equation}
-    \text{RUFA Score} = \left( \frac{\text{CCP} + \text{TD} + \text{TE} + \text{TPC}}{20} \right) \times 100,
+    \text{RUFA Score} = \left( \frac{\text{CCP} + \text{TD} + \text{TE} + \text{TPC}}{20} \right) \times 100.
 \end{equation}
-where higher values (closer to 100) indicate stronger overall performance.
+The RUFA Score ranges from 0 to 100, with higher values (closer to 100) indicating stronger overall performance.
+
+Below, we discuss each of the constituent parts of the RUFA Score.
 
 \paragraph{Canopy cover percentage.}
-CCP for each geographic area is derived from the tree detection pipeline developed by Ventura et al.\ \cite{ventura2022}. That pipeline applies a convolutional neural network to high-resolution multispectral aerial imagery to identify individual tree locations and their associated canopy extent. RUFA aggregates these detections within census-place, ZIP-code, and tract boundaries and computes CCP as the percentage of land area within each boundary covered by tree canopy. Where inventoried trees include per-tree canopy measurements (\texttt{canopy\_avg}), those values supplement the aerial-derived estimates for areas with formal inventory coverage.
+CCP measures the percentage of land area covered by tree canopy within each census-designated place. The data come from EarthDefine's 2018 California canopy product, purchased for the state by the U.S.\ Forest Service and distributed as open data \cite{earthdefineTreemap,usfsEarthdefine}. The dataset reports 96.6\% accuracy across the United States. Because EarthDefine's urban boundaries do not align perfectly with census-designated place boundaries, RUFA computes canopy percentages only where EarthDefine coverage overlaps a place polygon, but reports the value for the full place boundary; places with no overlapping canopy data receive a score of NA. Canopy cover percentage is a widely used urban forestry metric in California and supports measurement against the California Urban Forestry Act of 1978 goal of a 10-percent increase in urban tree canopy cover by 2035, with priority for disadvantaged and low-income communities.
 
 \paragraph{Trees per capita.}
 TPC divides the total tree count within a geographic area by its human population. Tree counts combine inventoried records from the California Urban Forest Inventory with coordinates detected by the Ventura et al.\ pipeline, deduplicated and assigned to the appropriate place, ZIP, or tract polygon. Population figures come from U.S.\ Census Bureau data stored in the RUFA database (\texttt{human\_population} per city/place) and are propagated to associated geographic units.
