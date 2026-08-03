@@ -9,7 +9,7 @@
 
 - **[SelecTree](https://selectree.calpoly.edu/)** — tree selection guide used by **tens of thousands of visitors per month**
 - My prior work: engineering and infrastructure on the **SelecTree / UFEI stack** (shared MySQL, APIs, and deployment)
-- RUFA extends that same institute mission — from species-level guides to **statewide forest assessment**
+- **[RUFA](https://rufa.calpoly.edu/)** — extends that same institute mission, from species-level guides to **statewide forest assessment**
 
 </div>
 <div>

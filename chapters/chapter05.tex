@@ -1,14 +1,16 @@
 \chapter{Clustering} \label{sec:Clustering}
 
-The clustering component of RUFA groups millions of tree coordinates for interactive map visualization at multiple zoom levels. This Chapter describes the algorithms evaluated during development, from an initial K-means prototype through SuperClustering with Voronoi tessellation, and the performance trade-offs that motivated each transition.
+The clustering component of RUFA groups millions of tree coordinates for interactive map visualization at multiple zoom levels. This chapter describes the algorithms evaluated during development, from an initial K-means prototype through SuperClustering with Voronoi tessellation, and the performance trade-offs that motivated each transition.
+
+When RUFA was scoped, UFEI already had a Google BigQuery prototype that clustered tree points as users zoomed. That prototype established the product vision; the task here was to reproduce zoom-aware aggregation inside the MySQL-backed RUFA stack.
 
 \section{K-Means}
 
-The first implementation applied Lloyd's K-means algorithm to tree coordinates, minimizing the within-cluster sum of squares (WCSS):
+The first implementation applied Lloyd's K-means algorithm \cite{lloyd1982} to tree coordinates, minimizing the within-cluster sum of squares (WCSS):
 \begin{equation}
     \text{WCSS} = \sum_{i=1}^{k} \sum_{x \in C_i} \|x - \mu_i\|^2,
 \end{equation}
-where $C_i$ is cluster $i$, $\mu_i$ its centroid, and $x$ an individual tree location. Centroids were initialized with K-means++, distances were computed with the Haversine formula, and iteration continued until centroid movement fell below $0.001^\circ$ or 100 iterations were reached.
+where $C_i$ is cluster $i$, $\mu_i$ its centroid, and $x$ an individual tree location. Centroids were initialized with K-means++ \cite{arthur2007kmeanspp}, distances were computed with the Haversine formula, and iteration continued until centroid movement fell below $0.001^\circ$ or 100 iterations were reached.
 
 Because cluster count must be specified in advance, $k$ was chosen dynamically as a function of the number of input points and the map zoom level, typically ranging from 50 to 500 clusters. The intent was to preserve local structure in dense areas while limiting marker overlap at wider views.
 
@@ -27,7 +29,7 @@ Because cluster count must be specified in advance, $k$ was chosen dynamically a
     \caption{Insufficient segmentation at city scale.}
     \label{fig:la_kmeans_2}
 \end{subfigure}
-\caption{K-means clustering of Los Angeles tree coordinates. Scaling $k$ with input size produced overlapping clusters in dense neighborhoods (\subref{fig:la_kmeans}) and failed to yield stable multi-scale summaries when the viewport changed (\subref{fig:la_kmeans_2}).}
+\caption{K-means on Los Angeles trees: dense neighborhoods remain overlapped (\subref{fig:la_kmeans}); multi-scale summaries stay unstable (\subref{fig:la_kmeans_2}).}
 \label{fig:kmeans_la}
 \end{figure}
 
@@ -35,11 +37,11 @@ Because cluster count must be specified in advance, $k$ was chosen dynamically a
 
 \section{Intermediate Approaches}
 
-Several refinements were explored before adopting a hierarchical tile-based strategy. Result caching stored centroid positions and cluster assignments across repeated queries, reducing redundant computation when users returned to previously viewed regions, but did not address the fundamental cost of recomputing clusters at each zoom level.
+Several refinements were explored before adopting a hierarchical tile-based strategy. Result caching stored centroid positions and cluster assignments across repeated queries, reducing redundant computation when users returned to previously viewed regions, but did not address the fundamental cost of recomputing clusters at each zoom level. Rebuilding a simple greedy radius clustering independently for every zoom level has the same problem: the full dataset would be scanned once per zoom, which is too expensive at statewide scale.
 
 \section{SuperClustering with Voronoi Diagrams}
 
-The production implementation combines SuperCluster, a hierarchical point-clustering library used in web mapping, with Voronoi tessellation to define spatial analysis regions at each zoom level. SuperCluster precomputes a pyramid of clusters from zoom 0 to 10; at query time, RUFA requests only the clusters intersecting the current bounding box, avoiding full-dataset recomputation on pan and zoom events.
+The production implementation combines SuperCluster, a hierarchical point-clustering library used in web mapping \cite{agafonkin2016supercluster}, with Voronoi tessellation to define spatial analysis regions at each zoom level. Hierarchical greedy clustering, popularized for interactive maps by Leaflet.markercluster \cite{leaver2012markercluster}, reuses weighted clusters from finer zoom levels to build coarser ones, so the full point set is not reprocessed for every zoom. SuperCluster precomputes a pyramid of clusters from zoom 0 to 10; at query time, RUFA requests only the clusters intersecting the current bounding box, avoiding full-dataset recomputation on pan and zoom events.
 
 \begin{lstlisting}[language=Python, caption=SuperCluster initialization and zoom-level processing]
 index = pysupercluster.SuperCluster(
@@ -58,12 +60,12 @@ for zoom in range(5, 10):
 
 For zoom levels with at least four cluster centroids, RUFA generates a Voronoi diagram from the centroid set and converts each cell into a polygon bounded by the viewport. Trees are assigned to cells by point-in-polygon containment, and each cell receives tree density (trees per km\textsuperscript{2}) and a TD-50 diversity score computed from species counts within the cell (\autoref{eq:td50}). Invalid or unbounded Voronoi regions are clipped to the query extent before export as GeoJSON features for the dashboard.
 
-SuperCluster initialization runs in $O(n \log n)$ time; Fortune's algorithm generates the Voronoi diagram in $O(m \log m)$ for $m$ centroids, and point assignment is $O(mn)$ in the naive formulation used during development. In practice, the hierarchical index limits $m$ to the clusters visible at each zoom, and cached tile results make zoom-level switching near instantaneous. Higher zoom levels expose local density variation; lower zoom levels collapse detail into regional summaries suitable for statewide comparison.
+SuperCluster initialization runs in $O(n \log n)$ time; Fortune's sweepline algorithm generates the Voronoi diagram in $O(m \log m)$ for $m$ centroids \cite{fortune1987}, and point assignment is $O(mn)$ in the naive formulation used during development. In practice, the hierarchical index limits $m$ to the clusters visible at each zoom, and cached tile results make zoom-level switching near instantaneous. Higher zoom levels expose local density variation; lower zoom levels collapse detail into regional summaries suitable for statewide comparison.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/slo_voronoi.png}
-\caption{SuperClustering with Voronoi tessellation applied to San Luis Obispo. Each cell summarizes local tree density and species diversity within boundaries that adapt to the underlying point distribution.}
+\caption{SuperCluster with Voronoi cells for San Luis Obispo, colored by local tree density.}
 \label{fig:slo_voronoi}
 \end{figure}
 
