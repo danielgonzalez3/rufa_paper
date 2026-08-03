@@ -7,7 +7,7 @@ This project introduces an innovative approach to urban forestry management by d
 
 - **Author**: Daniel Gonzalez
 - **Degree/Field**: Master of Science, Computer Science
-- **Planned Graduation**: January 2025
+- **Planned Graduation**: August 2026
 
 ## Repository Structure
 - `main.tex` — root document (no need to edit in most cases)

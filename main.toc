@@ -6,68 +6,67 @@
 \contentsline {chapter}{\numberline {2.}\uppercase {Background}}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Urban Forest Ecosystems Institute}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}RUFA System Overview}{4}{section.2.2}%
-\contentsline {section}{\numberline {2.3}RUFA Score}{6}{section.2.3}%
+\contentsline {section}{\numberline {2.3}RUFA Score}{7}{section.2.3}%
 \contentsline {paragraph}{Canopy cover percentage.}{7}{paragraph*.5}%
 \contentsline {paragraph}{Trees per capita.}{8}{paragraph*.6}%
 \contentsline {paragraph}{Tree diversity.}{8}{paragraph*.7}%
 \contentsline {paragraph}{Tree evenness.}{8}{paragraph*.8}%
 \contentsline {section}{\numberline {2.4}Diversity Metrics}{9}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Canopy and Density}{10}{section.2.5}%
-\contentsline {chapter}{\numberline {3.}\uppercase {Rufa Database Design}}{12}{chapter.3}%
+\contentsline {chapter}{\numberline {3.}\uppercase {RUFA Database Design}}{12}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Proximity Point Search}{12}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}Baseline Geospatial Filter}{12}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Why Separate Latitude/Longitude Indexes Plateau}{13}{subsection.3.1.2}%
 \contentsline {subsubsection}{\numberline {3.1.2.1}Hash-Based Spatial Partitioning}{13}{subsubsection.3.1.2.1}%
 \contentsline {subsubsection}{\numberline {3.1.2.2}Tree-Based Spatial Indexing}{14}{subsubsection.3.1.2.2}%
-\contentsline {paragraph}{Quadtree.}{14}{paragraph*.9}%
-\contentsline {paragraph}{Google S2.}{14}{paragraph*.10}%
-\contentsline {paragraph}{R-tree.}{14}{paragraph*.11}%
-\contentsline {subsection}{\numberline {3.1.3}RUFA Approach: R-tree Candidate Pruning Plus Exact Geometry}{14}{subsection.3.1.3}%
-\contentsline {section}{\numberline {3.2}SQL Workflow}{15}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Tables and Normalization}{15}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Entity Relationship Diagram}{15}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Alternative Database Solutions}{16}{subsection.3.2.3}%
-\contentsline {paragraph}{PostgreSQL/PostGIS.}{17}{paragraph*.13}%
-\contentsline {paragraph}{MongoDB with Geospatial Indexes.}{17}{paragraph*.14}%
-\contentsline {paragraph}{GIS-Specific Databases.}{17}{paragraph*.15}%
-\contentsline {paragraph}{Why MySQL Remains in Use.}{17}{paragraph*.16}%
-\contentsline {section}{\numberline {3.3}Materialized Views}{19}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Indexing Strategies}{19}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Automatic Index Maintenance}{19}{subsection.3.4.1}%
-\contentsline {section}{\numberline {3.5}Materialized View Implementation for RUFA Score Management}{20}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Overview}{20}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Geographic Cascade Architecture}{20}{subsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.2.1}Unified Statistics Table}{21}{subsubsection.3.5.2.1}%
-\contentsline {subsubsection}{\numberline {3.5.2.2}Relationship Mapping and Cascade Logic}{21}{subsubsection.3.5.2.2}%
-\contentsline {paragraph}{Trigger-Based Updates}{22}{paragraph*.17}%
-\contentsline {paragraph}{Scheduled Batch Processing}{22}{paragraph*.18}%
-\contentsline {paragraph}{Incremental Update Strategy}{23}{paragraph*.19}%
-\contentsline {subsection}{\numberline {3.5.3}Data Consistency Safeguards}{24}{subsection.3.5.3}%
-\contentsline {subsubsection}{\numberline {3.5.3.1}Version Control}{24}{subsubsection.3.5.3.1}%
-\contentsline {subsubsection}{\numberline {3.5.3.2}Atomic Updates}{25}{subsubsection.3.5.3.2}%
-\contentsline {subsection}{\numberline {3.5.4}Performance Optimization}{25}{subsection.3.5.4}%
-\contentsline {subsubsection}{\numberline {3.5.4.1}Selective Refresh}{25}{subsubsection.3.5.4.1}%
-\contentsline {subsubsection}{\numberline {3.5.4.2}Parallel Processing}{26}{subsubsection.3.5.4.2}%
-\contentsline {subsubsection}{\numberline {3.5.4.3}Caching Strategy}{26}{subsubsection.3.5.4.3}%
-\contentsline {subsection}{\numberline {3.5.5}Monitoring and Alerting}{26}{subsection.3.5.5}%
-\contentsline {subsection}{\numberline {3.5.6}Indexing Results}{27}{subsection.3.5.6}%
-\contentsline {subsection}{\numberline {3.5.7}Performance Comparison Results}{28}{subsection.3.5.7}%
-\contentsline {subsubsection}{\numberline {3.5.7.1}S3 Single CSV File Approach}{28}{subsubsection.3.5.7.1}%
-\contentsline {subsubsection}{\numberline {3.5.7.2}S3 Per-City CSV Files}{28}{subsubsection.3.5.7.2}%
-\contentsline {subsubsection}{\numberline {3.5.7.3}Database Table Without Indexing}{29}{subsubsection.3.5.7.3}%
-\contentsline {subsubsection}{\numberline {3.5.7.4}Database Table With City Indexing}{29}{subsubsection.3.5.7.4}%
-\contentsline {subsection}{\numberline {3.5.8}Memory and Storage Impact}{29}{subsection.3.5.8}%
-\contentsline {subsection}{\numberline {3.5.9}Scaling Considerations}{30}{subsection.3.5.9}%
-\contentsline {chapter}{\numberline {4.}\uppercase {System Design}}{31}{chapter.4}%
+\contentsline {paragraph}{Quadtree.}{14}{paragraph*.10}%
+\contentsline {paragraph}{Google S2.}{15}{paragraph*.12}%
+\contentsline {paragraph}{R-tree.}{15}{paragraph*.13}%
+\contentsline {subsection}{\numberline {3.1.3}RUFA Approach: R-tree Candidate Pruning Plus Exact Geometry}{15}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}SQL Workflow}{16}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Tables and Normalization}{16}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Entity Relationship Diagram}{16}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Alternative Database Solutions}{17}{subsection.3.2.3}%
+\contentsline {paragraph}{PostgreSQL/PostGIS.}{18}{paragraph*.16}%
+\contentsline {paragraph}{MongoDB with Geospatial Indexes.}{18}{paragraph*.17}%
+\contentsline {paragraph}{GIS-Specific Databases.}{18}{paragraph*.18}%
+\contentsline {paragraph}{Why MySQL Remains in Use.}{19}{paragraph*.19}%
+\contentsline {section}{\numberline {3.3}Materialized Views}{20}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Indexing Strategies}{20}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Materialized View Implementation for RUFA Score Management}{21}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Overview}{21}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Geographic Cascade Architecture}{21}{subsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}Unified Statistics Table}{22}{subsubsection.3.5.2.1}%
+\contentsline {subsubsection}{\numberline {3.5.2.2}Relationship Mapping and Cascade Logic}{22}{subsubsection.3.5.2.2}%
+\contentsline {paragraph}{Trigger-Based Updates}{23}{paragraph*.20}%
+\contentsline {paragraph}{Scheduled Batch Processing}{23}{paragraph*.21}%
+\contentsline {paragraph}{Incremental Update Strategy}{24}{paragraph*.22}%
+\contentsline {subsection}{\numberline {3.5.3}Data Consistency Safeguards}{25}{subsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.3.1}Version Control}{25}{subsubsection.3.5.3.1}%
+\contentsline {subsubsection}{\numberline {3.5.3.2}Atomic Updates}{26}{subsubsection.3.5.3.2}%
+\contentsline {subsection}{\numberline {3.5.4}Performance Optimization}{26}{subsection.3.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.4.1}Selective Refresh}{26}{subsubsection.3.5.4.1}%
+\contentsline {subsubsection}{\numberline {3.5.4.2}Parallel Processing}{27}{subsubsection.3.5.4.2}%
+\contentsline {subsubsection}{\numberline {3.5.4.3}Caching Strategy}{27}{subsubsection.3.5.4.3}%
+\contentsline {subsection}{\numberline {3.5.5}Monitoring and Alerting}{27}{subsection.3.5.5}%
+\contentsline {subsection}{\numberline {3.5.6}Indexing Results}{28}{subsection.3.5.6}%
+\contentsline {subsection}{\numberline {3.5.7}Performance Comparison Results}{29}{subsection.3.5.7}%
+\contentsline {subsubsection}{\numberline {3.5.7.1}S3 Single CSV File Approach}{29}{subsubsection.3.5.7.1}%
+\contentsline {subsubsection}{\numberline {3.5.7.2}S3 Per-City CSV Files}{29}{subsubsection.3.5.7.2}%
+\contentsline {subsubsection}{\numberline {3.5.7.3}Database Table Without Indexing}{30}{subsubsection.3.5.7.3}%
+\contentsline {subsubsection}{\numberline {3.5.7.4}Database Table With City Indexing}{30}{subsubsection.3.5.7.4}%
+\contentsline {subsection}{\numberline {3.5.8}Memory and Storage Impact}{30}{subsection.3.5.8}%
+\contentsline {subsection}{\numberline {3.5.9}Scaling Considerations}{31}{subsection.3.5.9}%
+\contentsline {chapter}{\numberline {4.}\uppercase {System Design}}{32}{chapter.4}%
 \contentsline {section}{\numberline {4.1}System Diagram}{32}{section.4.1}%
-\contentsline {chapter}{\numberline {5.}\uppercase {Clustering}}{34}{chapter.5}%
-\contentsline {section}{\numberline {5.1}K-Means}{34}{section.5.1}%
+\contentsline {chapter}{\numberline {5.}\uppercase {Clustering}}{35}{chapter.5}%
+\contentsline {section}{\numberline {5.1}K-Means}{35}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Intermediate Approaches}{36}{section.5.2}%
-\contentsline {section}{\numberline {5.3}SuperClustering with Voronoi Diagrams}{36}{section.5.3}%
-\contentsline {chapter}{\numberline {6.}\uppercase {Conclusions}}{39}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Future Work}{40}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Allometric Estimation}{40}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Incremental Data Integration}{41}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Mobile and Field Interfaces}{41}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}Geographic Expansion}{41}{subsection.6.1.4}%
-\contentsline {chapter}{\MakeUppercase []{Bibliography}}{42}{chapter*.25}%
+\contentsline {section}{\numberline {5.3}SuperClustering with Voronoi Diagrams}{37}{section.5.3}%
+\contentsline {chapter}{\numberline {6.}\uppercase {Conclusions}}{40}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Future Work}{41}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Allometric Estimation}{41}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Incremental Data Integration}{42}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Mobile and Field Interfaces}{42}{subsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.1.4}Geographic Expansion}{42}{subsection.6.1.4}%
+\contentsline {chapter}{\MakeUppercase []{Bibliography}}{43}{chapter*.28}%

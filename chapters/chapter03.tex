@@ -1,11 +1,11 @@
-\chapter{Rufa Database Design} \label{sec:Database}
+\chapter{RUFA Database Design} \label{sec:Database}
 
-In this Chapter, we delve into the rationale behind the relational database for the RUFA project, a system designed to track tree records across various geographic and ecological dimensions. A relational database provides an ideal solution for managing structured data, such as tree attributes, geographic metrics, and hierarchical relationships between places, zip codes, and tracts. We will explore the MySQL workflow, emphasizing data integrity, normalization principles, materialized views for efficient querying, and indexing strategies to optimize database performance. These features ensure scalable, accurate, and high-performance data management for the RUFA project.
+This chapter presents the rationale behind the relational database that underpins RUFA, a system designed to track tree records across geographic and ecological dimensions. A relational database is well suited to the structured data RUFA manages: tree attributes, geographic metrics, and hierarchical relationships between places, ZIP codes, and tracts. The sections that follow examine the MySQL workflow, emphasizing data integrity, normalization principles, materialized views for efficient querying, and indexing strategies that keep queries responsive at scale. Together these choices support scalable, accurate, and high-performance data management for the RUFA project.
 
-At production scale, the workload includes on the order of 7.2 million detector coordinates and tens of millions of inventory-related rows across 702+ places, with interactive dashboard reads targeting well under 200\,ms. Before a score can be served, each tree point must be assigned to the correct administrative polygons---a two-dimensional locality problem for which independent one-dimensional indexes are a poor fit \cite{samet2006}.
+At production scale, the workload includes on the order of 7.2 million detector coordinates and tens of millions of inventory-related rows across 702+ places, with interactive dashboard reads targeting well under 200\,ms. Before a score can be served, each tree point must be assigned to the correct administrative polygons, a two-dimensional locality problem for which independent one-dimensional indexes are a poor fit \cite{samet2006}.
 
 
-\section{Proximity Point Search}
+\section{Proximity Point Search} \label{sec:ProximitySearch}
 
 \subsection{Baseline Geospatial Filter}
 
@@ -17,7 +17,14 @@ Ordinary B-tree indexes on latitude or longitude alone improve one dimension at 
 
 \subsubsection{Hash-Based Spatial Partitioning}
 
-Hash-based approaches (for example fixed grids, geohash variants \cite{niemeyer2008}, or Cartesian tiering) divide the map into smaller cells and assign records to cell keys. In plain terms, the earth is bucketed into many small boxes, and queries first retrieve matching buckets before testing exact geometry. This is often simple to implement and scales well for coarse filtering.
+Hash-based approaches (for example fixed grids, geohash variants \cite{niemeyer2008}, or Cartesian tiering) divide the map into smaller cells and assign records to cell keys. In plain terms, the earth is bucketed into many small boxes, and queries first retrieve matching buckets before testing exact geometry. \autoref{fig:geohash} illustrates the geohash scheme: each additional character in the cell key subdivides a cell into finer cells, and keys that share a prefix are geographically adjacent, so proximity queries reduce to string prefix lookups on an ordinary index. This is often simple to implement and scales well for coarse filtering.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/geo_hash.png}
+\caption{Geohash-style hash-based partitioning}
+\label{fig:geohash}
+\end{figure}
 
 The tradeoff is that cell quality depends heavily on resolution choice. If cells are too large, many unrelated trees collapse into the same bucket and candidate sets grow quickly. If cells are too small, index management and boundary effects increase. Another limitation for RUFA is geometric fidelity: polygon membership and boundary precision are approximated by the selected grid resolution before exact tests are applied.
 
@@ -25,7 +32,14 @@ The tradeoff is that cell quality depends heavily on resolution choice. If cells
 
 Tree-based methods preserve spatial hierarchy by recursively partitioning space and are generally better suited for variable density data:
 
-\paragraph{Quadtree.} Recursively splits 2D space into four quadrants \cite{finkel1974}. It is simple and effective for many point-heavy workloads, but balance and depth can vary widely with uneven urban density.
+\paragraph{Quadtree.} Recursively splits 2D space into four quadrants \cite{finkel1974}, subdividing only where data is dense, as shown in \autoref{fig:quadtree}. It is simple and effective for many point-heavy workloads, but balance and depth can vary widely with uneven urban density.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/quad_tree.png}
+\caption{Quadtree spatial decomposition}
+\label{fig:quadtree}
+\end{figure}
 
 \paragraph{Google S2.} Projects the globe onto hierarchical cells over a cube-based decomposition \cite{veach2017s2}. It is robust for global-scale consistency and spherical geometry, especially when cross-region precision matters.
 
@@ -33,14 +47,21 @@ Tree-based methods preserve spatial hierarchy by recursively partitioning space 
 
 \subsection{RUFA Approach: R-tree Candidate Pruning Plus Exact Geometry}
 
-RUFA uses an R-tree-oriented workflow for polygon layers such as place, ZIP, and tract boundaries. At index-build time, each polygon's MBR is inserted into the tree as a searchable envelope \cite{guttman1984}. During lookup, a point query retrieves a very small set of nearest or intersecting envelope candidates, and then runs an exact geometry containment test against the candidate polygons.
+RUFA uses an R-tree-oriented workflow for polygon layers such as place, ZIP, and tract boundaries. At index-build time, each polygon's MBR is inserted into the tree as a searchable envelope \cite{guttman1984}. \autoref{fig:rtree} shows the resulting structure: leaf rectangles enclose individual geometries, and interior nodes group nearby rectangles into progressively larger envelopes. During lookup, a point query retrieves a very small set of nearest or intersecting envelope candidates, and then runs an exact geometry containment test against the candidate polygons.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/r_tree.png}
+\caption{R-tree indexing}
+\label{fig:rtree}
+\end{figure}
 
 This two-phase strategy is important: the tree handles fast candidate pruning, while exact polygon containment preserves correctness at boundaries. In other words, RUFA avoids scanning every row while still returning topologically accurate geographic assignments. These proximity-search requirements directly shape the relational design choices in RUFA, including how tables are normalized, how keys connect geographic entities, and where indexes are introduced for predictable query performance.
 
 
 \section{SQL Workflow}
 
-With that spatial-query context established, a well-defined SQL workflow is crucial for maintaining data integrity and ensuring efficient data retrieval \cite{codd1970}. The following Sections detail the tables used in the RUFA database, the normalization process adopted, and the overall database schema design.
+With that spatial-query context established, a well-defined SQL workflow is crucial for maintaining data integrity and ensuring efficient data retrieval \cite{codd1970}. The following sections detail the tables used in the RUFA database, the normalization process adopted, and the overall database schema design.
 
 
 \subsection{Tables and Normalization}
@@ -62,9 +83,9 @@ The RUFA database consists of several tables designed to minimize redundancy and
 
 \subsection{Alternative Database Solutions}
 
-While MySQL serves as the database choice for the RUFA, there are several alternative systems that offer enhanced capabilities for spatial data management and analysis. Given that the RUFA project relies on precise geographical information, including census tracts, city boundaries, and tree coordinates, optimizing spatial queries and performance can be a critical consideration.
+While MySQL serves as the database choice for RUFA, several alternative systems offer enhanced capabilities for spatial data management and analysis. Given that the RUFA project relies on precise geographical information, including census tracts, city boundaries, and tree coordinates, optimizing spatial queries and performance can be a critical consideration.
 
-\paragraph{PostgreSQL/PostGIS.} One of the most commonly cited alternatives for spatially intensive applications is PostgreSQL coupled with its PostGIS extension \cite{postgis2005}. PostGIS extends the relational engine to include advanced geospatial data types, indexing methods (e.g., GiST, SP-GiST), and an extensive library of geospatial functions (for instance, ST\_Intersect, S\_Buffer, and ST\_Distance). These features support complex spatial queries, such as determining which trees fall within a specific bounding polygon or calculating nearest-neighbor distances between tree points. Additionally, PostGIS’s robust handling of coordinate reference systems (CRS) and transformations can greatly simplify cross-regional comparisons within the RUFA framework.
+\paragraph{PostgreSQL/PostGIS.} One of the most commonly cited alternatives for spatially intensive applications is PostgreSQL coupled with its PostGIS extension \cite{postgis2005}. PostGIS extends the relational engine to include advanced geospatial data types, indexing methods (e.g., GiST, SP-GiST), and an extensive library of geospatial functions (for instance, ST\_Intersects, ST\_Buffer, and ST\_Distance). These features support complex spatial queries, such as determining which trees fall within a specific bounding polygon or calculating nearest-neighbor distances between tree points. Additionally, PostGIS’s robust handling of coordinate reference systems (CRS) and transformations can greatly simplify cross-regional comparisons within the RUFA framework.
 
 \paragraph{MongoDB with Geospatial Indexes.} MongoDB, a NoSQL document database, also offers geospatial indexing that can handle queries for distance-based searches on points, lines, and polygons \cite{cattell2011}. This schema-free approach can be advantageous for storing heterogeneous tree data, especially when species attributes vary significantly, since new fields can be added without redefining a rigid schema.
 
@@ -81,21 +102,17 @@ For MyISAM and InnoDB tables, search operations in columns containing spatial da
 
 MySQL uses \textit{R-Trees} with quadratic splitting for SPATIAL indexes on geometry columns. A SPATIAL index is built using the \textit{minimum bounding rectangle} (MBR) of a geometry. For most geometries, the MBR is the smallest rectangle that completely encloses the shape. For a horizontal or vertical linestring, the MBR degenerates to that linestring; and for a point, it degenerates to a single point. Spatial predicates on full \texttt{GEOMETRY} values (for example, point-in-polygon or intersection tests) are evaluated using these \texttt{SPATIAL} indexes; a conventional B-tree index is not the mechanism used to index the geometry column itself for that style of query. When applications need fast relational access to \emph{scalar} values derived from geometry (such as individual coordinates or numeric projections), the usual pattern is to store those values in stored generated columns or, in MySQL~8.0.13 and later, to define functional key parts on expressions, and then apply ordinary B-tree indexes to those generated or expression columns, rather than to the raw geometry column.
 
-Ultimately, although PostgreSQL/PostGIS/MongoDB has geospatial indexes, or specialized GIS databases may outperform MySQL in certain spatial workflows, the RUFA project’s current operational environment and alignment with \href{https://selectree.calpoly.edu}{Selectree}’s architecture underscore MySQL’s continued use. Future iterations of RUFA could incorporate or migrate to these alternatives if spatial demands grow significantly, for example by leveraging hybrid architectures that pair MySQL’s relational strengths with specialized spatial extensions in a multi-database ecosystem.
+Ultimately, although PostgreSQL with PostGIS, MongoDB's geospatial indexes, or specialized GIS databases may outperform MySQL in certain spatial workflows, the RUFA project's current operational environment and alignment with \href{https://selectree.calpoly.edu}{SelecTree}'s architecture underscore MySQL's continued use. Future iterations of RUFA could incorporate or migrate to these alternatives if spatial demands grow significantly, for example by leveraging hybrid architectures that pair MySQL’s relational strengths with specialized spatial extensions in a multi-database ecosystem.
 
 \section{Materialized Views}
 
-Materialized views are used in the RUFA database to store the results of complex queries, thereby improving query performance. To ensure that these views remain up-to-date with the underlying data, we implement automatic refresh mechanisms. This can be achieved using database triggers or scheduled jobs that periodically update the materialized views based on changes in the base tables.
+A materialized view stores the precomputed result of a query as a physical table, trading storage space and refresh cost for fast reads. RUFA depends on this pattern because its composite scores aggregate millions of tree records across nested geographic boundaries, and recomputing those aggregates on every dashboard request would be far too slow for interactive use. Because MySQL and MariaDB do not provide materialized views natively, RUFA emulates them with regular tables kept current by triggers and scheduled refresh jobs. The full implementation for RUFA Score management is described in \autoref{sec:MVImplementation}.
 
 \section{Indexing Strategies}
 
-Effective indexing is essential for optimizing query performance in the RUFA database. By carefully selecting which columns to index, we can significantly reduce query execution time. Automatic updates to indexes are managed by the database system, which maintains the indexes as data is inserted, updated, or deleted. Additionally, regular index maintenance tasks, such as rebuilding fragmented indexes, are scheduled to ensure optimal performance.
+Indexing determines whether the queries built on these tables return in milliseconds or seconds. RUFA indexes the columns that drive its most frequent access patterns, including geographic identifiers and the spatial columns discussed in \autoref{sec:ProximitySearch}, so that city- and region-level reads avoid full table scans. Modern relational database management systems maintain these indexes automatically as rows are inserted, updated, or deleted, but at RUFA's scale it remains worthwhile to monitor index health and rebuild fragmented indexes periodically. The effect of indexing on query latency against the full California dataset is quantified in \autoref{sec:IndexingResults}.
 
-\subsection{Automatic Index Maintenance}
-
-Modern relational database management systems (RDBMS) handle index maintenance automatically. However, for large databases like RUFA, it's advisable to monitor index performance and perform manual maintenance when necessary. Tools and scripts can be employed to automate these maintenance tasks, ensuring that indexes remain efficient without manual intervention.
-
-\section{Materialized View Implementation for RUFA Score Management}
+\section{Materialized View Implementation for RUFA Score Management} \label{sec:MVImplementation}
 
 \subsection{Overview}
 
@@ -198,7 +215,7 @@ Because refresh is multi-step (read base data, recompute aggregates, write servi
 
 RUFA therefore enforces operational goals of \textbf{detectability}, so materialized tables expose whether they are current, in progress, or stale; \textbf{atomic publication}, so score tables never appear half-updated during a refresh; and \textbf{cascade alignment}, so dependent geographic levels shown together reflect the same logical version of the underlying data.
 
-The Sections below implement this in MariaDB with lightweight metadata, status flags, and atomic table swaps that avoid long-lived locks on the primary serving table.
+The sections below implement this in MariaDB with lightweight metadata, status flags, and atomic table swaps that avoid long-lived locks on the primary serving table.
 
 \subsubsection{Version Control}
 Each materialized view maintains version numbers to detect stale data:
@@ -260,7 +277,7 @@ The system includes comprehensive monitoring to ensure materialized views remain
 
 This materialized view architecture ensures that RUFA scores remain accurate and current while providing the query performance necessary for responsive user interactions with the Urban Forestry Assessment Dashboard.
 
-\subsection{Indexing Results}
+\subsection{Indexing Results} \label{sec:IndexingResults}
 
 To evaluate the performance impact of different data storage and indexing strategies, we conducted comprehensive benchmarking tests across various query scenarios. Our analysis compared four different approaches for data retrieval and rendering within the RUFA system, measuring query execution times and system responsiveness under typical usage patterns. All performance tests were conducted on a standardized test environment consisting of an AWS EC2 instance (t3.large) with 2 vCPUs, 8GB RAM, and 10.5.23 MariaDB running on Amazon RDS. The test dataset contained approximately 7.2 million tree records distributed across 702 cities in California, matching the production data scale described in the California Urban Forest Inventory.
 
@@ -278,7 +295,7 @@ where $T_{\text{baseline}}$ represents the baseline query time and $T_{\text{opt
 
 \subsection{Performance Comparison Results}
 
-Table~\ref{tab:performance_comparison} presents the average query execution times across different storage and indexing strategies for city-specific queries retrieving tree inventory data.
+\autoref{tab:performance_comparison} presents the average query execution times across different storage and indexing strategies for city-specific queries retrieving tree inventory data.
 
 \begin{table}[htbp]
 \centering

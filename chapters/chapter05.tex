@@ -1,6 +1,6 @@
 \chapter{Clustering} \label{sec:Clustering}
 
-The clustering component of RUFA groups millions of tree coordinates for interactive map visualization at multiple zoom levels. This Chapter describes the algorithms evaluated during development, from an initial K-means prototype through SuperClustering with Voronoi tessellation, and the performance trade-offs that motivated each transition.
+The clustering component of RUFA groups millions of tree coordinates for interactive map visualization at multiple zoom levels. This chapter describes the algorithms evaluated during development, from an initial K-means prototype through SuperClustering with Voronoi tessellation, and the performance trade-offs that motivated each transition.
 
 When RUFA was scoped, UFEI already had a Google BigQuery prototype that clustered tree points as users zoomed. That prototype established the product vision; the task here was to reproduce zoom-aware aggregation inside the MySQL-backed RUFA stack.
 
@@ -29,7 +29,7 @@ Because cluster count must be specified in advance, $k$ was chosen dynamically a
     \caption{Insufficient segmentation at city scale.}
     \label{fig:la_kmeans_2}
 \end{subfigure}
-\caption{K-means clustering of Los Angeles tree coordinates. Scaling $k$ with input size produced overlapping clusters in dense neighborhoods (\subref{fig:la_kmeans}) and failed to yield stable multi-scale summaries when the viewport changed (\subref{fig:la_kmeans_2}).}
+\caption{K-means on Los Angeles trees: dense neighborhoods remain overlapped (\subref{fig:la_kmeans}); multi-scale summaries stay unstable (\subref{fig:la_kmeans_2}).}
 \label{fig:kmeans_la}
 \end{figure}
 
@@ -41,7 +41,7 @@ Several refinements were explored before adopting a hierarchical tile-based stra
 
 \section{SuperClustering with Voronoi Diagrams}
 
-The production implementation combines SuperCluster, a hierarchical point-clustering library used in web mapping \cite{agafonkin2016supercluster}, with Voronoi tessellation to define spatial analysis regions at each zoom level. Hierarchical greedy clustering---popularized for interactive maps by Leaflet.markercluster \cite{leaver2012markercluster}---reuses weighted clusters from finer zoom levels to build coarser ones, so the full point set is not reprocessed for every zoom. SuperCluster precomputes a pyramid of clusters from zoom 0 to 10; at query time, RUFA requests only the clusters intersecting the current bounding box, avoiding full-dataset recomputation on pan and zoom events.
+The production implementation combines SuperCluster, a hierarchical point-clustering library used in web mapping \cite{agafonkin2016supercluster}, with Voronoi tessellation to define spatial analysis regions at each zoom level. Hierarchical greedy clustering, popularized for interactive maps by Leaflet.markercluster \cite{leaver2012markercluster}, reuses weighted clusters from finer zoom levels to build coarser ones, so the full point set is not reprocessed for every zoom. SuperCluster precomputes a pyramid of clusters from zoom 0 to 10; at query time, RUFA requests only the clusters intersecting the current bounding box, avoiding full-dataset recomputation on pan and zoom events.
 
 \begin{lstlisting}[language=Python, caption=SuperCluster initialization and zoom-level processing]
 index = pysupercluster.SuperCluster(
@@ -65,7 +65,7 @@ SuperCluster initialization runs in $O(n \log n)$ time; Fortune's sweepline algo
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/slo_voronoi.png}
-\caption{SuperClustering with Voronoi tessellation applied to San Luis Obispo. Each cell summarizes local tree density and species diversity within boundaries that adapt to the underlying point distribution.}
+\caption{SuperCluster with Voronoi cells for San Luis Obispo, colored by local tree density.}
 \label{fig:slo_voronoi}
 \end{figure}
 

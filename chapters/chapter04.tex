@@ -1,20 +1,20 @@
 \chapter{System Design} \label{sec:SystemDesign}
 
-The rapid urban forest assessment system requires a robust and scalable architecture capable of handling large-scale tree inventory data while providing real-time query capabilities for municipal planners and environmental researchers. Building upon the performance analysis presented in Chapter~3, which demonstrated that indexed database queries achieve 95\% performance improvements over non-indexed approaches, this Chapter outlines the comprehensive system design that enables efficient processing and visualization of urban forest data across California's 702+ cities. In the overall thesis narrative, this Chapter is supporting deployment context for the database and clustering contributions rather than a primary research result.
+The rapid urban forest assessment system requires a robust and scalable architecture capable of handling large-scale tree inventory data while providing real-time query capabilities for municipal planners and environmental researchers. Building upon the performance analysis presented in \autoref{sec:Database}, which demonstrated that indexed database queries achieve 95\% performance improvements over non-indexed approaches, this chapter outlines the comprehensive system design that enables efficient processing and visualization of urban forest data across California's 702+ places. In the overall thesis narrative, this chapter provides supporting deployment context for the database and clustering contributions rather than a primary research result.
 
 The system architecture addresses three critical design requirements: scalability to accommodate the 7.2 million tree records in the California Urban Forest Inventory, performance optimization to support interactive web applications with sub-second response times, and extensibility to incorporate additional environmental datasets and analysis capabilities. The design leverages cloud-native technologies and modern web frameworks to create a maintainable and cost-effective solution.
 
 \section{System Diagram}
 \label{subsec:diagram}
 
-\begin{figure}[H]
+\begin{sidewaysfigure}
 \centering
-\includegraphics[width=0.95\textwidth]{figures/rufa_system.png}
+\includegraphics[width=0.92\textheight]{figures/rufa_system.png}
 \caption{AWS-based system architecture for the RUFA platform.}
 \label{fig:rufa_system_architecture}
-\end{figure}
+\end{sidewaysfigure}
 
-Figure~\ref{fig:rufa_system_architecture} presents the architecture of the RUFA system, deployed within an AWS Virtual Private Cloud (VPC) for scalability, security, and high availability. The system follows a three-tier design: front-end delivery, backend processing, and data storage.
+\autoref{fig:rufa_system_architecture} presents the architecture of the RUFA system, deployed within an AWS Virtual Private Cloud (VPC) for scalability, security, and high availability. The system follows a three-tier design: front-end delivery, backend processing, and data storage.
 
 \begin{table}[h!]
 \centering

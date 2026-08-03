@@ -1,6 +1,9 @@
 \hbox to \linewidth {\hspace {1.5em}Figure\hfill Page}
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Interactive map view in RUFA showing tree density by Voronoi cell for San Luis Obispo.}}{5}{figure.caption.4}%
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Entity Relationship Diagram (ERD) for the RUFA database schema}}{16}{figure.caption.12}%
-\contentsline {figure}{\numberline {4.1}{\ignorespaces AWS-based system architecture for the RUFA platform.}}{32}{figure.caption.21}%
-\contentsline {figure}{\numberline {5.1}{\ignorespaces K-means clustering of Los Angeles tree coordinates. Scaling $k$ with input size produced overlapping clusters in dense neighborhoods (\subref {fig:la_kmeans}) and failed to yield stable multi-scale summaries when the viewport changed (\subref {fig:la_kmeans_2}).}}{35}{figure.caption.23}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces SuperClustering with Voronoi tessellation applied to San Luis Obispo. Each cell summarizes local tree density and species diversity within boundaries that adapt to the underlying point distribution.}}{38}{figure.caption.24}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Interactive map view in RUFA showing cluster density and score components for San Francisco.}}{5}{figure.caption.4}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Geohash-style hash-based partitioning}}{14}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Quadtree spatial decomposition}}{14}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces R-tree indexing}}{15}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity Relationship Diagram (ERD) for the RUFA database schema}}{17}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces AWS-based system architecture for the RUFA platform.}}{33}{figure.caption.24}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces K-means on Los Angeles trees: dense neighborhoods remain overlapped (\subref {fig:la_kmeans}); multi-scale summaries stay unstable (\subref {fig:la_kmeans_2}).}}{36}{figure.caption.26}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces SuperCluster with Voronoi cells for San Luis Obispo, colored by local tree density.}}{38}{figure.caption.27}%
