@@ -1,9 +1,9 @@
 \hbox to \linewidth {\hspace {1.5em}Figure\hfill Page}
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Interactive map view in RUFA showing cluster density and score components for San Francisco.}}{5}{figure.caption.4}%
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Geohash-style hash-based partitioning}}{14}{figure.caption.9}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Quadtree spatial decomposition}}{14}{figure.caption.11}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces R-tree indexing}}{15}{figure.caption.14}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity Relationship Diagram (ERD) for the RUFA database schema}}{17}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Geohash-style hash-based partitioning.}}{14}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Quadtree spatial decomposition.}}{14}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces R-tree indexing.}}{15}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity Relationship Diagram (ERD) for the RUFA database schema.}}{17}{figure.caption.15}%
 \contentsline {figure}{\numberline {4.1}{\ignorespaces AWS-based system architecture for the RUFA platform.}}{33}{figure.caption.24}%
-\contentsline {figure}{\numberline {5.1}{\ignorespaces K-means on Los Angeles trees: dense neighborhoods remain overlapped (\subref {fig:la_kmeans}); multi-scale summaries stay unstable (\subref {fig:la_kmeans_2}).}}{36}{figure.caption.26}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces K-means clustering of Los Angeles tree coordinates: (a) Dynamic $k$ as a function of point count and (b) Insufficient segmentation at city scale.}}{36}{figure.caption.26}%
 \contentsline {figure}{\numberline {5.2}{\ignorespaces SuperCluster with Voronoi cells for San Luis Obispo, colored by local tree density.}}{38}{figure.caption.27}%

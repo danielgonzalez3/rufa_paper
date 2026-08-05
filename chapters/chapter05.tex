@@ -19,17 +19,19 @@ Because cluster count must be specified in advance, $k$ was chosen dynamically a
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{la_k_means.png}
-    \caption{Dynamic $k$ as a function of point count.}
+    \captionsetup{list=no}
+    \caption{}
     \label{fig:la_kmeans}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{la_k_means_2.png}
-    \caption{Insufficient segmentation at city scale.}
+    \captionsetup{list=no}
+    \caption{}
     \label{fig:la_kmeans_2}
 \end{subfigure}
-\caption{K-means on Los Angeles trees: dense neighborhoods remain overlapped (\subref{fig:la_kmeans}); multi-scale summaries stay unstable (\subref{fig:la_kmeans_2}).}
+\caption[K-means clustering of Los Angeles tree coordinates: (a) Dynamic $k$ as a function of point count and (b) Insufficient segmentation at city scale.]{K-means clustering of Los Angeles tree coordinates: (a)~Dynamic $k$ as a function of point count and (b)~Insufficient segmentation at city scale. Scaling $k$ with input size produced overlapping clusters in dense neighborhoods and failed to yield stable multi-scale summaries when the viewport changed.}
 \label{fig:kmeans_la}
 \end{figure}
 
